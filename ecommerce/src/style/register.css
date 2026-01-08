@@ -1,0 +1,40 @@
+.auth-wrapper {
+  min-height: 500px;
+}
+
+/* LEFT PANEL */
+.auth-left {
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.auth-left-content {
+  max-width: 350px;
+}
+
+.auth-left h3 {
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.auth-left p {
+  font-size: 14px;
+  opacity: 0.85;
+}
+
+/* INPUT STYLE */
+.form-control,
+.form-select {
+  border-radius: 8px;
+  padding: 10px;
+}
+
+/* BUTTON */
+.btn-primary {
+  border-radius: 8px;
+  padding: 10px;
+  font-weight: 500;
+}

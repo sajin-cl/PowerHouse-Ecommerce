@@ -1,0 +1,67 @@
+🧑‍💼 ADMIN – Responsibilities
+
+Category & Brand Management
+
+New category create pannalaam
+
+Edit / Delete categories
+
+Ex: Electronics, Fashion, Mobiles
+
+User Management
+
+Users list paakra ability
+
+Block / unblock users
+
+Seller Management
+
+Seller registration approve / reject
+
+Block bad sellers
+
+Order Management
+
+View all orders
+
+Refunds / complaints handling
+
+Reports & Analytics
+
+Total sales, total users, revenue graph
+
+✅ Admin does NOT:
+
+Add products
+
+Upload product images
+
+Manage own products
+
+Admin role = system controller / moderator
+
+🧑‍🏬 SELLER – Responsibilities
+
+Product Management
+
+Add / edit / delete own products
+
+Upload product images
+
+Order Management
+
+View only own orders
+
+Update order status (shipped / delivered)
+
+Earnings / Sales
+
+Track revenue from their products
+
+✅ Seller cannot:
+
+Manage users
+
+Approve other sellers
+
+Add platform categories

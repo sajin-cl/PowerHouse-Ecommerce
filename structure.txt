@@ -1,0 +1,44 @@
+src/
+ ├─ components/          # Reusable components
+ │    ├─ Navbar.jsx
+ │    ├─ Footer.jsx
+ │    ├─ ProductCard.jsx
+ │    └─ Sidebar.jsx
+ │
+ ├─ pages/               # Role-based pages
+ │    ├─ user/
+ │    │    ├─ Home.jsx
+ │    │    ├─ Cart.jsx
+ │    │    └─ Orders.jsx
+ │    │
+ │    ├─ seller/
+ │    │    ├─ SellerDashboard.jsx
+ │    │    ├─ AddProduct.jsx
+ │    │    └─ MyProducts.jsx
+ │    │
+ │    └─ admin/
+ │         ├─ AdminDashboard.jsx
+ │         ├─ ManageUsers.jsx
+ │         ├─ ManageSellers.jsx
+ │         └─ ManageCategories.jsx
+ │
+ ├─ pages/auth/          # Login / Register
+ │    ├─ Login.jsx
+ │    └─ Register.jsx
+ │
+ ├─ routes/              # React Router config
+ │    └─ AppRoutes.jsx
+ │
+ ├─ context/             # React Context or Redux
+ │    └─ AuthContext.jsx
+ │
+ ├─ services/            # API calls
+ │    ├─ userService.js
+ │    ├─ sellerService.js
+ │    └─ adminService.js
+ │
+ ├─ utils/               # Helper functions
+ │    └─ privateRoute.js
+ │
+ ├─ App.jsx
+ └─ main.jsx
