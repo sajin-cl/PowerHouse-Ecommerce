@@ -1,0 +1,67 @@
+{
+  "Products": [
+    {
+      "id": 1,
+      "productName": "Briyani",
+      "productDesc": "product available",
+      "prodRate": 100,
+      "prodImage": "/src/assets/images/mockdatas/Briyani.avif"
+    },
+    {
+      "id": 2,
+      "productName": "Chicken Briyani",
+      "productDesc": "product available",
+      "prodRate": 500,
+      "prodImage": "/src/assets/images/mockdatas/prod2.avif"
+    },
+    {
+      "id": 3,
+      "productName": "Chilli Chicken",
+      "productDesc": "product available",
+      "prodRate": 800,
+      "prodImage": "/src/assets/images/mockdatas/ChilliChicken.avif"
+    },
+    {
+      "id": 4,
+      "productName": "Chicken Noodles",
+      "productDesc": "product available",
+      "prodRate": 100,
+      "prodImage": "/src/assets/images/mockdatas/prod5.avif"
+    },
+    {
+      "id": 5,
+      "productName": "Dosa",
+      "productDesc": "product available",
+      "prodRate": 600,
+      "prodImage": "/src/assets/images/mockdatas/prod4.avif"
+    },
+    {
+      "id": 6,
+      "productName": "Veg briyani",
+      "productDesc": "product available",
+      "prodRate": 660,
+      "prodImage": "/src/assets/images/mockdatas/veg-briyani.avif"
+    },
+    {
+      "id": 7,
+      "productName": "sawarma",
+      "productDesc": "product available",
+      "prodRate": 660,
+      "prodImage": "/src/assets/images/mockdatas/sawarma.avif"
+    },
+    {
+      "id": 8,
+      "productName": "product8",
+      "productDesc": "product available",
+      "prodRate": 107,
+      "prodImage": "/src/assets/images/mockdatas/prod1.avif"
+    },
+    {
+      "id": 9,
+      "productName": "product9",
+      "productDesc": "product available",
+      "prodRate": 555,
+      "prodImage": "/src/assets/images/mockdatas/prod2.avif"
+    }
+  ]
+}
