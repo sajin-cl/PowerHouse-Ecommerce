@@ -1,0 +1,17 @@
+.success-box {
+  max-width: 420px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+ 
+}
+
+.success-icon {
+  font-size: 50px;
+  color: #28a745;
+}
+
+.order-id {
+  font-size: 14px;
+  margin-top: 10px;
+}

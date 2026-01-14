@@ -1,0 +1,11 @@
+.order-box {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.summary {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #fafafa;
+}

@@ -1,0 +1,30 @@
+.cart-item {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.cart-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
+.qty {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+}
+
+.qty button {
+  padding: 4px 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.summary {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #fafafa;
+}

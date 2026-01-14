@@ -21,10 +21,10 @@ function Header() {
 
 
             <li className="nav-item">
-              <Link className="nav-link text-white">Cart</Link>
+              <Link to={'/cart'} className="nav-link text-white">Cart</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-white">Order</Link>
+              <Link to={'/myorders'} className="nav-link text-white">Orders</Link>
             </li>
 
             <li className="nav-item">

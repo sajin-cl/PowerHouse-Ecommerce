@@ -23,15 +23,15 @@ function HomePage() {
 
           <div className="carousel-inner">
             <div className="carousel-item active">
-              <img src="src/assets/images/banner/banner1.webp" className="d-block w-100" alt="Banner 1"
+              <img src="src/assets/images/banner/banner3.jpg" className="d-block w-100" alt="Banner 1"
                 style={bannerStyle} />
             </div>
             <div className="carousel-item">
-              <img src="src/assets/images/banner/banner2.webp" className="d-block w-100" alt="Banner 2"
+              <img src="src/assets/images/banner/banner2.jpg" className="d-block w-100" alt="Banner 2"
                 style={bannerStyle} />
             </div>
             <div className="carousel-item">
-              <img src="src/assets/images/banner/banner3.webp" className="d-block w-100" alt="Banner 3"
+              <img src="src/assets/images/banner/banner1.jpg" className="d-block w-100" alt="Banner 3"
                 style={bannerStyle} />
             </div>
           </div>
