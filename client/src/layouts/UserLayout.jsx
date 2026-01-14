@@ -1,11 +1,11 @@
 import { Outlet } from 'react-router-dom'
-import Header from '../components/Header'
+import UserHeader from '../components/UserHeader';
 
 
 function UserLayout() {
   return (
     <>
-      <Header />
+      <UserHeader />
       <main>
         <Outlet />
       </main>

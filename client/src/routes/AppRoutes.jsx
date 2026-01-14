@@ -8,6 +8,8 @@ import Cart from '../pages/user/Cart';
 import Checkout from '../pages/user/Checkout';
 import OrderSuccess from '../pages/user/OrderSuccess';
 import MyOrders from '../pages/user/MyOrders';
+import SellerLayout from '../layouts/SellerLayout';
+import SellerDashboard from '../pages/seller/SellerDashboard';
 
 
 
@@ -22,6 +24,14 @@ const router = createBrowserRouter([
       { path: '/checkout', element: <Checkout /> },
       { path: '/test', element: <OrderSuccess /> },  //-->order success page tick
       { path: '/myorders', element: <MyOrders /> }
+    ]
+  },
+
+  
+  {
+    path: '/seller', element: <SellerLayout />,
+    children: [
+      { index: true, element: <SellerDashboard /> }
     ]
   },
 

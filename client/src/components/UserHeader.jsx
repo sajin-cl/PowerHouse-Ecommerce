@@ -1,7 +1,7 @@
 import '../style/header.css'
 import { Link } from 'react-router-dom'
 
-function Header() {
+function UserHeader() {
   return (
 
     <nav className="navbar navbar-expand-lg navbar-light  sticky-top">
@@ -49,4 +49,4 @@ function Header() {
   )
 };
 
-export default Header;
+export default UserHeader;
