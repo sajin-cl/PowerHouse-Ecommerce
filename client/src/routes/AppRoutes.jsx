@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import RegisterForm from '../pages/auth/Register';
 import LoginForm from '../pages/auth/Login';
+
 import UserLayout from '../layouts/UserLayout';
 import Home from '../pages/user/Home'
 import ProductDetails from '../pages/user/ProductDetails';
@@ -8,6 +9,7 @@ import Cart from '../pages/user/Cart';
 import Checkout from '../pages/user/Checkout';
 import OrderSuccess from '../pages/user/OrderSuccess';
 import MyOrders from '../pages/user/MyOrders';
+
 import SellerLayout from '../layouts/SellerLayout';
 import SellerDashboard from '../pages/seller/SellerDashboard';
 import SellerProducts from '../pages/seller/SellerProducts';
@@ -16,6 +18,18 @@ import SellerEarnings from '../pages/seller/SellerEanings';
 import AddProduct from '../pages/seller/AddProduct';
 import UpdateProduct from '../pages/seller/UpdateProduct';
 import UpdateOrder from '../pages/seller/UpdateOrder';
+
+import AdminLayout from '../layouts/AdminLayout';
+import AdminDashboard from '../pages/admin/AdminDashboard'
+import Categories from '../pages/admin/Categories';
+import AddCategory from '../pages/admin/AddCategory';
+import UpdateCategory from '../pages/admin/UpdateCategory';
+import Brands from '../pages/admin/Brands';
+import AddBrand from '../pages/admin/AddBrand';
+import UpdateBrand from '../pages/admin/UpdateBrand';
+import Users from '../pages/admin/Users';
+import Sellers from '../pages/admin/Sellers';
+import Orders from '../pages/admin/Orders';
 
 
 
@@ -33,7 +47,6 @@ const router = createBrowserRouter([
     ]
   },
 
-
   {
     path: '/seller', element: <SellerLayout />,
     children: [
@@ -44,6 +57,22 @@ const router = createBrowserRouter([
       { path: 'earnings', element: <SellerEarnings /> },
       { path: 'add-product', element: <AddProduct /> },
       { path: 'update-product', element: <UpdateProduct /> }
+    ]
+  },
+
+  {
+    path: '/admin', element: <AdminLayout />,
+    children: [
+      { index: true, element: <AdminDashboard /> },
+      { path: 'categories', element: <Categories /> },
+      { path: 'add-category', element: <AddCategory /> },
+      { path: 'update-category', element: <UpdateCategory /> },
+      { path: 'brands', element: <Brands /> },
+      { path: 'add-brand', element: <AddBrand /> },
+      { path: 'update-brand', element: <UpdateBrand /> },
+      { path: 'users', element: <Users /> },
+      { path: 'sellers', element: <Sellers /> },
+      { path: 'orders', element: <Orders /> }
     ]
   },
 

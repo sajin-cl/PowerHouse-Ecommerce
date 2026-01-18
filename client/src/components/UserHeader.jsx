@@ -6,7 +6,7 @@ function UserHeader() {
 
     <nav className="navbar navbar-expand-lg navbar-light  sticky-top">
       <div className="container-fluid">
-        <img src="src/assets/images/logos/logo.png" alt="logo" style={{ height: "32px", width: "32px" }} />
+        <img src="/logo.png" alt="logo" style={{ height: "32px", width: "32px" }} />
         <Link className="navbar-brand text-white fw-bold fs-6" ><small>Power <span className="text-warning">House</span></small></Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
           <span className="navbar-toggler-icon"></span>

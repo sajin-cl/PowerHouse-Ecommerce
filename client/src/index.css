@@ -4,6 +4,14 @@
   box-sizing: border-box;
 }
 
+.logo{
+   background: white;
+  padding: 4px;
+  border-radius: 6px; 
+   border: 2px solid white;
+ 
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -59,20 +67,22 @@ body::-webkit-scrollbar {
 
 :root {
   --violet-color: #4c00b0;
-  --seller-nav-color: #22314a;
+  --seller-nav-color: #660066;
+  --admin-nav-color: #245731;
+  --light-green-color:#b0e000;
 }
 
 
 .btn-purple {
-  background-color: #250569;
-  border: 1px solid #250569;
+  background-color: #800080;
+  border: 1px solid #800080;
   color: #fff;
   border-radius: 5px;
 }
 
 .btn-purple:hover {
-  background-color: var(--seller-nav-color);
-  border-color: var(--seller-nav-color);
+  background-color:#660066;
+  border-color:#660066 ;
   color: #fff;
 }
 

@@ -58,3 +58,11 @@
   margin-top: 25px;
   font-size: 14px;
 }
+
+.footer-top h6:hover{
+  color: black;
+}
+.footer-logo:hover {
+  transform: scale(1.04);
+  cursor: pointer;
+}

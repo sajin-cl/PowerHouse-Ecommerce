@@ -1,15 +1,14 @@
-.seller-navbar {
-  background-color: var(--seller-nav-color);
+.admin-navbar {
+  background-color: var(--admin-nav-color);
 }
 
-.seller-content {
+.admin-content {
   padding: 15px;
   background-color: #f1f1f1;
   min-height: 100vh;
 }
 
-
-.seller-sidebar {
+.admin-sidebar {
   position: fixed;
   top: 48px;
   left: -250px;
@@ -20,15 +19,18 @@
   overflow-y: auto;
 }
 
-.seller-sidebar li {
+.admin-sidebar li {
   padding: 10px;
 }
 
-
-.seller-sidebar.open {
+.admin-sidebar.open {
   left: 0;
 }
 
+.admin-sidebar li:hover {
+  background-color: var(--admin-nav-color);
+  transition: 0.3s;
+}
 
 .overlay {
   position: fixed;
@@ -36,23 +38,16 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0,0,0,0.5);
   z-index: 999;
 }
 
-.seller-sidebar li:hover {
-  background-color: var(--seller-nav-color);
-  transition: 0.3s;
-}
-
-
-
 @media (min-width: 992px) {
-  .seller-sidebar {
+  .admin-sidebar {
     left: 0;
   }
 
-  .seller-content {
+   .admin-content {
     margin-left: 250px;
     padding: 20px;
   }

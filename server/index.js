@@ -12,6 +12,7 @@ const port = 4000;
 
 const app = express();
 
+database();
 
 app.use(logger('dev'));
 app.use(cors());
@@ -20,14 +21,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(fileup());
 app.use(
   session({
-    secret: "keyboard cat",
+    secret: "dont tell me",
     resave: false,
     saveUninitialized: true,
   })
 );
 
 
-app.use('/api/auth',authRouter);
+app.use('/api/auth', authRouter);
 
 
 app.listen(port, () => console.info(`server: http://localhost:${port}`))
