@@ -29,7 +29,7 @@ import AddBrand from '../pages/admin/AddBrand';
 import UpdateBrand from '../pages/admin/UpdateBrand';
 import Users from '../pages/admin/Users';
 import Sellers from '../pages/admin/Sellers';
-import Orders from '../pages/admin/Orders';
+
 
 
 
@@ -72,7 +72,7 @@ const router = createBrowserRouter([
       { path: 'update-brand', element: <UpdateBrand /> },
       { path: 'users', element: <Users /> },
       { path: 'sellers', element: <Sellers /> },
-      { path: 'orders', element: <Orders /> }
+    
     ]
   },
 

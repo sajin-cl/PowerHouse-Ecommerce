@@ -22,6 +22,13 @@ function AddProduct() {
                 </div>
 
                 <div className="mb-3">
+                  <label htmlFor="prodBrand" className="form-label text-violet">Brand</label>
+                  <select name="prodBrand" id="prodBrand" className="form-select">
+                    <option >Select Brand</option>
+                  </select>
+                </div>
+
+                <div className="mb-3">
                   <label htmlFor="prodStock" className="form-label text-violet">Stock</label>
                   <input type="number" className="form-control" id="prodStock" placeholder="Enter the product stock" name="prodStock" />
                 </div>

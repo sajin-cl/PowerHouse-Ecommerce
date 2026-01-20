@@ -5,6 +5,17 @@ function LoginForm() {
 
   const [showPassword, setShowPassword] = useState(false);
 
+  const [errors, setErrors] = useState({});
+
+  const validate = (data) => {
+    const newErrors = {};
+
+    if (!data.email.trim()) newErrors.email = "Email is required";
+    if (!data.password) newErrors.password = "Password is required"
+
+    return newErrors;
+  };
+
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -12,21 +23,33 @@ function LoginForm() {
 
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
+    const { name, value } = e.target;
+
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+
+    setErrors(prev => ({
+      ...prev,
+      [name]: undefined
+    }))
+
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setFormData({
-      email: "",
-      password: ""
-    });
+    const validateErrors = validate(formData);
+
+    if (Object.keys(validateErrors).length > 0) {
+      setErrors(validateErrors);
+      return
+    }
 
     console.log(formData)
+    setFormData({ email: "", password: "" });
+
   };
 
 
@@ -57,33 +80,37 @@ function LoginForm() {
                 <label className="form-label">Email</label>
                 <input
                   type="email"
-                  className="form-control"
+                  className={`form-control ${errors.email ? "border border-danger" : ""}`}
                   name="email"
                   placeholder="Enter your email"
                   value={formData.email}
                   onChange={handleChange}
                 />
+                {errors.email && <div className="text-danger">{errors.email}</div>}
               </div>
 
-              <div className="mb-3 position-relative">
+              <div className="mb-3">
                 <label className="form-label">Password</label>
+                <div className="position-relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    className={`form-control pe-5${errors.password ? "border border-danger" : ""}`}
+                    name="password"
+                    placeholder="Enter your password"
+                    value={formData.password}
+                    onChange={handleChange}
+                  />
 
-                <input
-                  type={showPassword ? "text" : "password"}
-                  className="form-control pe-5"
-                  name="password"
-                  placeholder="Enter your password"
-                  value={formData.password}
-                  onChange={handleChange}
-                />
+                  <span
+                    className="position-absolute top-50 end-0 translate-middle-y me-3"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    <i className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}></i>
+                  </span>
+                </div>
 
-                <span
-                  className="position-absolute top-50 end-0 translate-middle-y m-3"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  <i className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}></i>
-                </span>
+                {errors.password && <div className='text-danger'>{errors.password}</div>}
               </div>
 
               <button className="btn btn-primary w-100 mt-3" style={{ backgroundColor: "var(--violet-color)" }}>

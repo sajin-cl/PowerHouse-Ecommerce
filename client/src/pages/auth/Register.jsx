@@ -1,83 +1,72 @@
 import { useState } from "react";
-import '../../style/register.css'
+import "../../style/register.css";
 import { useNavigate, Link } from "react-router-dom";
 
 function RegisterForm() {
-
   const navigate = useNavigate();
 
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState({});
 
   const [formData, setFormData] = useState({
-
     user: "",
     email: "",
     password: "",
     confirmPassword: "",
     role: "user",
-    shopName: ""
+    shopName: "",
   });
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
+    const { name, value } = e.target;
 
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: undefined,
+    }));
   };
 
+  const validate = (data) => {
+    const newErrors = {};
+
+    if (!data.user.trim()) newErrors.user = "Name is required";
+    if (!data.email.trim()) newErrors.email = "Email is required";
+
+    if (!data.password) newErrors.password = "Password is required";
+    if (!data.confirmPassword) newErrors.confirmPassword = "password is required";
+
+    if (data.password && data.confirmPassword && data.password !== data.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+    }
+
+    if (data.role === "seller" && !data.shopName.trim()) {
+      newErrors.shopName = "Shop name required for sellers";
+    }
+
+    return newErrors;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { user, email, password, confirmPassword, role, shopName } = formData;
+    const validationErrors = validate(formData);
 
-    if (!user || !email || !password || !confirmPassword) {
-      setError('All fields required');
-      setTimeout(() => {
-        setError('');
-      }, 2000);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
-    };
+    }
 
-    if (role === 'seller' && !shopName) {
-      setError('Shop name is required for seller');
-      setTimeout(() => {
-        setError('');
-      }, 2000);
-      return;
-    };
-
-    if (password !== confirmPassword) {
-      setError('Password mismatched');
-
-      setTimeout(() => {
-        setError('')
-      }, 2000);
-
-      return;
-    };
-
-
-    setFormData({
-
-      user: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      role: "user",
-      shopName: ""
-    });
-
-    navigate('/login')
-
+    navigate("/login");
   };
 
-
   return (
-
     <div className="container my-5 pb-5">
       <div className="row shadow-lg rounded-4 overflow-hidden auth-wrapper">
 
@@ -85,8 +74,8 @@ function RegisterForm() {
           <div className="auth-left-content">
             <h3>Welcome to Power House</h3>
             <p>
-              Your trusted marketplace for quality products from verified sellers, designed
-              for a smooth and secure shopping experience.
+              Your trusted marketplace for quality products from verified sellers,
+              designed for a smooth and secure shopping experience.
             </p>
           </div>
         </div>
@@ -96,67 +85,81 @@ function RegisterForm() {
 
           <form onSubmit={handleSubmit}>
 
+
             <div className="mb-3">
               <label className="form-label">Name</label>
               <input
                 type="text"
-                className="form-control"
+                className={`form-control ${errors.user ? "border border-danger" : ""}`}
                 name="user"
                 placeholder="Enter your name"
                 value={formData.user}
                 onChange={handleChange}
               />
+              {errors.user && <div className="text-danger">{errors.user}</div>}
             </div>
+
 
             <div className="mb-3">
               <label className="form-label">Email</label>
               <input
                 type="email"
-                className="form-control"
+                className={`form-control ${errors.email ? "border border-danger" : ""}`}
                 name="email"
                 placeholder="Enter your email"
                 value={formData.email}
                 onChange={handleChange}
               />
+              {errors.email && <div className="text-danger">{errors.email}</div>}
             </div>
 
-            <div className="mb-3 position-relative">
+
+            <div className="mb-3">
               <label className="form-label">Password</label>
-              <input
-                type={showPassword ? "text" : "password"}
-                className="form-control"
-                name="password"
-                placeholder="Enter your password"
-                value={formData.password}
-                onChange={handleChange}
-              />
-              <span
-                className="position-absolute top-50 end-0 translate-middle-y m-3"
-                style={{ cursor: "pointer" }}
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                <i className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}></i>
-              </span>
+              <div className="position-relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  className={`form-control ${errors.password ? "border border-danger" : ""}`}
+                  name="password"
+                  placeholder="Enter your password"
+                  value={formData.password}
+                  onChange={handleChange}
+                />
+                <span
+                  className="position-absolute top-50 end-0 translate-middle-y me-3"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setShowPassword((prev) => !prev)}
+                >
+                  <i className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}></i>
+                </span>
+              </div>
+
+              {errors.password && <div className="text-danger">{errors.password}</div>}
             </div>
 
-            <div className="mb-3 position-relative">
+
+            <div className="mb-3">
               <label className="form-label">Confirm Password</label>
-              <input
-                type={showPassword ? "text" : "password"}
-                className="form-control"
-                name="confirmPassword"
-                placeholder="Confirm your password"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-              />
-              <span
-                className="position-absolute top-50 end-0 translate-middle-y m-3"
-                style={{ cursor: "pointer" }}
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                <i className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}></i>
-              </span>
+              <div className="position-relative">
+                <input
+                  type={showConfirm ? "text" : "password"}
+                  className={`form-control ${errors.confirmPassword ? "border border-danger" : ""}`}
+                  name="confirmPassword"
+                  placeholder="Confirm your password"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                />
+                <span
+                  className="position-absolute top-50 end-0 translate-middle-y me-3"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setShowConfirm((prev) => !prev)}
+                >
+                  <i className={`bi ${showConfirm ? "bi-eye-slash" : "bi-eye"}`}></i>
+                </span>
+              </div>
+              {errors.confirmPassword && <div className="text-danger">{errors.confirmPassword}</div>}
             </div>
+
 
             <div className="mb-3">
               <label className="form-label">Register as</label>
@@ -168,24 +171,24 @@ function RegisterForm() {
               >
                 <option value="user">User</option>
                 <option value="seller">Seller</option>
-                <option value="admin">Admin</option>
               </select>
             </div>
+
 
             {formData.role === "seller" && (
               <div className="mb-3">
                 <label className="form-label">Shop Name</label>
                 <input
                   type="text"
-                  className="form-control"
+                  className={`form-control ${errors.shopName ? "border border-danger" : ""}`}
                   name="shopName"
                   placeholder="Enter your shop name"
+                  value={formData.shopName}
                   onChange={handleChange}
                 />
+                {errors.shopName && <div className="text-danger">{errors.shopName}</div>}
               </div>
             )}
-
-            {error && <p className="text-danger text-center">{error}</p>}
 
             <button className="btn btn-primary w-100 mt-3" style={{ backgroundColor: "var(--violet-color)" }}>
               Register now
@@ -196,10 +199,8 @@ function RegisterForm() {
             </p>
           </form>
         </div>
-
       </div>
     </div>
-
   );
 }
 
