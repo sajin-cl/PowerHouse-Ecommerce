@@ -39,7 +39,6 @@ function RegisterForm() {
     }
     return newErrors;
   };
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -84,15 +83,11 @@ function RegisterForm() {
         navigate("/login");
       }))
       .catch((err) => {
-        console.error('data tranfor failed');
-        if (err.response && err.response.data && err.response.data.error) {
+        console.error('registeration failed');
 
+        if (err.response?.data?.error) {
           setErrors({ backend: err.response.data.error });
-          setTimeout(() => {
-            setErrors('')
-          }, 3000)
-        } else {
-          setErrors({ backend: "Something went wrong" });
+          setTimeout(() => setErrors(''), 3000)
         }
       });
   };

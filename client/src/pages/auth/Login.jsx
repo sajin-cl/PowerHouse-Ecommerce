@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 function LoginForm() {
+
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -47,8 +50,24 @@ function LoginForm() {
       return
     }
 
-    console.log(formData)
-    setFormData({ email: "", password: "" });
+    axios.post('http://localhost:4000/api/auth/login', formData, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then((response) => {
+      console.log(response.data);
+      setFormData({
+        email: "",
+        password: ""
+      });
+      navigate('/')
+    }).catch((err) => {
+      console.log('Login failed')
+      if (err.response?.data?.error) {
+        setErrors({ backend: err.response.data.error });
+        setTimeout(() => setErrors(''), 3000)
+      }
+    })
 
   };
 
@@ -112,6 +131,7 @@ function LoginForm() {
 
                 {errors.password && <div className='text-danger'>{errors.password}</div>}
               </div>
+              {errors.backend && <div className="text-danger mb-2 text-center">{errors.backend}</div>}
 
               <button className="btn btn-primary w-100 mt-3" style={{ backgroundColor: "var(--violet-color)" }}>
                 Login
