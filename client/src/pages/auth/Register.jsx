@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../../style/register.css";
 import { useNavigate, Link } from "react-router-dom";
+import axios from 'axios';
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -19,6 +20,27 @@ function RegisterForm() {
     shopName: "",
   });
 
+
+  const validate = (data) => {
+    const newErrors = {};
+
+    if (!data.user.trim()) newErrors.user = "Name is required *";
+    if (!data.email.trim()) newErrors.email = "Email is required *";
+
+    if (!data.password) newErrors.password = "Password is required";
+    else if (data.password && data.password.length < 5) newErrors.password = "password must be contain 5 characters"
+    else if (!data.confirmPassword) newErrors.confirmPassword = "password is required *";
+    else if (data.password && data.confirmPassword && data.password !== data.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+    }
+
+    if (data.role === "seller" && !data.shopName.trim()) {
+      newErrors.shopName = "Shop name required for sellers";
+    }
+    return newErrors;
+  };
+  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -33,25 +55,6 @@ function RegisterForm() {
     }));
   };
 
-  const validate = (data) => {
-    const newErrors = {};
-
-    if (!data.user.trim()) newErrors.user = "Name is required";
-    if (!data.email.trim()) newErrors.email = "Email is required";
-
-    if (!data.password) newErrors.password = "Password is required";
-    if (!data.confirmPassword) newErrors.confirmPassword = "password is required";
-
-    if (data.password && data.confirmPassword && data.password !== data.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
-    }
-
-    if (data.role === "seller" && !data.shopName.trim()) {
-      newErrors.shopName = "Shop name required for sellers";
-    }
-
-    return newErrors;
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -63,7 +66,35 @@ function RegisterForm() {
       return;
     }
 
-    navigate("/login");
+    axios.post('http://localhost:4000/api/auth/register', formData, {
+      headers: {
+        "Content-Type": 'application/json'
+      }
+    })
+      .then((response => {
+        console.log(response.data);
+        setFormData({
+          user: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+          role: "user",
+          shopName: "",
+        });
+        navigate("/login");
+      }))
+      .catch((err) => {
+        console.error('data tranfor failed');
+        if (err.response && err.response.data && err.response.data.error) {
+
+          setErrors({ backend: err.response.data.error });
+          setTimeout(() => {
+            setErrors('')
+          }, 3000)
+        } else {
+          setErrors({ backend: "Something went wrong" });
+        }
+      });
   };
 
   return (
@@ -183,12 +214,15 @@ function RegisterForm() {
                   className={`form-control ${errors.shopName ? "border border-danger" : ""}`}
                   name="shopName"
                   placeholder="Enter your shop name"
-                  value={formData.shopName}
+                  value={formData.shopName || ''}
                   onChange={handleChange}
                 />
                 {errors.shopName && <div className="text-danger">{errors.shopName}</div>}
               </div>
             )}
+
+            {errors.backend && <div className="text-danger mb-2 text-center">{errors.backend}</div>}
+
 
             <button className="btn btn-primary w-100 mt-3" style={{ backgroundColor: "var(--violet-color)" }}>
               Register now

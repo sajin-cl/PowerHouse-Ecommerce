@@ -29,4 +29,4 @@ app.use(
 
 app.use('/api/auth', authRouter);
 
-app.listen(port, () => console.info(`server: http://localhost:${port}`));
+app.listen(port, async() => console.info(`server: http://localhost:${port}`));
