@@ -7,12 +7,29 @@ export const useAuth = () => {
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    axios.get('http://localhost:4000/api/auth/check-session', { withCredentials: true, })
-      .then(res => setLoggedIn(res.data.loggedIn))
-      .catch(err => {
-        if (err.response) console.error(err.response.data?.message);
-        setLoggedIn(false)
-      })
+    let active = true;
+
+    const checkSession = async () => {
+      try {
+        const res = await axios.get("http://localhost:4000/api/auth/check-session", {
+          withCredentials: true,
+        });
+        if (!active) return;
+        setLoggedIn(res.data.loggedIn);
+      } catch (err) {
+        if (!active) return;
+        console.error(err.response?.data?.message || "Session check failed");
+        navigate("/login");
+      }
+    };
+
+    checkSession();
+    const interval = setInterval(checkSession, 30000);
+
+    return () => {
+      active = false;
+      clearInterval(interval);
+    };
   }, []);
 
   const logout = async () => {
@@ -20,12 +37,11 @@ export const useAuth = () => {
       const res = await axios.get("http://localhost:4000/api/auth/logout", { withCredentials: true });
       console.log(res.data.message);
       setLoggedIn(false);
-      navigate('/login')
+      navigate("/login");
+    } catch (err) {
+      console.error("Logout failed", err);
     }
-    catch (err) {
-      console.error('logout failed', err)
-    }
-  }
+  };
 
-  return { loggedIn, logout }
+  return { loggedIn, logout };
 };
