@@ -1,4 +1,5 @@
-import  { useState } from 'react';
+import { useState } from 'react';
+import { useAuth } from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
 import '../style/SellerHeader.css';
 
@@ -8,6 +9,8 @@ function SellerHeader() {
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
+
+  const { logout } = useAuth();
 
   return (
     <>
@@ -58,9 +61,10 @@ function SellerHeader() {
         </ul>
 
         <div className="pb-5">
-          <Link to="/logout" className="btn btn-danger  w-100">
+          <button className="btn btn-danger w-100" onClick={logout}>
             <i className="fa fa-sign-out me-1"></i> Logout
-          </Link>
+          </button>
+
         </div>
 
 

@@ -17,7 +17,8 @@ export const useAuth = () => {
 
   const logout = async () => {
     try {
-      await axios.get("http://localhost:4000/api/auth/logout", { withCredentials: true });
+      const res = await axios.get("http://localhost:4000/api/auth/logout", { withCredentials: true });
+      console.log(res.data.message);
       setLoggedIn(false);
       navigate('/login')
     }
