@@ -1,4 +1,4 @@
-const { User } = require('../models/auth.model');
+const  User  = require('../models/auth.model.js');
 const bcrypt = require('bcrypt');
 const database = require('../config/database.js');
 
@@ -14,7 +14,7 @@ const setupAdmin = async () => {
   }
 
   const admin = new User({
-    user: 'admin',
+    fullName: 'admin',
     email: 'admin@gmail.com',
     password: await bcrypt.hash('admin', 10),
     role: 'admin'

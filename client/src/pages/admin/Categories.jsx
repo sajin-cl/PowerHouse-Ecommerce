@@ -1,16 +1,11 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from 'axios';
+import { useState } from "react";
 
 function Categories() {
 
-  const categories = [
-    { id: 1, name: "Electronics", description: "Devices and gadgets" },
-    { id: 2, name: "Mobiles", description: "Smartphones and accessories" },
-    { id: 3, name: "Laptops", description: "All kinds of laptops" },
-    { id: 4, name: "Fashion", description: "Clothes, shoes, accessories" },
-    { id: 5, name: "Men", description: "Men's clothing and accessories" },
-    { id: 6, name: "Women", description: "Women's clothing and accessories" },
-  ];
-
+  const [categories, setCategories] = useState([]);
 
   const addCategoryBtn = {
     position: "fixed",
@@ -23,17 +18,27 @@ function Categories() {
   };
 
 
+  useEffect(() => {
+    axios
+      .get('http://localhost:4000/api/admin/category')
+      .then(response => {
+        setCategories(response.data.categories);
+      })
+      .catch(() => console.log('categories fetch error'));
+  }, []);
+
+
 
   return (
     <div className="container mt-4">
       <h3 className="mb-4">Category Management</h3>
       <div className="row">
         {categories.map((category) => (
-          <div key={category.id} className="col-6 col-md-4 col-lg-3 mb-4">
+          <div key={category._id} className="col-6 col-md-4 col-lg-3 mb-4">
             <div className="card h-100 shadow">
               <div className="card-body d-flex flex-column">
-                <h6 className="card-title">{category.name}</h6>
-                <p className="card-text text-muted">{category.description}</p>
+                <h6 className="card-title">{category.categoryName}</h6>
+                <p className="card-text text-muted">{category.catDescription}</p>
                 <div className="mt-auto d-flex justify-content-between">
                   <Link
                     to={`/admin/update-category`}

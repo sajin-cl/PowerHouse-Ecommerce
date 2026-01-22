@@ -1,4 +1,49 @@
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 function AddCategory() {
+
+  const navigate = useNavigate();
+
+  const [errors, setErrors] = useState({});
+
+  const [formData, setFormData] = useState({
+    categoryName: "",
+    catDescription: ""
+  });
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev => ({
+      ...prev,
+      [name]: value,
+    })));
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    axios.post('http://localhost:4000/api/admin/category', formData, {
+      headers: { "Content-Type": "application/json" }
+    }).then(response => {
+      console.log(response.data);
+      setFormData({
+        categoryName: "",
+        catDescription: ""
+      });
+      navigate('/admin/categories')
+    })
+      .catch(err => {
+        console.error('error for creating category');
+        if (err) {
+          setErrors({ backend: err.response?.data?.error });
+          setTimeout(() => setErrors({}), 3000);
+        }
+      })
+  };
+
   return (
     <>
       <div className="container mt-5 mb-5">
@@ -7,17 +52,35 @@ function AddCategory() {
             <div className="card shadow-lg p-4 rounded-4">
               <h3 className="text-center mb-4">Add Category</h3>
 
-              <form method="post" encType="multipart/form-data">
+              <form method="post" encType="multipart/form-data" onSubmit={handleSubmit}>
 
                 <div className="mb-3">
-                  <label htmlFor="catName" className="form-label text-success">Category </label>
-                  <input type="text" id="catName" className="form-control" placeholder="Enter the category name" name="catName" />
+                  <label htmlFor="categoryName" className="form-label text-success">Category </label>
+                  <input
+                    type="text"
+                    id="categoryName"
+                    className="form-control"
+                    placeholder="Enter the category name"
+                    name="categoryName"
+                    onChange={handleChange}
+                    value={formData.categoryName}
+                  />
                 </div>
 
                 <div className="mb-3">
-                  <label htmlFor="catDesc" className="form-label text-success">Description</label>
-                  <input type="text" className="form-control" id="catDesc" placeholder="Enter the  description" name="catDesc" />
+                  <label htmlFor="catDescription" className="form-label text-success">Description</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="catDescription"
+                    placeholder="Enter the  description"
+                    name="catDescription"
+                    onChange={handleChange}
+                    value={formData.catDescription}
+                  />
                 </div>
+
+                {errors.backend && (<div className="text-center text-danger mb-2">{errors.backend}</div>)}
 
                 <div className="d-grid">
                   <button type="submit" className="btn btn-success btn-lg " id="atr-submit-btn">Submit</button>

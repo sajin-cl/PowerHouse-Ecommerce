@@ -7,6 +7,7 @@ const database = require('./config/database');
 
 
 const authRouter = require('./routes/auth.routes');
+const adminRouter = require('./routes/admin.routes');
 
 const app = express();
 
@@ -15,8 +16,8 @@ database();
 app.use(logger('dev'));
 
 app.use(cors({
-  origin: 'http://localhost:5173', 
-  credentials: true              
+  origin: 'http://localhost:5173',
+  credentials: true
 }));
 
 app.use(express.json());
@@ -29,14 +30,15 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 1000 * 60 * 2,
-       httpOnly:true,
-       secure:false
+      maxAge: 1000 * 60 * 30,
+      httpOnly: true,
+      secure: false
     }
   })
 );
 
 app.use('/api/auth', authRouter);
+app.use('/api/admin', adminRouter);
 
 const PORT = 4000;
 app.listen(PORT, () => console.info(`Server running at http://localhost:${PORT}`));

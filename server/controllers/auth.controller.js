@@ -1,12 +1,12 @@
 const bcrypt = require('bcrypt');
-const { User } = require('../models/auth.model.js');
+const  User  = require('../models/auth.model.js');
 
 
 exports.register = async (req, res) => {
   try {
-    const { user, email, password, confirmPassword, role, shopName } = req.body;
+    const { fullName, email, password, confirmPassword, role, shopName } = req.body;
 
-    if (!user || !email || !password || !confirmPassword) return res.status(400).json({ error: 'all fields are required' });
+    if (!fullName || !email || !password || !confirmPassword) return res.status(400).json({ error: 'all fields are required' });
     if (password !== confirmPassword) return res.status(400).json({ error: 'Password mismatched' });
     if (role === 'seller' && !shopName) return res.status(400).json({ error: 'Shop name is required for sellers' });
 
@@ -17,7 +17,7 @@ exports.register = async (req, res) => {
     const hashedPwd = await bcrypt.hash(password, 10);
 
     const newUser = await User.create({
-      user,
+      fullName,
       email,
       password: hashedPwd,
       role: role || 'user',
@@ -40,10 +40,10 @@ exports.login = async (req, res) => {
       return res.status(400).json({ error: 'Email and password are required' });
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ error: 'Invalid user or password' });
+    if (!user ) return res.status(400).json({ error: 'Invalid user or password' });
 
     if (user.isBlocked) {
-      return res.status(403).json({ error: 'User account is blocked' });
+      return res.status(403).json({ error: 'Access Denied' });
     }
 
     const match = await bcrypt.compare(password, user.password);

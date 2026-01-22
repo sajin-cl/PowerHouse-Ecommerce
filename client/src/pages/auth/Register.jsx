@@ -12,7 +12,7 @@ function RegisterForm() {
   const [errors, setErrors] = useState({});
 
   const [formData, setFormData] = useState({
-    user: "",
+    fullName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -24,7 +24,7 @@ function RegisterForm() {
   const validate = (data) => {
     const newErrors = {};
 
-    if (!data.user.trim()) newErrors.user = "Name is required *";
+    if (!data.fullName.trim()) newErrors.fullName = "Name is required *";
     if (!data.email.trim()) newErrors.email = "Email is required *";
 
     if (!data.password) newErrors.password = "Password is required";
@@ -73,7 +73,7 @@ function RegisterForm() {
       .then((response => {
         console.log(response.data);
         setFormData({
-          user: "",
+          fullName: "",
           email: "",
           password: "",
           confirmPassword: "",
@@ -113,27 +113,29 @@ function RegisterForm() {
 
 
             <div className="mb-3">
-              <label className="form-label">Name</label>
+              <label className="form-label" htmlFor="fullName">Full name</label>
               <input
                 type="text"
-                className={`form-control ${errors.user ? "border border-danger" : ""}`}
-                name="user"
+                className={`form-control ${errors.fullName ? "border border-danger" : ""}`}
+                name="fullName"
                 placeholder="Enter your name"
-                value={formData.user}
+                value={formData.fullName}
+                id="fullName"
                 onChange={handleChange}
               />
-              {errors.user && <div className="text-danger">{errors.user}</div>}
+              {errors.fullName && <div className="text-danger">{errors.fullName}</div>}
             </div>
 
 
             <div className="mb-3">
-              <label className="form-label">Email</label>
+              <label className="form-label" htmlFor="email">Email</label>
               <input
                 type="email"
                 className={`form-control ${errors.email ? "border border-danger" : ""}`}
                 name="email"
                 placeholder="Enter your email"
                 value={formData.email}
+                id="email"
                 onChange={handleChange}
               />
               {errors.email && <div className="text-danger">{errors.email}</div>}
@@ -141,7 +143,7 @@ function RegisterForm() {
 
 
             <div className="mb-3">
-              <label className="form-label">Password</label>
+              <label className="form-label" htmlFor="password">Password</label>
               <div className="position-relative">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -149,6 +151,7 @@ function RegisterForm() {
                   name="password"
                   placeholder="Enter your password"
                   value={formData.password}
+                  id='password'
                   onChange={handleChange}
                 />
                 <span
@@ -165,7 +168,7 @@ function RegisterForm() {
 
 
             <div className="mb-3">
-              <label className="form-label">Confirm Password</label>
+              <label className="form-label" htmlFor="confirm-password">Confirm Password</label>
               <div className="position-relative">
                 <input
                   type={showConfirm ? "text" : "password"}
@@ -174,6 +177,7 @@ function RegisterForm() {
                   placeholder="Confirm your password"
                   value={formData.confirmPassword}
                   onChange={handleChange}
+                  id="confirm-password"
                 />
                 <span
                   className="position-absolute top-50 end-0 translate-middle-y me-3"
@@ -188,10 +192,11 @@ function RegisterForm() {
 
 
             <div className="mb-3">
-              <label className="form-label">Register as</label>
+              <label className="form-label" htmlFor="role">Register as</label>
               <select
                 className="form-select"
                 name="role"
+                id="role"
                 value={formData.role}
                 onChange={handleChange}
               >
@@ -203,11 +208,12 @@ function RegisterForm() {
 
             {formData.role === "seller" && (
               <div className="mb-3">
-                <label className="form-label">Shop Name</label>
+                <label className="form-label" htmlFor="shop-name">Shop Name</label>
                 <input
                   type="text"
                   className={`form-control ${errors.shopName ? "border border-danger" : ""}`}
                   name="shopName"
+                  id="shop-name"
                   placeholder="Enter your shop name"
                   value={formData.shopName || ''}
                   onChange={handleChange}
