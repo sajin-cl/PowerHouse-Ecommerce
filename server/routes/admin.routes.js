@@ -11,6 +11,8 @@ router.patch('/categories/:id', adminController.updateCategory);
 router.delete('/categories/:id', adminController.deleteCategory);
 
 
+router.post('/brands', adminController.addBrand);
+router.get('/brands', adminController.getBrands);
 
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const Category = require('../models/category.model');
+const Brand = require('../models/brand.model')
 
 exports.addCategory = async (req, res) => {
   try {
@@ -70,14 +71,44 @@ exports.updateCategory = async (req, res) => {
   }
 };
 
-exports.deleteCategory = async(req,res)=>{
-   try{
-     const id = req.params.id;
-     await Category.findByIdAndDelete(id);
-     res.status(200).json({message:'category deleted'});
-   }
-   catch(err){
-    res.status(500).json({error:'category deletion problem'});
-   }
+exports.deleteCategory = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await Category.findByIdAndDelete(id);
+    res.status(200).json({ message: 'category deleted' });
+  }
+  catch (err) {
+    res.status(500).json({ error: 'category deletion problem' });
+  }
 
+};
+
+exports.addBrand = async (req, res) => {
+  try {
+    const { name, description } = req.body;
+
+    if (!name) return res.status(400).json({ error: 'Brand name is required' });
+
+    const existing = await Brand.findOne({ name });
+    if (existing) return res.status(400).json({ error: 'Brand name aleready exist' });
+
+    const brand = await Brand.create({ name, description });
+    res.status(201).json({ message: 'Brand created', brand });
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Brand name doesn\'t  created' });
+  }
+
+};
+
+exports.getBrands = async (req, res) => {
+  try {
+    const brands = await Brand.find();
+    res.status(200).json(brands);
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error for fetching brands' });
+  }
 };
