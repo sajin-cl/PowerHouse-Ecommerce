@@ -9,6 +9,7 @@ const database = require('./config/database');
 
 const authRouter = require('./routes/auth.routes');
 const adminRouter = require('./routes/admin.routes');
+const sellerRouter = require('./routes/seller.routes');
 
 const app = express();
 
@@ -40,6 +41,8 @@ app.use(
 
 app.use('/api/auth', authRouter);
 app.use('/api/admin', adminRouter);
+app.use('/api/seller', sellerRouter);
+
 
 const PORT = 4000;
 app.listen(PORT, () => console.info(`Server running at http://localhost:${PORT}`));

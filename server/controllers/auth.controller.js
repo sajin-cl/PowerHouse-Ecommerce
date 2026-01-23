@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
-const  User  = require('../models/auth.model.js');
+const User = require('../models/auth.model.js');
+const validator = require('validator');
 
 
 exports.register = async (req, res) => {
@@ -12,6 +13,9 @@ exports.register = async (req, res) => {
 
     const existingUser = await User.findOne({ email });
 
+    if (!validator.isEmail(email)) {
+      return res.status(400).json({ error: 'Please enter a valid email address' });
+    }
     if (existingUser) return res.status(400).json({ error: 'Email is already registered' });
 
     const hashedPwd = await bcrypt.hash(password, 10);
@@ -40,7 +44,7 @@ exports.login = async (req, res) => {
       return res.status(400).json({ error: 'Email and password are required' });
 
     const user = await User.findOne({ email });
-    if (!user ) return res.status(400).json({ error: 'Invalid user or password' });
+    if (!user) return res.status(400).json({ error: 'Invalid user or password' });
 
     if (user.isBlocked) {
       return res.status(403).json({ error: 'Access Denied' });
