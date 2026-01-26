@@ -20,7 +20,7 @@ function Users() {
   }, [refresh]);
 
 
-  const handleDelete = (id) => {
+  const deleteUser = (id) => {
     axios
       .delete(`http://localhost:4000/api/admin/users/${id}`, { withCredentials: true })
       .then(() => {
@@ -31,14 +31,14 @@ function Users() {
   };
 
 
-  const handleToggleBlockUser = (id) => {
+  const toggleBlockUser = (id) => {
     axios
       .patch(`http://localhost:4000/api/admin/users/${id}/toggle-block`, null, { withCredentials: true })
       .then(() => {
         console.info('User toggle status changed');
         setRefresh(prev => prev + 1);
       })
-      .catch(err => console.error('failed to change status', err.response))
+      .catch(err => console.error('failed to change status', err.response?.data?.error || err.message))
   }
 
   return (
@@ -52,26 +52,26 @@ function Users() {
               <div className="card-body d-flex flex-column">
 
                 {/* Show name + email */}
-                <h6 className="card-title">{user.name}</h6>
+                <h6 className="card-title">{user.fullName}</h6>
                 <p className="card-text">{user.email}</p>
 
                 {/* Show status */}
-                <p className={`card-text ${user.isBlocked ? "text-danger" : "text-success"}`}>
+                <p className={`card-text ${!user.isBlocked ? "text-success" : "text-danger"}`}>
                   {user.isBlocked ? "Blocked" : "Active"}
                 </p>
 
                 {/* Buttons */}
                 <div className="mt-auto d-flex justify-content-between">
                   <button
-                    className={`btn btn-${user.isBlocked ? "success" : "warning"} px-3 py-1`}
-                    onClick={() => { handleToggleBlockUser(user._id) }}
+                    className={`btn btn-${!user.isBlocked ? "warning" : "success"} px-3 py-1`}
+                    onClick={() => { toggleBlockUser(user._id) }}
                   >
                     <small>{user.isBlocked ? "Unblock" : "Block"}</small>
                   </button>
 
                   <button
                     className="btn btn-danger px-3 py-1"
-                    onClick={() => { handleDelete(user._id) }}
+                    onClick={() => { deleteUser(user._id) }}
                   >
                     <small>Delete</small>
                   </button>

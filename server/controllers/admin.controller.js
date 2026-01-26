@@ -169,6 +169,8 @@ exports.deleteBrand = async (req, res) => {
 exports.getUsers = async (req, res) => {
   try {
     const users = await User.find({ role: 'user' }).sort({ name: 1 });
+    if (!users) return res.status(400).json({ error: 'users not found' });
+
     res.status(200).json(users)
   }
   catch (err) {
@@ -209,3 +211,50 @@ exports.toggleBlockUser = async (req, res) => {
     res.status(500).json({ error: 'Failed to block or unblock user' });
   }
 };
+
+exports.getSellers = async (req, res) => {
+  try {
+    const sellers = await User.find({ role: 'seller' }).sort({ name: 1 });
+    if (!sellers) return res.status(400).json({ error: 'sellers not found' });
+
+    res.status(200).json(sellers);
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch sellers' });
+  }
+};
+
+exports.deleteSeller = async (req, res) => {
+  try {
+
+    const { id } = req.params;
+
+    const seller = await User.findByIdAndDelete(id);
+    if (!seller) return res.status(400).json({ error: 'Seller not found' });
+
+    res.status(200).json({ messsage: 'seller deleted successfully' });
+  }
+  catch (err) {
+    console.error('Failed to delete seller');
+    res.status(500).json({ error: 'Faild to delete seller' });
+  }
+};
+
+exports.toggleBlockSeller = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const seller = await User.findById(id);
+    if (!seller) return res.status(400).json({ error: 'seller not found' });
+
+    seller.isBlocked = !seller.isBlocked;
+    await seller.save();
+
+    res.status(200).json({ message: seller.isBlocked ? "seller blocked" : "seller unblocked" });
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to block or unblock seller' });
+  }
+}
