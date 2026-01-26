@@ -1,6 +1,7 @@
 const Category = require('../models/category.model');
 const Product = require('../models/product.model');
 const Brand = require('../models/brand.model');
+const User = require('../models/auth.model');
 
 exports.addProducts = async (req, res) => {
 
@@ -53,9 +54,22 @@ exports.getProducts = async (req, res) => {
   try {
 
     const products = await Product.find().sort({ createdAt: 1 });
-    res.status(200).json(products);
-  }
-  catch (err) {
+    if (!products) return res.status(400).json({ error: 'Failed to fetch products' });
+
+    const visibleProducts = [];
+
+    for (let product of products) {
+
+      const seller = await User.findById(product.sellerId);
+      
+      if (seller && !seller.isBlocked) {
+        visibleProducts.push(product);
+      }
+    }
+
+    res.status(200).json(visibleProducts);
+    console.log('visible product', visibleProducts)
+  } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to fetch products' });
   }

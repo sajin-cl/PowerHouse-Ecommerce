@@ -32,6 +32,10 @@ function HomePage() {
                 <ProductCard key={product._id + "-" + index} product={product} />
               ))}
             </div>
+
+            {products.length <= 0 && (
+              <div className="text-center text-muted p-5">Products not found</div>
+            )}
           </div>
         </section>
       </main>
