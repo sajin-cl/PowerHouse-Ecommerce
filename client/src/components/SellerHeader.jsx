@@ -4,13 +4,15 @@ import { Link } from 'react-router-dom';
 import '../style/SellerHeader.css';
 
 function SellerHeader() {
+  
+  const { logout } = useAuth();
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
-  const { logout } = useAuth();
 
   return (
     <>

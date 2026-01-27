@@ -37,7 +37,7 @@ exports.getCategories = async (req, res) => {
 };
 
 
-exports.editCategory = async (req, res) => {
+exports.getCategoryById = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -117,7 +117,7 @@ exports.getBrands = async (req, res) => {
   }
 };
 
-exports.editBrand = async (req, res) => {
+exports.getBrandById = async (req, res) => {
   try {
     const { id } = req.params;
 

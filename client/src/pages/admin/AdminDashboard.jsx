@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function AdminDashboard() {
-  // Dummy stats, replace with API calls in real app
+ 
   const [stats, setStats] = useState({
     totalUsers: 120,
     totalSellers: 35,

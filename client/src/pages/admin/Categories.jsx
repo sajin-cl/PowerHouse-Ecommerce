@@ -6,6 +6,7 @@ import { useState } from "react";
 function Categories() {
 
   const [categories, setCategories] = useState([]);
+  
   const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
@@ -19,7 +20,7 @@ function Categories() {
   }, [refresh]);
 
 
-  const handleDelete = (id) => {
+  const deleteCategory = (id) => {
     axios
       .delete(`http://localhost:4000/api/admin/categories/${id}`, { withCredentials: true })
       .then(() => {
@@ -53,7 +54,7 @@ function Categories() {
                     </Link>
                     <button
                       className="btn btn-danger px-3 py-1"
-                      onClick={() => handleDelete(category._id)}
+                      onClick={() => deleteCategory(category._id)}
                     >
                       <small>Delete</small>
                     </button>

@@ -12,6 +12,7 @@ const adminRouter = require('./routes/admin.routes');
 const productRouter = require('./routes/products.routes');
 const categoryRouter = require('./routes/categories.routes');
 const brandRouter = require('./routes/brands.routes');
+const cartRouter = require('./routes/cart.routes');
 
 
 const app = express();
@@ -37,10 +38,9 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 1000 * 60 * 80,
-      httpOnly: true,
-      secure: false
+      maxAge: 24 * 60 * 60 * 1000
     }
+
   })
 );
 
@@ -49,6 +49,7 @@ app.use('/api/admin', adminRouter);
 app.use('/api/products', productRouter);
 app.use('/api/categories', categoryRouter);
 app.use('/api/brands', brandRouter);
+app.use('/api/cart', cartRouter);
 
 
 const PORT = 4000;

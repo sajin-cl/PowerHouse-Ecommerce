@@ -4,6 +4,7 @@ const database = require('../config/database.js');
 
 
 const setupAdmin = async () => {
+  
   await database();
 
   const existingAdmin = await User.findOne({ role: 'admin' });

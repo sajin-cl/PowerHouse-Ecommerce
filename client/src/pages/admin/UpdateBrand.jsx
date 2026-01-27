@@ -6,7 +6,9 @@ import { useNavigate, useParams } from "react-router-dom";
 function UpdateBrand() {
 
   const { id } = useParams();
+  
   const navigate = useNavigate();
+
   const [errors, setErrors] = useState({});
 
   const [brand, setBrand] = useState({
@@ -35,7 +37,8 @@ function UpdateBrand() {
     }));
   };
 
-  const handleUpdate = (e) => {
+  const updateBrand = (e) => {
+
     e.preventDefault();
     axios
       .patch(`http://localhost:4000/api/admin/brands/${id}`, brand, { withCredentials: true })
@@ -59,7 +62,7 @@ function UpdateBrand() {
             <div className="card shadow-lg p-4 rounded-4">
               <h3 className="text-center mb-4">Edit Brand </h3>
 
-              <form method="post" encType="multipart/form-data" onSubmit={handleUpdate}>
+              <form method="post" encType="multipart/form-data" onSubmit={updateBrand}>
 
                 <div className="mb-3">
                   <label htmlFor="brandName" className="form-label text-success">Brand Name </label>

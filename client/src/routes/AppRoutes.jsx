@@ -33,15 +33,13 @@ import Sellers from '../pages/admin/Sellers';
 import NotFound from '../components/NotFound';
 
 
-
-
 const router = createBrowserRouter([
 
   {
     path: '/', element: <UserLayout />,
     children: [
       { index: true, element: <Home /> },
-      { path: '/product-details', element: <ProductDetails /> },
+      { path: '/product-details/:id', element: <ProductDetails /> },
       { path: '/cart', element: <Cart /> },
       { path: '/checkout', element: <Checkout /> },
       { path: '/test', element: <OrderSuccess /> },  //-->order success page tick

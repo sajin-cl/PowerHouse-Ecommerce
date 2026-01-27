@@ -5,6 +5,7 @@ import playStore from '../assets/images/logos/playstore-icon.png'
 import { Link } from 'react-router-dom'
 
 function Footer() {
+  
   return (
     <footer className="footer">
 

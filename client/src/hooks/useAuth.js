@@ -3,10 +3,13 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export const useAuth = () => {
+
   const navigate = useNavigate();
+
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
+
     let active = true;
 
     const checkSession = async () => {
@@ -24,13 +27,13 @@ export const useAuth = () => {
     };
 
     checkSession();
+
     const interval = setInterval(checkSession, 30000);
 
-    return () => {
-      active = false;
-      clearInterval(interval);
-    };
+    return () => { active = false; clearInterval(interval); };
+
   }, []);
+  
 
   const logout = async () => {
     try {

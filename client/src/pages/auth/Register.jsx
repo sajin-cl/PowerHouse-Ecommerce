@@ -7,6 +7,7 @@ function RegisterForm() {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
+
   const [showConfirm, setShowConfirm] = useState(false);
 
   const [errors, setErrors] = useState({});
@@ -42,6 +43,7 @@ function RegisterForm() {
   };
 
   const handleChange = (e) => {
+
     const { name, value } = e.target;
 
     setFormData((prev) => ({
@@ -49,14 +51,11 @@ function RegisterForm() {
       [name]: value,
     }));
 
-    setErrors((prev) => ({
-      ...prev,
-      [name]: undefined,
-    }));
   };
 
 
   const handleSubmit = (e) => {
+
     e.preventDefault();
 
     const validationErrors = validate(formData);

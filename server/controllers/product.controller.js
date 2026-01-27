@@ -61,7 +61,7 @@ exports.getProducts = async (req, res) => {
     for (let product of products) {
 
       const seller = await User.findById(product.sellerId);
-      
+
       if (seller && !seller.isBlocked) {
         visibleProducts.push(product);
       }
@@ -75,12 +75,16 @@ exports.getProducts = async (req, res) => {
   }
 };
 
-exports.editProducts = async (req, res) => {
+exports.getProductsId = async (req, res) => {
   try {
 
     const { id } = req.params;
-    const product = await Product.findById(id);
+
+    const product = await Product.findById(id).populate('category').populate('brand');
+    if (!product) return res.status(400).json({ error: 'Product not found' });
+
     res.status(200).json(product);
+
   }
   catch (err) {
     console.error(err);
@@ -89,9 +93,6 @@ exports.editProducts = async (req, res) => {
 };
 
 exports.updateProducts = async (req, res) => {
-  console.log('req.files', req.files)
-  console.log('req.body', req.body)
-
   try {
 
     const { id } = req.params;

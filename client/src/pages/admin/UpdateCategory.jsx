@@ -6,9 +6,11 @@ import { useNavigate, useParams } from "react-router-dom";
 function UpdateCategory() {
 
   const { id } = useParams();
+
   const navigate = useNavigate();
 
   const [errors, setErrors] = useState({});
+
   const [data, setData] = useState({
     name: "",
     description: ""
@@ -29,6 +31,7 @@ function UpdateCategory() {
 
 
   const handleChange = (e) => {
+
     const { name, value } = e.target;
 
     setData(prev => ({
@@ -38,8 +41,10 @@ function UpdateCategory() {
   };
 
 
-  const handleUpdate = (e) => {
+  const updateCategory = (e) => {
+
     e.preventDefault();
+
     axios
       .patch(`http://localhost:4000/api/admin/categories/${id}`, data, { withCredentials: true })
       .then(() => {
@@ -61,7 +66,7 @@ function UpdateCategory() {
             <div className="card shadow-lg p-4 rounded-4">
               <h3 className="text-center mb-4">Edit Category</h3>
 
-              <form method="post" encType="multipart/form-data" onSubmit={handleUpdate}>
+              <form method="post" encType="multipart/form-data" onSubmit={updateCategory}>
 
                 <div className="mb-3">
                   <label htmlFor="catName" className="form-label text-success">Category </label>

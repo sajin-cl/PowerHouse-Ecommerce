@@ -17,6 +17,7 @@ function LoginForm() {
 
 
   const validate = (data) => {
+
     const newErrors = {};
 
     if (!data.email.trim()) newErrors.email = "Email is required";
@@ -27,6 +28,7 @@ function LoginForm() {
 
 
   const handleChange = (e) => {
+
     const { name, value } = e.target;
 
     setFormData(prev => ({
@@ -34,20 +36,17 @@ function LoginForm() {
       [name]: value
     }));
 
-    setErrors(prev => ({
-      ...prev,
-      [name]: undefined
-    }))
-
   };
 
   const handleSubmit = (e) => {
+
     e.preventDefault();
 
     const validateErrors = validate(formData);
 
     if (Object.keys(validateErrors).length > 0) {
       setErrors(validateErrors);
+      setTimeout(() => setErrors({}), 3000);
       return
     }
 

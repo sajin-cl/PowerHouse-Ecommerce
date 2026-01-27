@@ -4,13 +4,15 @@ import { Link } from 'react-router-dom';
 import '../style/AdminHeader.css';
 
 function AdminHeader() {
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const { logout } = useAuth();
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
-  const { logout } = useAuth();
 
   return (
     <>

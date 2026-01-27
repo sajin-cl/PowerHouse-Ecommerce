@@ -7,6 +7,7 @@ function Brands() {
 
 
   const [brands, setBrands] = useState([]);
+  
   const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
@@ -18,7 +19,7 @@ function Brands() {
   }, [refresh]);
 
 
-  const handleDelete = (id) => {
+  const deleteBrand = (id) => {
     axios
       .delete(`http://localhost:4000/api/admin/brands/${id}`, { withCredentials: true })
       .then(() => {
@@ -50,7 +51,7 @@ function Brands() {
                     </Link>
                     <button
                       className="btn btn-danger px-3 py-1"
-                      onClick={() => { handleDelete(brand._id) }}
+                      onClick={() => { deleteBrand(brand._id) }}
                     >
                       <small>Delete</small>
                     </button>
@@ -62,7 +63,7 @@ function Brands() {
         </div>
 
       ) : (
-        <div className="d-flex align-items-center h-50 justify-content-center text-muted"  > No Brands found</div>
+        <div className="d-flex align-items-center h-50 justify-content-center text-muted p-5"  > No Brands found</div>
       )}
 
       <Link
