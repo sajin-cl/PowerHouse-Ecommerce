@@ -8,10 +8,17 @@
   min-height: 100vh;
 }
 
+.sidebar-link.active {
+  background-color: var(--seller-nav-color);
+  color: #000 !important;
+  font-weight: bold;
+
+}
+
 
 .seller-sidebar {
   position: fixed;
-  top: 48px;
+  top: 44px;
   left: -250px;
   width: 250px;
   height: 100vh;

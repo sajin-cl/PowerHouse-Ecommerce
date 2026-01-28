@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import '../style/SellerHeader.css';
 
 function SellerHeader() {
@@ -13,6 +13,8 @@ function SellerHeader() {
     setSidebarOpen(!sidebarOpen);
   };
 
+  
+
 
   return (
     <>
@@ -22,7 +24,7 @@ function SellerHeader() {
             <img
               src="/logo-icon.png"
               alt="logo"
-              style={{ height: "32px", width: "32px" }}
+              style={{ height: "28px", width: "28px" }}
             />
             <span className="text-white fw-bold ms-2">POWER <span className="text-warning">HOUSE</span></span>
           </div>
@@ -41,24 +43,24 @@ function SellerHeader() {
       <div className={`seller-sidebar sidebar bg-dark text-white ${sidebarOpen ? 'open' : ''} d-flex flex-column`} >
         <ul className="p-0 flex-grow-1">
           <li>
-            <Link to="/seller" className="text-white">
+            <NavLink to="/seller" className="text-white">
               <i className="fa fa-tachometer me-2"></i> Dashboard
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to="/seller/products" className="text-white">
+            <NavLink to="/seller/products" className="text-white">
               <i className="fa fa-cube me-2"></i> Products
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to="/seller/orders" className="text-white">
+            <NavLink to="/seller/orders" className="text-white">
               <i className="fa fa-shopping-cart me-2"></i> Orders
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link to="/seller/earnings" className="text-white">
+            <NavLink to="/seller/earnings" className="text-white">
               <i className="fa fa-money me-2"></i> Earnings
-            </Link>
+            </NavLink>
           </li>
         </ul>
 
