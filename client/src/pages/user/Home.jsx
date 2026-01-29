@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import BannerCarousel from "../../components/BannerCarousel";
 import Footer from "../../components/Footer";
 import ProductCard from "../../components/ProductCard";
@@ -9,6 +9,8 @@ function HomePage() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState("");
+  const [search, setSearch] = useState("");
+
 
   useEffect(() => {
     axios.get("http://localhost:4000/api/products")
@@ -20,17 +22,28 @@ function HomePage() {
       .catch((err) => console.error("Failed to fetch categories", err));
   }, []);
 
-  const filteredProducts = useMemo(() => {
-    if (!category) return products;
-    return products.filter((prod) => prod.category === category);
-  }, [products, category]);
+
+  const filteredProducts = products.filter(prod =>
+    (!category || prod.category === category) &&
+    (!search || prod.name?.toLowerCase().includes(search.toLowerCase()))
+  );
+
 
   return (
     <div className="page-container">
 
       <BannerCarousel />
-
       <main>
+        <div className="container">
+          <input
+            type="text"
+            className="form-control my-4"
+            placeholder="Search Products.."
+            ref={inputRef}
+            value={search}
+            onChange={(e) => { setSearch(e.target.value) }}
+          />
+        </div>
         <section className="product-section">
           <div className="ms-3 me-3 mb-3 d-flex align-items-center justify-content-between">
             <h4 className="mb-0">All Products</h4>
@@ -62,7 +75,7 @@ function HomePage() {
                   />
                 ))
               ) : (
-                <div className="text-center text-muted p-5">
+                <div className="text-center text-muted p-5 d-flex justify-content-center  w-100">
                   Products not found
                 </div>
               )}
