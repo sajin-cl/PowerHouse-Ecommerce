@@ -14,7 +14,7 @@ function UserHeader() {
 
     axios.get("http://localhost:4000/api/cart", { withCredentials: true })
       .then(res => {
-        const totalItems = res.data.reduce((acc, item) => acc + item.quantity, 0);
+        const totalItems = res.data.length;
         setCartCount(totalItems);
         setRefresh(prev => prev + 1)
       })
