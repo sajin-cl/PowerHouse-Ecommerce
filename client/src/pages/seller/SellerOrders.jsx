@@ -4,7 +4,7 @@ import axios from "axios";
 function SellerOrders() {
   const [orders, setOrders] = useState([]);
 
-  // Fetch seller orders on mount
+ 
   useEffect(() => {
     axios
       .get("http://localhost:4000/api/seller/orders", { withCredentials: true })
@@ -12,7 +12,7 @@ function SellerOrders() {
       .catch((err) => console.error("Failed to fetch orders:", err.response?.data || err));
   }, []);
 
-  // Update item status: 'shipped' or 'delivered'
+
   const updateStatus = (orderId, itemId, newStatus) => {
     axios
       .patch(
@@ -21,7 +21,7 @@ function SellerOrders() {
         { withCredentials: true }
       )
       .then((res) => {
-        // Update state locally after backend update
+        
         setOrders((prev) =>
           prev.map((order) =>
             order._id === orderId

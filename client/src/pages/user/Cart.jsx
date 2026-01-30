@@ -1,7 +1,6 @@
 import '../../style/cart.css'
-import { useEffect } from 'react';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom"
 
 function Cart() {
@@ -133,7 +132,7 @@ function Cart() {
                     className="btn btn-link text-danger p-0"
                     onClick={() => { removeItem(item._id) }}
                   >
-                   <i className="fas fa-trash fs-5"></i>
+                    <i className="fas fa-trash fs-5"></i>
                   </button>
                 </div>
               </div>

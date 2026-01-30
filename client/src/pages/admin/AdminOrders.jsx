@@ -44,30 +44,38 @@ function AdminOrders() {
         const allItemsDelivered = order.items.every(item => item.status === "delivered");
 
         return (
+
           <div key={order._id} className="border p-3 mb-3">
-            <p><b>Order ID:</b> {order._id}</p>
-            <p><b>Total:</b> ₹{order.total}</p>
-            <p><b>Status:</b> {order.status}</p>
+            <>
 
-
-            {order.items.map(item => (
-              <div
-                key={item._id}
-                className="item-row d-flex align-items-center justify-content-between py-1 border-bottom"
-              >
-                <div className="item-info">
-                  <span className="fw-bold">{item.product.name}</span> x {item.quantity}
-                </div>
-                <div className="item-price-status d-flex align-items-center gap-3">
-                  <span>₹{item.price * item.quantity}</span>
-                  <span className={item.status === "shipped" ? "text-success fw-semibold" : "text-muted fw-semibold"}>
-                    {item.status}
-                  </span>
-                </div>
+              <div className="fw-bold mb-2 text-danger">
+                Customer: {order.user?.fullName}
               </div>
-            ))}
+              <p><b>Order ID:</b> {order._id}</p>
+              <p><b>Total:</b> ₹{order.total}</p>
+              <p><b>Status:</b> {order.status}</p>
 
-            {/* Progress */}
+
+              {order.items.map(item => (
+
+                <div
+                  key={item._id}
+                  className="item-row d-flex align-items-center justify-content-between py-1 border-bottom"
+                >
+                  <div className="item-info">
+                    <span className="fw-bold">{item.product.name}</span> x {item.quantity}
+                  </div>
+                  <div className="item-price-status d-flex align-items-center gap-3">
+                    <span>₹{item.price * item.quantity}</span>
+                    <span className={item.status === "shipped" ? "text-success fw-semibold" : "text-muted fw-semibold"}>
+                      {item.status}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </>
+
+
             {order.status !== "delivered" && (
               <>
                 <p className="mt-2">

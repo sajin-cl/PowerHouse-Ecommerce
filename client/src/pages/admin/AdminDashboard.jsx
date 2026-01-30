@@ -69,7 +69,7 @@ function AdminDashboard() {
         <div className="col-6 col-md-4 col-lg-2">
           <div className="card shadow-sm text-center p-3">
             <h6>Total Revenue</h6>
-            <h4>&#8377; {stats.revenue}</h4>
+            <h4 style={{fontFamily:"Intel"}}>&#8377; {stats.revenue}</h4>
             <Link to="/admin/orders" className="btn btn-sm btn-purple mt-2">View</Link>
           </div>
         </div>

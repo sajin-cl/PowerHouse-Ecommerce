@@ -54,15 +54,12 @@ exports.getProducts = async (req, res) => {
   try {
     let filter = {};
 
-    // If seller is logged in, show only their products
     if (req.session?.userData?.role === 'seller') {
-      filter.sellerId = req.session.userData.id;
+      filter.sellerId = req.session?.userData?.id;
     }
 
-    // Fetch products from DB with filter
     const products = await Product.find(filter).sort({ createdAt: 1 });
     if (!products) return res.status(400).json({ error: 'Failed to fetch products' });
-
 
     const visibleProducts = [];
     

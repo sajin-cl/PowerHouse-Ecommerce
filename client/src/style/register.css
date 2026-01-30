@@ -2,7 +2,6 @@
   min-height: 500px;
 }
 
-/* LEFT PANEL */
 .auth-left {
   background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
   display: flex;
@@ -25,14 +24,14 @@
   opacity: 0.85;
 }
 
-/* INPUT STYLE */
+
 .form-control,
 .form-select {
   border-radius: 8px;
   padding: 10px;
 }
 
-/* BUTTON */
+
 .btn-primary {
   border-radius: 8px;
   padding: 10px;

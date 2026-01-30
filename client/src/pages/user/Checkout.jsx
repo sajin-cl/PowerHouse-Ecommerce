@@ -6,7 +6,7 @@ function Checkout() {
       <h3 className="mb-4">Checkout</h3>
 
       <div className="row">
-        {/* Address Form */}
+      
         <div className="col-12 col-lg-8">
           <div className="order-box p-3 mb-4">
             <h5>Delivery Address</h5>
@@ -38,7 +38,7 @@ function Checkout() {
             </div>
           </div>
 
-          {/* Payment Method */}
+        
           <div className="order-box p-3">
             <h5>Payment Method</h5>
 
@@ -58,7 +58,7 @@ function Checkout() {
           </div>
         </div>
 
-        {/* Order Summary */}
+       
         <div className="col-12 col-lg-4">
           <div className="summary p-3">
             <h5>Order Summary</h5>

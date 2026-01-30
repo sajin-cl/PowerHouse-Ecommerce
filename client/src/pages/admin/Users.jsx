@@ -51,16 +51,16 @@ function Users() {
             <div className="card h-100 shadow">
               <div className="card-body d-flex flex-column">
 
-                {/* Show name + email */}
+              
                 <h6 className="card-title">{user.fullName}</h6>
                 <p className="card-text">{user.email}</p>
 
-                {/* Show status */}
+             
                 <p className={`card-text ${!user.isBlocked ? "text-success" : "text-danger"}`}>
                   {user.isBlocked ? "Blocked" : "Active"}
                 </p>
 
-                {/* Buttons */}
+                
                 <div className="mt-auto d-flex justify-content-between">
                   <button
                     className={`btn btn-${!user.isBlocked ? "warning" : "success"} px-3 py-1`}
