@@ -37,7 +37,8 @@ function HomePage() {
         <div className="container">
           <input
             type="text"
-            className="form-control my-4"
+            className="form-control my-5 search-bar px-4"
+            style={{ borderRadius: "50px", boxShadow: "rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset" }}
             placeholder="Search Products.."
             value={search}
             onChange={(e) => { setSearch(e.target.value) }}
