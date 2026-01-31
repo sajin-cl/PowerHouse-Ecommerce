@@ -4,7 +4,7 @@ import axios from "axios";
 function SellerOrders() {
   const [orders, setOrders] = useState([]);
 
- 
+
   useEffect(() => {
     axios
       .get("http://localhost:4000/api/seller/orders", { withCredentials: true })
@@ -21,7 +21,7 @@ function SellerOrders() {
         { withCredentials: true }
       )
       .then((res) => {
-        
+
         setOrders((prev) =>
           prev.map((order) =>
             order._id === orderId
@@ -71,10 +71,16 @@ function SellerOrders() {
                 {item.status === "delivered" && (
                   <span className="text-success">Delivered</span>
                 )}
+                {item.status === "canceled" && (
+                  <span className="text-danger">Canceled</span>
+                  )}
+
               </div>
             </div>
           ))}
+
         </div>
+
       ))}
     </div>
   );

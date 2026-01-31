@@ -53,7 +53,12 @@ function AdminOrders() {
               </div>
               <p><b>Order ID:</b> {order._id}</p>
               <p><b>Total:</b> ₹{order.total}</p>
-              <p><b>Status:</b> {order.status}</p>
+              <p>
+                <b>Status:</b>{" "}
+                <span className={order.status === "cancelled" ? "text-danger fw-bold" : ""}>
+                  {order.status}
+                </span>
+              </p>
 
 
               {order.items.map(item => (
@@ -76,7 +81,7 @@ function AdminOrders() {
             </>
 
 
-            {order.status !== "delivered" && (
+            {order.status !== "delivered" && order.status !== "cancelled" && (
               <>
                 <p className="mt-2">
                   <span className="text-danger">Shipped:</span> {order.items.filter(item => item.status === 'shipped').length} / {order.items.length}
@@ -93,11 +98,18 @@ function AdminOrders() {
                     Mark Shipped
                   </button>
                   <button
-                    className="btn btn-primary px-2 py-0"
+                    className="btn btn-primary px-2 py-0 me-2"
                     onClick={() => updateOrderStatus(order._id, "delivered")}
                     disabled={!allItemsDelivered || order.status === "delivered"}
                   >
                     Mark Delivered
+                  </button>
+                  <button
+                    className="btn btn-danger px-2 py-0"
+                    onClick={() => updateOrderStatus(order._id, "cancelled")}
+                    disabled={order.status === "delivered" || order.status === "cancelled"}
+                  >
+                    Cancel Order
                   </button>
                 </div>
               </>

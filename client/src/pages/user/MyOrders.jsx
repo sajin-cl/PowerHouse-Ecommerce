@@ -30,7 +30,8 @@ function MyOrders() {
                 ? "bg-success"
                 : order.status === "shipped"
                   ? "bg-warning"
-                  : "bg-secondary"
+                  : order.status === 'cancelled'
+                  ? "bg-danger" : "bg-secondary"
                 }`}
             >
               {order.status}

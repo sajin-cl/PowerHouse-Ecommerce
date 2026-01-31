@@ -283,33 +283,49 @@ exports.updateOrderStatus = async (req, res) => {
     const { status } = req.body;
 
     const order = await Order.findById(orderId);
-    if (!order) return res.status(404).json({ error: "Order not found" });
+    if (!order) {
+      return res.status(404).json({ error: "Order not found" });
+    }
 
-    // Only allow shipped/delivered if all items are shipped/delivered
     if (status === "shipped") {
-      const allItemsShipped = order.items.every(item => item.status === "shipped");
+      const allItemsShipped = order.items.every(
+        item => item.status === "shipped"
+      );
       if (!allItemsShipped) {
-        return res.status(400).json({ error: "All items must be shipped by sellers first" });
+        return res.status(400).json({
+          error: "All items must be shipped by sellers first"
+        });
       }
     }
 
     if (status === "delivered") {
-      const allItemsDelivered = order.items.every(item => item.status === "delivered");
+      const allItemsDelivered = order.items.every(
+        item => item.status === "delivered"
+      );
       if (!allItemsDelivered) {
-        return res.status(400).json({ error: "All items must be delivered first" });
+        return res.status(400).json({
+          error: "All items must be delivered first"
+        });
       }
     }
+
+    if (status === "cancelled") {
+      order.items.forEach(item => {
+        item.status = "cancelled";
+      });
+    } 
 
     order.status = status;
     await order.save();
 
     res.json({ message: "Order status updated", order });
-  }
-  catch (err) {
+
+  } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to update status" });
   }
 };
+
 
 
 exports.getAdminDashboard = async (req, res) => {
