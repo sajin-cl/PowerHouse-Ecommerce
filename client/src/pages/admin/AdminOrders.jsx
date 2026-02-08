@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import CustomerDetailsModal from "../../components/CustomerDetailsModal";
 
 function AdminOrders() {
   const [orders, setOrders] = useState([]);
@@ -28,7 +29,6 @@ function AdminOrders() {
       });
   };
 
-  let orderDate, orderTime;
 
   return (
     <div className="container py-4">
@@ -37,7 +37,7 @@ function AdminOrders() {
       {orders.length === 0 && <p>No orders found.</p>}
 
       {orders.map(order => {
-        const allItemsDelivered = order.items.every(item => item.status === "delivered");
+        const allItemsDelivered = order.items.every(item => item.status === "delivered")
 
         return (
           <div key={order._id} className="border p-3 mb-3">
@@ -116,36 +116,16 @@ function AdminOrders() {
               View Customer Details
             </button>
 
-
             {errors.backend && <div className="text-danger mt-2">{errors.backend}</div>}
 
           </div>
         );
       })}
 
+     {/* CustomerDetails Modal for View Customer Details button */}
 
       {selectedOrder && (
-        <div className="modal fade show" style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}>
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Customer Details</h5>
-                <button className="btn-close" onClick={() => setSelectedOrder(null)}></button>
-              </div>
-              <div className="modal-body">
-                <p><b>Name:</b> {selectedOrder.shippingAddress?.name}</p>
-                <p><b>Phone:</b> {selectedOrder.shippingAddress?.phone}</p>
-                <p><b>Address:</b> {selectedOrder.shippingAddress?.address}</p>
-                <p><b>City:</b> {selectedOrder.shippingAddress?.city}</p>
-                <p><b>State:</b> {selectedOrder.shippingAddress?.state}</p>
-                <p><b>Pincode:</b> {selectedOrder.shippingAddress?.pincode}</p>
-              </div>
-              <div className="modal-footer">
-                <button className="btn btn-secondary w-100" onClick={() => setSelectedOrder(null)}>Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <CustomerDetailsModal order={selectedOrder} onCloseBtn={() => setSelectedOrder(null)}/>
       )}
 
     </div>

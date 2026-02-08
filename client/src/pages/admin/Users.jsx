@@ -51,9 +51,9 @@ function Users() {
             <div className="card h-100 shadow">
               <div className="card-body d-flex flex-column">
 
-
-                <h6 className="card-title">{user.fullName}</h6>
-                <p className="card-text">{user.email}</p>
+                <img src="/src/assets/images/avatar.png" alt="avatar" className="rounded-circle w-25 mx-auto d-block mb-4" />
+                <h6 className="card-title fs-7">Name : {user.fullName}</h6>
+                <h6 className="card-title fs-7 ">Email : {user.email}</h6>
 
 
                 <p className={`card-text ${!user.isBlocked ? "text-success" : "text-danger"}`}>
