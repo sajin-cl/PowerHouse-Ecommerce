@@ -63,23 +63,38 @@ function AdminOrders() {
 
 
             {order.items.map(item => (
-              <div key={item._id} className="item-row d-flex align-items-center justify-content-between py-1 border-bottom">
+              <div
+                key={item._id}
+                className="item-row d-flex align-items-center justify-content-between py-1 border-bottom"
+              >
+
                 <div className="item-info">
-                  <span className="fw-bold">{item.product.name}</span> x {item.quantity}
+                  <span className="fw-bold">{item?.product?.name}</span> x {item.quantity}
                 </div>
+
                 <div className="item-price-status d-flex align-items-center gap-3">
-                  <span>₹{item.price * item.quantity}</span>
-                  <span className={
-                    item.status === "shipped"
-                      ? "text-warning fw-semibold"
-                      : item.status === "delivered"
-                        ? "text-success fw-semibold"
-                        : "text-muted fw-semibold"
-                  }>
+                  <span className="text-muted me-5">{item?.seller?.shopName}</span>
+
+                  <span className="fw-semibold ">
+                    ₹{item.price * item.quantity}
+                  </span>
+
+                  <span
+                    className={
+                      item.status === "shipped"
+                        ? "text-warning fw-semibold"
+                        : item.status === "delivered"
+                          ? "text-success fw-semibold"
+                          : item.status === "cancelled"
+                            ? "text-danger fw-semibold"
+                            : "text-muted fw-semibold"
+                    }
+                  >
                     {item.status}
                   </span>
                 </div>
               </div>
+
             ))}
 
 
@@ -122,10 +137,10 @@ function AdminOrders() {
         );
       })}
 
-     {/* CustomerDetails Modal for View Customer Details button */}
+      {/* CustomerDetails Modal for View Customer Details button */}
 
       {selectedOrder && (
-        <CustomerDetailsModal order={selectedOrder} onCloseBtn={() => setSelectedOrder(null)}/>
+        <CustomerDetailsModal order={selectedOrder} onCloseBtn={() => setSelectedOrder(null)} />
       )}
 
     </div>
