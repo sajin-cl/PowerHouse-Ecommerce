@@ -4,8 +4,13 @@ import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import logo from '/logo.png'
 import axios from "axios";
+import { motion } from 'framer-motion'
+import {logoVariants} from '../animations/globalVarients.js'
+
+
 
 function UserHeader() {
+  
   const { loggedIn, logout } = useAuth();
   const [cartCount, setCartCount] = useState(0);
   const [refresh, setRefresh] = useState(0);
@@ -25,7 +30,13 @@ function UserHeader() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light sticky-top">
       <div className="container-fluid">
-        <img src={logo} alt="logo" style={{ height: "32px", width: "32px" }} className="me-2" />
+        <motion.img
+          src={logo} alt="logo" 
+          className="me-2"
+          variants={logoVariants}
+          initial="hidden" animate="visible" drag dragConstraints={{ left: 0, top: 0, bottom: 0, right: 0 }}
+
+        />
         <NavLink className="navbar-brand text-white fw-bold fs-6">
           <small>
             POWER <span className="text-warning">HOUSE</span>

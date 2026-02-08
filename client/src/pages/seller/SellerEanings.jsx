@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from 'axios';
-import { useState } from "react";
+import { motion } from "framer-motion";
+import { cardContainer, droppingCard } from '../../animations/sellerVarients'
 
 function SellerEarnings() {
 
-  
+
   const webTitle = document.title = 'Seller Earnings | Power House Ecommerce';
 
   const [earnings, setEarnings] = useState({
@@ -27,32 +28,46 @@ function SellerEarnings() {
 
       <h5 className="border-bottom mb-4 pb-2">My Earnings</h5>
 
-      <div className="row my-3">
-        <div className="col-md-4 mb-3" >
+      <motion.div
+        className="row my-3"
+        variants={cardContainer} initial="hidden" animate="visible"
+      >
+        <motion.div
+          className="col-md-4 mb-3"
+          variants={droppingCard} drag
+        >
           <div className="card text-center shadow-sm " >
             <div className="card-body">
               <h6 className="card-title">Total Earnings</h6>
-              <p className="card-text display-6" style={{fontFamily:"Intel"}}>₹{earnings.totalEarnings}</p>
+              <p className="card-text display-6" style={{ fontFamily: "Intel" }}>₹{earnings.totalEarnings}</p>
             </div>
           </div>
-        </div>
-        <div className="col-md-4 mb-3">
+        </motion.div>
+
+        <motion.div
+          className="col-md-4 mb-3"
+          variants={droppingCard} drag
+        >
           <div className="card text-center shadow-sm">
             <div className="card-body">
               <h6 className="card-title">Pending Payout</h6>
-              <p className="card-text display-6" style={{fontFamily:"Intel"}}>₹{earnings.pendingPayout}</p>
+              <p className="card-text display-6" style={{ fontFamily: "Intel" }}>₹{earnings.pendingPayout}</p>
             </div>
           </div>
-        </div>
-        <div className="col-md-4 mb-3">
+        </motion.div>
+
+        <motion.div
+          className="col-md-4 mb-3"
+          variants={droppingCard} drag
+        >
           <div className="card text-center shadow-sm">
             <div className="card-body">
               <h6 className="card-title">Completed Payout</h6>
-              <p className="card-text display-6" style={{fontFamily:"Intel"}}>₹{earnings.completedPayout}</p>
+              <p className="card-text display-6" style={{ fontFamily: "Intel" }}>₹{earnings.completedPayout}</p>
             </div>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
     </div>
   );

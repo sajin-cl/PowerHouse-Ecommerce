@@ -1,5 +1,6 @@
 .product-section {
   margin: 60px 20px;
+  min-height: 400px;
 }
 
 .product-card {

@@ -3,7 +3,7 @@
 }
 
 .seller-content {
-  padding: 15px;
+ 
   background-color: #f1f1f1;
   min-height: 100vh;
 }
@@ -31,7 +31,7 @@
   display: block;
   padding: 10px;
   border-radius: 4px;
-  margin-bottom: 5px;
+  margin: 5px 0px;
 }
 
 .seller-sidebar.open {
@@ -61,7 +61,7 @@
 
 .sidebar-link.active {
   background-color: var(--seller-nav-color);
-  color: white!important;
+  color: white !important;
   font-weight: bold;
   border-radius: 0px 170px 170px 0px;
 }
@@ -81,5 +81,6 @@
   .seller-content {
     margin-left: 250px;
     padding: 20px;
+    
   }
 }

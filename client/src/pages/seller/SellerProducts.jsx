@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { motion, scale } from 'framer-motion';
+import { droppingCard, cardContainer } from '../../animations/sellerVarients'
 
 function SellerProducts() {
 
@@ -32,14 +34,21 @@ function SellerProducts() {
 
   return (
     <div className="container mt-4">
-      <div className="row">
+      <motion.div
+        className="row"
+        variants={cardContainer} initial="hidden" animate="visible"
+      >
         {products.map((product, index) => (
           <div key={product._id + '-' + index} className="col-6 col-md-4 col-lg-3 mb-4 product-card">
-            <div className="card h-100 shadow">
+            <motion.div
+              className="card h-100 shadow"
+              variants={droppingCard}
+            >
               <img
                 src={`http://localhost:4000${product.image_url}`}
                 className="card-img-top"
                 alt={product.name}
+              
               />
               <div className="card-body d-flex flex-column">
                 <h6
@@ -47,11 +56,11 @@ function SellerProducts() {
                   title={product.name}
                 >
                   {product.name.length > 20 ? product.name.slice(0, 19) + ".." : product.name}
-                  
+
                 </h6>
                 <p
                   className="card-text text-muted"
-                 
+
                 >
                   {product.description.length > 20 ? product.description.slice(0, 19) + ".." : product.description}
                 </p>
@@ -83,10 +92,10 @@ function SellerProducts() {
                   </button>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         ))}
-      </div>
+      </motion.div>
 
       {products.length <= 0 && <div className="d-flex align-items-center h-50 justify-content-center text-muted"  > No Products found</div>}
 

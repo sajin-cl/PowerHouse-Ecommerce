@@ -4,14 +4,6 @@
   box-sizing: border-box;
 }
 
-.logo {
-  background: white;
-  padding: 4px;
-  border-radius: 6px;
-  border: 2px solid white;
-
-}
-
 html {
   scroll-behavior: smooth;
 }
@@ -120,4 +112,8 @@ body::-webkit-scrollbar {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.cursor-grab {
+  cursor: grab;
 }

@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
-import BannerCarousel from "../../components/BannerCarousel";
-import Footer from "../../components/Footer";
-import ProductCard from "../../components/ProductCard";
-import axios from "axios";
 import "../../style/ProductCard.css";
+import axios from "axios";
+import { useEffect, useState, Suspense, lazy } from "react";
+import { motion } from 'framer-motion'
+const BannerCarousel = lazy(() => import("../../components/BannerCarousel"));
+const Footer = lazy(() => import("../../components/Footer"));
+const ProductCard = lazy(() => import("../../components/ProductCard"));
+
 
 function HomePage() {
 
-  
   const webTitle = document.title = 'Home | Power House Ecommerce';
 
   const [products, setProducts] = useState([]);
@@ -34,9 +35,11 @@ function HomePage() {
 
 
   return (
-    <div className="page-container">
 
-      <BannerCarousel />
+    <div className="page-container">
+      <Suspense fallback={<div>Loading Banner...</div>}>
+        <BannerCarousel />
+      </Suspense>
       <main>
         <div className="container">
           <input
@@ -70,25 +73,37 @@ function HomePage() {
           </div>
 
           <div className="container-fluid">
-            <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4">
-              {filteredProducts.length > 0 ? (
-                filteredProducts.map((product, index) => (
-                  <ProductCard
-                    key={product._id + "-" + index}
-                    product={product}
-                  />
-                ))
-              ) : (
-                <div className="text-center text-muted p-5 d-flex justify-content-center  w-100">
-                  Products not found
-                </div>
-              )}
-            </div>
+            <Suspense fallback={<div className="d-flex justify-content-center align-content-center pt-5">
+              <img src="/loading-spinner.gif" width={"50px"} /></div>}>
+
+              <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4">
+                {filteredProducts.length > 0 ? (
+                  filteredProducts.map((product, index) => (
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{duration:0.5, delay: index * 0.1 }} 
+                      key={product._id}
+                    >
+                      <ProductCard product={product} />
+                    </motion.div>
+
+                  ))
+                ) : (
+                  <div className="text-center text-muted p-5 d-flex justify-content-center  w-100">
+                    Products not found
+                  </div>
+                )}
+              </div>
+            </Suspense>
           </div>
         </section>
       </main>
 
-      <Footer />
+      <Suspense fallback={<div>Loading Footer...</div>}>
+        <Footer />
+      </Suspense>
 
     </div>
   );

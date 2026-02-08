@@ -1,10 +1,11 @@
 import axios from "axios";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { cardContainer, droppingCard } from "../../animations/adminVarients.js";
 
 function Sellers() {
 
-  
+
   const webTitle = document.title = 'Admin | Seller List | Power House Ecommerce';
 
   const [sellers, setSellers] = useState([]);
@@ -45,8 +46,15 @@ function Sellers() {
 
       <div className="row">
         {sellers.map((seller, index) => (
-          <div key={seller._id + "-" + index} className="col-12 col-md-6 col-lg-4 mb-4">
-            <div className="card h-100 shadow-sm border-0">
+          <motion.div
+            key={seller._id + "-" + index}
+            className="col-12 col-md-6 col-lg-4 mb-4"
+            variants={cardContainer} initial="hidden" animate="visible"
+          >
+            <motion.div
+              className="card h-100 shadow-sm border-0"
+              variants={droppingCard}
+            >
               <div className="card-body d-flex flex-column">
 
                 <div className="d-flex justify-content-between align-items-start mb-2">
@@ -61,7 +69,7 @@ function Sellers() {
                   </span>
                 </div>
 
-            
+
                 <p className="my-2 text-muted fs-7">
                   <b>Seller: </b> {seller.fullName}
                 </p>
@@ -72,7 +80,7 @@ function Sellers() {
                   <b>Location: </b> {seller.shopAddress}
                 </p>
 
-              
+
                 <div className="mt-auto d-flex gap-2">
                   <button
                     className={`btn btn-${seller.isBlocked ? "success" : "warning"} btn-sm w-100`}
@@ -90,8 +98,8 @@ function Sellers() {
                 </div>
 
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         ))}
 
         {sellers.length === 0 && (

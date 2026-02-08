@@ -10,9 +10,9 @@
 
 .admin-sidebar {
   position: fixed;
-  top: 57px;
+  top: 48px;
   left: -250px;
-  width: 230px;
+  width: 250px;
   height: 100vh;
   transition: 0.3s;
   z-index: 1000;
@@ -28,7 +28,7 @@
   display: block;
   padding: 10px;
   border-radius: 4px;
-  margin-bottom: 5px;
+  margin: 5px 0px;
 }
 
 .admin-sidebar li a:hover,

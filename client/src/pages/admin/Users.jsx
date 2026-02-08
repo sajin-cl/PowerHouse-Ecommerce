@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { motion } from 'framer-motion';
+import { cardContainer, droppingCard } from "../../animations/adminVarients";
 
 function Users() {
 
-  
+
   const webTitle = document.title = 'Admin | User List | Power House Ecommerce';
 
   const [refresh, setRefresh] = useState(0);
@@ -48,11 +50,17 @@ function Users() {
     <div className="container mt-4">
       <h5 className="border-bottom mb-4 pb-2">Manage Users</h5>
 
-      <div className="row">
+      <motion.div
+        className="row"
+        variants={cardContainer} initial="hidden" animate="visible"
+      >
         {users.map((user) => (
           <div key={user._id} className="col-12 col-md-6 col-lg-4 mb-4">
-            
-            <div className="card h-100 shadow-sm border-0">
+
+            <motion.div
+              className="card h-100 shadow-sm border-0"
+              variants={droppingCard}  
+            >
               <div className="card-body d-flex flex-column text-center">
 
                 <span
@@ -73,12 +81,12 @@ function Users() {
                   {user.fullName}
                 </h6>
 
-               
+
                 <p className="text-muted fs-7 mb-3">
                   {user.email}
                 </p>
 
-                
+
                 <div className="mt-auto d-flex gap-2">
                   <button
                     className={`btn btn-sm w-100 ${user.isBlocked ? "btn-success" : "btn-warning"
@@ -97,7 +105,7 @@ function Users() {
                 </div>
 
               </div>
-            </div>
+            </motion.div>
 
           </div>
         ))}
@@ -105,7 +113,7 @@ function Users() {
         {users.length === 0 && (
           <p className="text-center w-100">No users found.</p>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 }

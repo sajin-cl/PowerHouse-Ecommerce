@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { NavLink } from 'react-router-dom';
 import logo from '/logo.png';
+import {motion} from 'framer-motion'
+import { logoVariants } from '../animations/globalVarients.js';
 import '../style/SellerHeader.css';
 
 function SellerHeader() {
@@ -18,10 +20,12 @@ function SellerHeader() {
       <nav className="navbar navbar-light sticky-top seller-navbar">
         <div className="container-fluid">
           <div className="d-flex align-items-center">
-            <img
-              src={logo}
-              alt="logo"
-              style={{ height: "32px", width: "32px" }}
+            <motion.img
+              src={logo} alt="logo"
+              className="me-2"
+              variants={logoVariants}
+              initial="hidden" animate="visible" drag dragConstraints={{ left: 0, top: 0, bottom: 0, right: 0 }}
+
             />
             <span className="text-white fw-bold ms-2">
               POWER <span className="text-warning">HOUSE</span>
@@ -38,7 +42,7 @@ function SellerHeader() {
         className={`seller-sidebar sidebar bg-dark text-white ${sidebarOpen ? "open" : ""
           } d-flex flex-column`}
       >
-        <ul className="p-1 flex-grow-1">
+        <ul className="py-1 px-0 flex-grow-1">
           <li>
             <NavLink to="/seller/dashboard" className={linkClass} >
               <i className="fa fa-tachometer me-2 "></i> Dashboard

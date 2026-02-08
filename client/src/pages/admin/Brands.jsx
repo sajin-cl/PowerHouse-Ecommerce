@@ -1,10 +1,10 @@
 import axios from "axios";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { motion } from 'framer-motion';
+import { cardContainer, droppingCard } from "../../animations/adminVarients.js";
 
 function Brands() {
-
 
   const webTitle = document.title = 'Brand | Power House Ecommerce';
 
@@ -37,15 +37,21 @@ function Brands() {
       <h5 className="border-bottom mb-4 pb-2">Manage Brands</h5>
 
       {brands.length > 0 ? (
-        <div className="row">
+        <motion.div
+          className="row"
+          variants={cardContainer} initial="hidden" animate="visible"
+        >
           {brands.map((brand) => (
             <div key={brand._id} className="col-6 col-md-4 col-lg-3 mb-4">
-              <div className="card h-100 shadow">
+              <motion.div
+                className="card h-100 shadow"
+                variants={droppingCard}
+              >
                 <div className="card-body d-flex flex-column">
                   <h6 className="card-title">{brand.name}</h6>
                   <p className="card-text text-muted">{brand.description}</p>
                   <div className="mt-auto d-flex justify-content-between">
-                    
+
                     <Link
                       to={`/admin/update-brand/${brand._id}`}
                       className="btn  btn-sm"
@@ -61,10 +67,10 @@ function Brands() {
                     </button>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           ))}
-        </div>
+        </motion.div>
 
       ) : (
         <div className="d-flex align-items-center h-50 justify-content-center text-muted p-5"  > No Brands found</div>

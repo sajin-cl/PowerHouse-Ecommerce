@@ -1,11 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
-import { useState } from "react";
+import { motion } from 'framer-motion';
+import { cardContainer, droppingCard } from "../../animations/adminVarients";
+
 
 function Categories() {
 
-  
+
   const webTitle = document.title = 'Category | Power House Ecommerce';
 
   const [categories, setCategories] = useState([]);
@@ -43,10 +45,16 @@ function Categories() {
       <h5 className="border-bottom mb-4 pb-2">Manage Categories</h5>
 
       {categories.length > 0 ? (
-        <div className="row">
+        <motion.div
+          className="row"
+          variants={cardContainer} initial="hidden" animate="visible"
+        >
           {categories.map((category) => (
             <div key={category._id} className="col-6 col-md-4 col-lg-3 mb-4">
-              <div className="card h-100 shadow">
+              <motion.div 
+              className="card h-100 shadow"
+              variants={droppingCard} drag
+              >
                 <div className="card-body d-flex flex-column">
                   <h6 className="card-title">{category.name}</h6>
                   <p className="card-text text-muted">{category.description}</p>
@@ -65,10 +73,10 @@ function Categories() {
                     </button>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           ))}
-        </div>
+        </motion.div>
       ) : (
         <div className="d-flex align-items-center h-50 justify-content-center tesxt-muted"  > NO categories found</div>
       )}
