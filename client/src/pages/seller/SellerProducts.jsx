@@ -6,7 +6,7 @@ function SellerProducts() {
 
 
   const webTitle = document.title = 'Seller | Product List | Power House Ecommerce';
-  
+
   const [products, setProducts] = useState([]);
 
   const [refresh, setRefresh] = useState(0);
@@ -43,14 +43,17 @@ function SellerProducts() {
               />
               <div className="card-body d-flex flex-column">
                 <h6
-                  className="card-title text-purple fw-semibold"
+                  className="card-title text-purple fw-semibold cursor-pointer"
+                  title={product.name}
                 >
-                  {product.name}
+                  {product.name.length > 20 ? product.name.slice(0, 19) + ".." : product.name}
+                  
                 </h6>
                 <p
                   className="card-text text-muted"
+                 
                 >
-                  {product.description.length > 27 ? product.description.slice(0, 26) + ".." : product.description}
+                  {product.description.length > 20 ? product.description.slice(0, 19) + ".." : product.description}
                 </p>
                 <p
                   className={`card-text ${product.stock === 0 ? "text-danger" : "text-success"}`}
@@ -59,21 +62,24 @@ function SellerProducts() {
                 </p>
                 <p
                   className="card-text fw-bold fs-6"
-                  style={{fontFamily: "Inter"}}
+                  style={{ fontFamily: "Inter" }}
                 >
                   Price: ₹{product.price}
                 </p>
                 <div className="mt-auto d-flex justify-content-between">
                   <Link
                     to={`/seller/update-product/${product._id}`}
-                    className="btn btn-purple px-3 py-1"
+                    className="btn btn-sm"
                   >
-                    <small>Edit</small>
+                    <i className="fas fa-edit fs-5 "></i>
                   </Link>
+
                   <button
-                    className="btn btn-danger px-4 py-0"
+                    className="btn btn-sm"
                     onClick={() => { handleDelete(product._id) }}
-                  ><small>Delete</small>
+                  >
+                    <i className="fas fa-trash fs-5 text-danger"></i>
+
                   </button>
                 </div>
               </div>

@@ -33,7 +33,7 @@ function AdminDashboard() {
           <div className="card shadow-sm text-center p-3">
             <h6>Total Users</h6>
             <h4>{stats.totalUsers}</h4>
-            <Link to="/admin/users" className="btn btn-sm btn-purple mt-2">View</Link>
+            <Link to="/admin/users" className="btn btn-sm btn-purple mt-2" title="view Users">View</Link>
           </div>
         </div>
 
@@ -41,7 +41,7 @@ function AdminDashboard() {
           <div className="card shadow-sm text-center p-3">
             <h6>Total Sellers</h6>
             <h4>{stats.totalSellers}</h4>
-            <Link to="/admin/sellers" className="btn btn-sm btn-purple mt-2">View</Link>
+            <Link to="/admin/sellers" className="btn btn-sm btn-purple mt-2" title="view Sellers">View</Link>
           </div>
         </div>
 
@@ -49,7 +49,7 @@ function AdminDashboard() {
           <div className="card shadow-sm text-center p-3">
             <h6>Categories</h6>
             <h4>{stats.totalCategories}</h4>
-            <Link to="/admin/categories" className="btn btn-sm btn-purple mt-2">View</Link>
+            <Link to="/admin/categories" className="btn btn-sm btn-purple mt-2" title="view Categories">View</Link>
           </div>
         </div>
 
@@ -57,7 +57,7 @@ function AdminDashboard() {
           <div className="card shadow-sm text-center p-3">
             <h6>Brands</h6>
             <h4>{stats.totalBrands}</h4>
-            <Link to="/admin/brands" className="btn btn-sm btn-purple mt-2">View</Link>
+            <Link to="/admin/brands" className="btn btn-sm btn-purple mt-2" title="view Brands">View</Link>
           </div>
         </div>
 
@@ -65,7 +65,7 @@ function AdminDashboard() {
           <div className="card shadow-sm text-center p-3">
             <h6>Total Orders</h6>
             <h4>{stats.totalOrders}</h4>
-            <Link to="/admin/orders" className="btn btn-sm btn-purple mt-2">View</Link>
+            <Link to="/admin/orders" className="btn btn-sm btn-purple mt-2" title="view Orders">View</Link>
           </div>
         </div>
 
@@ -73,7 +73,7 @@ function AdminDashboard() {
           <div className="card shadow-sm text-center p-3">
             <h6>Total Revenue</h6>
             <h4 className="fw-bold" style={{fontFamily:"Intel"}}>&#8377; {stats.revenue}</h4>
-            <Link to="/admin/orders" className="btn btn-sm btn-purple mt-2">View</Link>
+            <Link to="/admin" className="btn btn-sm btn-purple mt-2" ><i className="fa-solid fa-money-bill-wave"></i></Link>
           </div>
         </div>
       </div>

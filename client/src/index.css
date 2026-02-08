@@ -74,7 +74,7 @@ body::-webkit-scrollbar {
 }
 
 
-/*custom css--------*/
+/*custom css & Bootstrap class--------*/
 :root {
   --violet-color: #4c00b0;
   --seller-nav-color: #660066;
@@ -116,4 +116,8 @@ body::-webkit-scrollbar {
 .bullet-list li {
   list-style-type: disc;
   padding-left: 1.5rem;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }

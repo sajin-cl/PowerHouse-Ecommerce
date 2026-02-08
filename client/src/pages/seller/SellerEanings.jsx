@@ -28,8 +28,8 @@ function SellerEarnings() {
       <h5 className="border-bottom mb-4 pb-2">My Earnings</h5>
 
       <div className="row my-3">
-        <div className="col-md-4 mb-3">
-          <div className="card text-center shadow-sm">
+        <div className="col-md-4 mb-3" >
+          <div className="card text-center shadow-sm " >
             <div className="card-body">
               <h6 className="card-title">Total Earnings</h6>
               <p className="card-text display-6" style={{fontFamily:"Intel"}}>₹{earnings.totalEarnings}</p>

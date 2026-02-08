@@ -24,7 +24,7 @@ function SellerOrders() {
         { status: newStatus },
         { withCredentials: true }
       )
-      .then((res) => {
+      .then(() => {
 
         setOrders((prev) =>
           prev.map((order) =>
@@ -50,7 +50,7 @@ function SellerOrders() {
       {orders.length === 0 && <p>No orders yet.</p>}
 
       {orders.map((order) => (
-        <div key={order._id} className="border p-3 mb-3">
+        <div key={order._id} className="border py-5 px-4 mb-3 bg-light " style={{borderRadius:"30px"}}>
           <p><b>Order ID:</b> #{order._id}</p>
 
           <p>

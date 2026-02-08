@@ -45,12 +45,14 @@ function Brands() {
                   <h6 className="card-title">{brand.name}</h6>
                   <p className="card-text text-muted">{brand.description}</p>
                   <div className="mt-auto d-flex justify-content-between">
+                    
                     <Link
                       to={`/admin/update-brand/${brand._id}`}
                       className="btn  btn-sm"
                     >
                       <i className="fas fa-edit fs-6 "></i>
                     </Link>
+
                     <button
                       className="btn  btn-sm "
                       onClick={() => { deleteBrand(brand._id) }}
