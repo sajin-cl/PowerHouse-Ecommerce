@@ -4,6 +4,9 @@ import axios from 'axios'
 
 function LoginForm() {
 
+  
+  const webTitle = document.title = 'Login | Power House Ecommerce';
+
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);

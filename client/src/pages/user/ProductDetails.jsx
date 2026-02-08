@@ -4,6 +4,10 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 function ProductDetails() {
+
+
+  const webTitle = document.title = 'Product Details | Power House Ecommerce';
+
   const { id } = useParams();
 
   const [product, setProduct] = useState(null);
@@ -63,7 +67,7 @@ function ProductDetails() {
 
 
   const descriptionItems = product?.description
-    ? product.description.split('.').filter(item => item.length) 
+    ? product.description.split('.').filter(item => item.length)
     : [];
 
   if (!product) return <div>Loading...</div>;

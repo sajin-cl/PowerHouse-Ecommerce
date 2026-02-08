@@ -4,6 +4,8 @@ import axios from "axios";
 
 function AddBrand() {
 
+  const webTitle = document.title = 'Add Brand | Power House Ecommerce';
+
   const navigate = useNavigate();
 
   const [errors, setErrors] = useState({});

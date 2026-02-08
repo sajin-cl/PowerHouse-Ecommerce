@@ -4,6 +4,9 @@ import { useState } from "react";
 
 function SellerEarnings() {
 
+  
+  const webTitle = document.title = 'Seller Earnings | Power House Ecommerce';
+
   const [earnings, setEarnings] = useState({
     totalEarnings: 0,
     pendingPayout: 0,

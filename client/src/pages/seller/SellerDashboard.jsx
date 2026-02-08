@@ -5,6 +5,9 @@ import {Link} from "react-router-dom"
 
 function SellerDashboard() {
 
+  
+  const webTitle = document.title = 'Seller Dashboard | Power House Ecommerce';
+
   const [stats, setStats] = useState({
     totalProducts: 0,
     totalOrders: 0,

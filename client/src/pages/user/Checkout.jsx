@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'
 
 function Checkout() {
 
+  const webTitle = document.title = 'Checkout Page | Power House Ecommerce';
+
   const navigate = useNavigate();
 
   const [error, setError] = useState('');

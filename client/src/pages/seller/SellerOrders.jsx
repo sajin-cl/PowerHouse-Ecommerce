@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function SellerOrders() {
+
+
+  const webTitle = document.title = 'Seller Orders | Power House Ecommerce';
+
   const [orders, setOrders] = useState([]);
 
 
@@ -40,6 +44,7 @@ function SellerOrders() {
 
   return (
     <div className="container py-4">
+      
       <h5 className="border-bottom mb-4 pb-2">Manage Orders</h5>
 
       {orders.length === 0 && <p>No orders yet.</p>}

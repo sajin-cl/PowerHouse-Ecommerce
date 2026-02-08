@@ -3,6 +3,9 @@ import axios from "axios";
 
 function Users() {
 
+  
+  const webTitle = document.title = 'Admin | User List | Power House Ecommerce';
+
   const [refresh, setRefresh] = useState(0);
 
   const [users, setUsers] = useState([]);

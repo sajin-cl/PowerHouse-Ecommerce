@@ -6,6 +6,10 @@ import axios from "axios";
 import "../../style/ProductCard.css";
 
 function HomePage() {
+
+  
+  const webTitle = document.title = 'Home | Power House Ecommerce';
+
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState("");

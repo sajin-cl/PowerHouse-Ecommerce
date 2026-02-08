@@ -4,6 +4,9 @@ import { useState } from "react";
 
 function Sellers() {
 
+  
+  const webTitle = document.title = 'Admin | Seller List | Power House Ecommerce';
+
   const [sellers, setSellers] = useState([]);
 
   const [refresh, setRefresh] = useState(0);

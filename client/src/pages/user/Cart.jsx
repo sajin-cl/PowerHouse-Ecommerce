@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom"
 
 function Cart() {
 
+  
+  const webTitle = document.title = 'My Cart | Power House Ecommerce';
+
   const navigate = useNavigate();
 
   const [cartItems, setCartItems] = useState([]);

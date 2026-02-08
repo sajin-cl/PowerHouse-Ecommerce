@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 function Brands() {
 
 
+  const webTitle = document.title = 'Brand | Power House Ecommerce';
+
   const [brands, setBrands] = useState([]);
 
   const [refresh, setRefresh] = useState(0);

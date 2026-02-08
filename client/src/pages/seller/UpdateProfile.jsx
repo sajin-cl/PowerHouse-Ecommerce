@@ -3,19 +3,27 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 function UpdateSellerProfile() {
-  const { id } = useParams(); // seller ID from route
+
+  
+  const webTitle = document.title = 'Seller Profile | Power House Ecommerce';
+
+  const { id } = useParams(); 
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     shopName: "",
     shopAddress: ""
   });
+
   const [loading, setLoading] = useState(true);
+
   const [errors, setErrors] = useState({});
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    // fetch seller profile
+  
     axios
       .get("http://localhost:4000/api/seller/profile", { withCredentials: true })
       .then((res) => {
@@ -30,10 +38,12 @@ function UpdateSellerProfile() {
       .finally(() => setLoading(false));
   }, [id]);
 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -61,6 +71,7 @@ function UpdateSellerProfile() {
   if (loading) return <p>Loading profile...</p>;
 
   return (
+
     <div className="container mt-5">
       <h2 className="mb-4">Update Profile</h2>
 

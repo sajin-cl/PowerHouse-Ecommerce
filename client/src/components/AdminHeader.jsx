@@ -1,9 +1,11 @@
 import { useAuth } from '../hooks/useAuth';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import logo from '/logo.png';
 import '../style/AdminHeader.css';
 
 function AdminHeader() {
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { logout } = useAuth();
 
@@ -17,7 +19,7 @@ function AdminHeader() {
         <div className="container-fluid">
           <div className="d-flex align-items-center">
             <img
-              src="/logo-icon.png"
+              src={logo}
               alt="logo"
               style={{ height: "25px", width: "25px" }}
             />

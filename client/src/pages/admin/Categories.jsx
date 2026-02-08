@@ -5,6 +5,9 @@ import { useState } from "react";
 
 function Categories() {
 
+  
+  const webTitle = document.title = 'Category | Power House Ecommerce';
+
   const [categories, setCategories] = useState([]);
 
   const [refresh, setRefresh] = useState(0);

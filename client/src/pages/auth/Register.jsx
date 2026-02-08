@@ -4,6 +4,10 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from 'axios';
 
 function RegisterForm() {
+  
+  
+  const webTitle = document.title = 'Register | Power House Ecommerce';
+
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);

@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom'
 
 function SellerProfile() {
 
+  
+  const webTitle = document.title = 'Seller Profile | Power House Ecommerce';
+
   const [seller, setSeller] = useState(null);
   const navigate = useNavigate();
 

@@ -4,6 +4,9 @@ import axios from 'axios';
 
 function AdminDashboard() {
 
+  
+  const webTitle = document.title = 'Admin Dashboard | Power House Ecommerce';
+
   const [stats, setStats] = useState({
     totalUsers: 0,
     totalSellers: 0,

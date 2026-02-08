@@ -4,6 +4,9 @@ import axios from "axios";
 
 function MyOrders() {
 
+  
+  const webTitle = document.title = 'My Orders | Power House Ecommerce';
+
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {

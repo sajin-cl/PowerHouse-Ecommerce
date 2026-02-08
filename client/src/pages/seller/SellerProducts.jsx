@@ -4,6 +4,9 @@ import axios from "axios";
 
 function SellerProducts() {
 
+
+  const webTitle = document.title = 'Seller | Product List | Power House Ecommerce';
+  
   const [products, setProducts] = useState([]);
 
   const [refresh, setRefresh] = useState(0);

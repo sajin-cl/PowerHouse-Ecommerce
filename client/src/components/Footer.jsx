@@ -1,5 +1,5 @@
 import '../style/footer.css'
-import logo from '/logo.png'
+import footerLogo from '/footer_logo.png'
 import appStore from '../assets/images/logos/App-Store-icon.png'
 import playStore from '../assets/images/logos/playstore-icon.png'
 import { Link } from 'react-router-dom'
@@ -18,7 +18,7 @@ function Footer() {
       <div className="footer-body">
 
         <div className="footer-logo">
-          <img src={logo} alt="PowerHouse Logo" />
+          <img src={footerLogo} alt="PowerHouse Logo" />
         </div>
 
         <ul className="footer-links">

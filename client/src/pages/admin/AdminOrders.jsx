@@ -3,6 +3,10 @@ import axios from "axios";
 import CustomerDetailsModal from "../../components/CustomerDetailsModal";
 
 function AdminOrders() {
+ 
+  
+  const webTitle = document.title = 'All Orders | Power House Ecommerce';
+
   const [orders, setOrders] = useState([]);
   const [refresh, setRefresh] = useState(0);
   const [errors, setErrors] = useState({});

@@ -5,6 +5,9 @@ import { useNavigate, useParams } from "react-router-dom";
 
 function UpdateProduct() {
 
+  
+  const webTitle = document.title = 'Seller | Update Products | Power House Ecommerce';
+
   const navigate = useNavigate();
 
   const { id } = useParams();

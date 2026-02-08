@@ -33,11 +33,7 @@ function BannerCarousel() {
           <div className="carousel-item active">
             <img src="src/assets/images/banner/banner1.webp" className="d-block w-100" alt="Banner 1"
               style={bannerStyle} />
-            <div className="carousel-caption d-none d-md-block" style={captionStyle}>
-              <h1 style={companyNameStyle}>Power House</h1>
-              <h5>Fresh Stuff at Fair Prices</h5>
-              <p>We source daily, keep prices honest, and deliver your groceries before they lose freshness. Simple as that.</p>
-            </div>
+            
           </div>
 
           <div className="carousel-item">
