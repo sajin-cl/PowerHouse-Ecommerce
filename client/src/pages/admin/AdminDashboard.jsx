@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { motion } from 'framer-motion';
-import { cardContainer, droppingCard } from '../../animations/adminVarients'
+import { cardContainer, droppingCard } from '../../animations/globalVariants'
 
 function AdminDashboard() {
 
 
-  const webTitle = document.title = 'Admin Dashboard | Power House Ecommerce';
+  document.title = ('Admin Dashboard | Power House Ecommerce');
 
   const [stats, setStats] = useState({
     totalUsers: 0,

@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import { motion } from "framer-motion";
-import { cardContainer, droppingCard } from '../../animations/sellerVarients'
+import { cardContainer, droppingCard } from '../../animations/globalVariants'
 
 function SellerEarnings() {
 
-
-  const webTitle = document.title = 'Seller Earnings | Power House Ecommerce';
+  document.title = ('Seller Earnings | Power House Ecommerce');
 
   const [earnings, setEarnings] = useState({
     totalEarnings: 0,

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import logo from '/logo.png';
 import { motion } from 'framer-motion';
-import { logoVariants } from '../animations/globalVarients.js';
+import { logoVariants } from '../animations/globalVariants';
 import '../style/AdminHeader.css';
 
 function AdminHeader() {

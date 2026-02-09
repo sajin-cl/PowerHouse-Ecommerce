@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from 'framer-motion';
-import { cardContainer, cardFromLeft, cardFromRight } from '../../animations/sellerVarients'
+import { cardContainer, cardFromLeft, cardFromRight } from '../../animations/globalVariants'
 
 function SellerOrders() {
 
 
-  const webTitle = document.title = 'Seller Orders | Power House Ecommerce';
+  document.title = ('Seller Orders | Power House Ecommerce');
 
   const [orders, setOrders] = useState([]);
 

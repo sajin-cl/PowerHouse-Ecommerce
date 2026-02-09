@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 function UpdateCategory() {
 
   
-  const webTitle = document.title = 'Update Category | Power House Ecommerce';
+   document.title = ('Update Category | Power House Ecommerce');
 
   const { id } = useParams();
 

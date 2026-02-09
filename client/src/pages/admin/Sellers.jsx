@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { cardContainer, droppingCard } from "../../animations/adminVarients.js";
+import { cardContainer, droppingCard } from "../../animations/globalVariants";
 
 function Sellers() {
 
 
-  const webTitle = document.title = 'Admin | Seller List | Power House Ecommerce';
+   document.title = ('Admin | Seller List | Power House Ecommerce');
 
   const [sellers, setSellers] = useState([]);
 

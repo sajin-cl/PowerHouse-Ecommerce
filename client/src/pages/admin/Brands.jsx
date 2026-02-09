@@ -2,11 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from 'framer-motion';
-import { cardContainer, droppingCard } from "../../animations/adminVarients.js";
+import { cardContainer, droppingCard } from "../../animations/globalVariants";
 
 function Brands() {
 
-  const webTitle = document.title = 'Brand | Power House Ecommerce';
+  document.title = ('Brand | Power House Ecommerce');
 
   const [brands, setBrands] = useState([]);
 

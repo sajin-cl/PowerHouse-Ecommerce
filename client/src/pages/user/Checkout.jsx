@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 function Checkout() {
 
-  const webTitle = document.title = 'Checkout Page | Power House Ecommerce';
+  document.title = ('Checkout Page | Power House Ecommerce');
 
   const navigate = useNavigate();
 
@@ -78,7 +78,7 @@ function Checkout() {
 
       <div className="row">
         <div className="col-12 col-lg-8">
-      
+
           <div className="order-box p-3 mb-4">
             <h5>Delivery Address</h5>
 
@@ -109,7 +109,7 @@ function Checkout() {
             </div>
           </div>
 
-   
+
           <div className="order-box p-3">
             <h5>Payment Method</h5>
 

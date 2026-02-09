@@ -4,10 +4,10 @@ import { useNavigate, useParams } from "react-router-dom";
 
 function UpdateSellerProfile() {
 
-  
-  const webTitle = document.title = 'Seller Profile | Power House Ecommerce';
 
-  const { id } = useParams(); 
+  document.title = ('Seller Profile | Power House Ecommerce');
+
+  const { id } = useParams();
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -23,7 +23,7 @@ function UpdateSellerProfile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-  
+
     axios
       .get("http://localhost:4000/api/seller/profile", { withCredentials: true })
       .then((res) => {

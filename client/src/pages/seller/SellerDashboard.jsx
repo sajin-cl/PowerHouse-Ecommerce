@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import { Link } from "react-router-dom"
 import { motion } from 'framer-motion';
-import { cardContainer, droppingCard } from '../../animations/sellerVarients.js'
+import { cardContainer, droppingCard } from '../../animations/globalVariants'
 
 
 function SellerDashboard() {
 
 
-  const webTitle = document.title = 'Seller Dashboard | Power House Ecommerce';
+  document.title = ('Seller Dashboard | Power House Ecommerce');
 
   const [stats, setStats] = useState({
     totalProducts: 0,

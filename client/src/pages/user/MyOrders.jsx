@@ -1,11 +1,12 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import { motion } from 'framer-motion';
+import { cardContainer, cardFromLeft, cardFromRight } from '../../animations/globalVariants'
 
 function MyOrders() {
 
-  
-  const webTitle = document.title = 'My Orders | Power House Ecommerce';
+
+  document.title = ('My Orders | Power House Ecommerce');
 
   const [orders, setOrders] = useState([]);
 
@@ -41,64 +42,80 @@ function MyOrders() {
 
   return (
     <div className="container py-4">
-      <h5 className="mb-4 border-bottom pb-2">My Orders</h5>
+      <motion.h5
+        className="mb-4 border-bottom pb-2"
+        initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }}
+      >
+        My Orders
+      </motion.h5>
 
-      {orders.map((order) => (
+      <motion.div
+        variants={cardContainer} initial="hidden" animate="visible"
+      >
+        {orders.map((order, index) => {
 
-        <div key={order._id} className="order-card p-3 mb-4 border rounded">
-          <div className="d-flex justify-content-between align-items-center mb-2">
-            <h6 className="text-danger">Order ID: #{order._id}</h6>
-            <span
-              className={`badge p-2 ${order.status === "delivered"
-                ? "bg-success"
-                : order.status === "shipped"
-                  ? "bg-warning"
-                  : order.status === 'cancelled'
-                    ? "bg-danger" : "bg-secondary"
-                }`}
+          const isLeft = index % 2 == 0
+
+          return (
+
+            <motion.div
+              key={order._id} className="order-card p-3 mb-4 border rounded"
+              variants={isLeft ? cardFromLeft : cardFromRight}
             >
-              {order.status}
-            </span>
-          </div>
-          <p className="mb-2 fw-bold">
-            Order Date: {new Date(order.createdAt).toLocaleDateString()}
-          </p>
-
-          <div className="order-items mb-2">
-            {order.items.map((item, idx) => (
-              <div
-                key={idx}
-                className="d-flex justify-content-between mb-2"
-              >
-                <span className="text-purple">
-                  {item.product.name} x {item.quantity}
+              <div className="d-flex justify-content-between align-items-center mb-2">
+                <h6 className="text-danger">Order ID: #{order._id}</h6>
+                <span
+                  className={`badge p-2 ${order.status === "delivered"
+                    ? "bg-success"
+                    : order.status === "shipped"
+                      ? "bg-warning"
+                      : order.status === 'cancelled'
+                        ? "bg-danger" : "bg-secondary"
+                    }`}
+                >
+                  {order.status}
                 </span>
-                <span >₹{item.price * item.quantity}</span>
               </div>
-            ))}
+              <p className="mb-2 fw-bold">
+                Order Date: {new Date(order.createdAt).toLocaleDateString()}
+              </p>
 
-            <div className="d-flex justify-content-between">
-              <span>Shipping</span>
-              <span>₹{order.shipping}</span>
-            </div>
-          </div>
+              <div className="order-items mb-2">
+                {order.items.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="d-flex justify-content-between mb-2"
+                  >
+                    <span className="text-purple">
+                      {item.product.name} x {item.quantity}
+                    </span>
+                    <span >₹{item.price * item.quantity}</span>
+                  </div>
+                ))}
 
-          <div className="d-flex justify-content-between fw-bold pt-2 border-top">
-            <span>Total:</span>
-            <span>₹{order.total}</span>
-          </div>
-          {order.status !== 'delivered' && order.status !== 'cancelled' && (
-            <button
-              className="btn btn-danger w-100 mt-4"
-              onClick={() => { cancelOrder(order._id) }}
-            >
-              Cancel Order
-            </button>)}
-        </div>
+                <div className="d-flex justify-content-between">
+                  <span>Shipping</span>
+                  <span>₹{order.shipping}</span>
+                </div>
+              </div>
 
+              <div className="d-flex justify-content-between fw-bold pt-2 border-top">
+                <span>Total:</span>
+                <span>₹{order.total}</span>
+              </div>
+              {order.status !== 'delivered' && order.status !== 'cancelled' && (
+                <button
+                  className="btn btn-danger w-100 mt-4"
+                  onClick={() => { cancelOrder(order._id) }}
+                >
+                  Cancel Order
+                </button>)}
+            </motion.div>
+          )
 
-      ))}
-    </div>
+        })}
+      </motion.div>
+    </div >
   );
 }
 

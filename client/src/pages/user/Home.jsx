@@ -9,7 +9,7 @@ const ProductCard = lazy(() => import("../../components/ProductCard"));
 
 function HomePage() {
 
-  const webTitle = document.title = 'Home | Power House Ecommerce';
+  document.title = ('Home | Power House Ecommerce');
 
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -83,7 +83,7 @@ function HomePage() {
                     <motion.div
                       initial={{ opacity: 0, y: 50 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{duration:0.5, delay: index * 0.1 }} 
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
                       key={product._id}
                     >
                       <ProductCard product={product} />

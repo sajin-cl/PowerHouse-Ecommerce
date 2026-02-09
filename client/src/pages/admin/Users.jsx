@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from 'framer-motion';
-import { cardContainer, droppingCard } from "../../animations/adminVarients";
+import { cardContainer, droppingCard } from "../../animations/globalVariants";
 
 function Users() {
 
 
-  const webTitle = document.title = 'Admin | User List | Power House Ecommerce';
+  document.title = ('Admin | User List | Power House Ecommerce');
 
   const [refresh, setRefresh] = useState(0);
 
@@ -59,7 +59,7 @@ function Users() {
 
             <motion.div
               className="card h-100 shadow-sm border-0"
-              variants={droppingCard}  
+              variants={droppingCard}
             >
               <div className="card-body d-flex flex-column text-center">
 

@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 function AddProduct() {
 
-  
-  const webTitle = document.title = 'Seller | Add Products | Power House Ecommerce';
+
+  document.title = ('Seller | Add Products | Power House Ecommerce');
 
   const navigate = useNavigate();
 

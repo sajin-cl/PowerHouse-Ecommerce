@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 function SellerProfile() {
 
 
-  const webTitle = document.title = 'Seller Profile | Power House Ecommerce';
+  document.title = ('Seller Profile | Power House Ecommerce');
 
   const [seller, setSeller] = useState(null);
   const navigate = useNavigate();
@@ -67,7 +67,7 @@ function SellerProfile() {
         <motion.button
           className="mt-3 btn btn-purple "
           onClick={() => { navigate(`/seller/update-profile/${seller._id}`) }}
-          initial={{ opacity: 0}} animate={{ opacity: 1, transition: { duration: 0.5, delay: 1 } }} drag
+          initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 0.5, delay: 1 } }} drag
         >
           Edit Profile
         </motion.button>

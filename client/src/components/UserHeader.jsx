@@ -3,7 +3,7 @@ import logo from '/logo.png'
 import { useAuth } from "../hooks/useAuth";
 import { NavLink } from "react-router-dom";
 import { motion } from 'framer-motion'
-import { logoVariants } from '../animations/globalVarients.js';
+import { logoVariants } from '../animations/globalVariants';
 import { useCart } from "../context/CartContext.jsx";
 
 

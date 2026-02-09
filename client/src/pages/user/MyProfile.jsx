@@ -7,7 +7,9 @@ import { useCart } from "../../context/CartContext";
 
 function MyProfile() {
 
-  const webTitle = (document.title = 'My Profile | Power House Ecommerce');
+  document.title = ('My Profile | Power House Ecommerce');
+
+  const MotionLink = motion(Link);
 
   const { cartCount } = useCart();
   const [user, setUser] = useState(null);
@@ -54,7 +56,7 @@ function MyProfile() {
 
         </div>
 
-        <motion.Link
+        <MotionLink
           to='/cart'
           className="border p-4 rounded shadow-sm d-flex justify-content-between position-relative"
           initial={{ x: 100, opacity: 0 }} animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
@@ -68,23 +70,23 @@ function MyProfile() {
               {cartCount}
             </span>
           )}
-        </motion.Link>
+        </MotionLink>
 
-        <motion.Link
+        <MotionLink
           to="/myorders" className="border p-4 rounded shadow-sm d-flex justify-content-between position-relative"
           initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
         >
           <span className="text-dark">My Orders</span>
 
-        </motion.Link>
+        </MotionLink>
 
-        <motion.button
+        <MotionLink
           className="mt-3 btn btn-violet "
           onClick={() => { navigate(`/seller/update-profile/${user._id}`) }}
           initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 0.5, delay: 1 } }} drag
         >
           Edit Profile
-        </motion.button>
+        </MotionLink>
       </div>
     </div>
   );

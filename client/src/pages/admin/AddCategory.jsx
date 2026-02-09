@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 function AddCategory() {
 
   
-  const webTitle = document.title = 'Add Category | Power House Ecommerce';
+   document.title = ('Add Category | Power House Ecommerce');
 
   const navigate = useNavigate();
 

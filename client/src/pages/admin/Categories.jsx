@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { motion } from 'framer-motion';
-import { cardContainer, droppingCard } from "../../animations/adminVarients";
+import { cardContainer, droppingCard } from "../../animations/globalVariants";
 
 
 function Categories() {
 
 
-  const webTitle = document.title = 'Category | Power House Ecommerce';
+  document.title = ('Category | Power House Ecommerce');
 
   const [categories, setCategories] = useState([]);
 
@@ -51,9 +51,9 @@ function Categories() {
         >
           {categories.map((category) => (
             <div key={category._id} className="col-6 col-md-4 col-lg-3 mb-4">
-              <motion.div 
-              className="card h-100 shadow"
-              variants={droppingCard} drag
+              <motion.div
+                className="card h-100 shadow"
+                variants={droppingCard} drag
               >
                 <div className="card-body d-flex flex-column">
                   <h6 className="card-title">{category.name}</h6>

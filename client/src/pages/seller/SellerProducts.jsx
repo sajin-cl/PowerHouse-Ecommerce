@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { motion, scale } from 'framer-motion';
-import { droppingCard, cardContainer } from '../../animations/sellerVarients'
+import { droppingCard, cardContainer } from '../../animations/globalVariants'
 
 function SellerProducts() {
 
 
-  const webTitle = document.title = 'Seller | Product List | Power House Ecommerce';
+  document.title = ('Seller | Product List | Power House Ecommerce');
 
   const [products, setProducts] = useState([]);
 
@@ -48,7 +48,7 @@ function SellerProducts() {
                 src={`http://localhost:4000${product.image_url}`}
                 className="card-img-top"
                 alt={product.name}
-              
+
               />
               <div className="card-body d-flex flex-column">
                 <h6

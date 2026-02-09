@@ -7,7 +7,7 @@ import { useCart } from "../../context/CartContext";
 function ProductDetails() {
 
 
-  const webTitle = (document.title = 'Product Details | Power House Ecommerce');
+  document.title = ('Product Details | Power House Ecommerce');
 
   const { id } = useParams();
 

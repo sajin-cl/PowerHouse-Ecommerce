@@ -4,8 +4,8 @@ import axios from 'axios'
 
 function LoginForm() {
 
-  
-  const webTitle = document.title = 'Login | Power House Ecommerce';
+
+  document.title = ('Login | Power House Ecommerce');
 
   const navigate = useNavigate();
 

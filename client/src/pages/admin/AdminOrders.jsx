@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useEffect, useState, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
-import { cardContainer, cardFromLeft, cardFromRight } from "../../animations/adminVarients.js";
+import { cardContainer, cardFromLeft, cardFromRight } from "../../animations/globalVariants";
 
 const CustomerDetailsModal = lazy(() => import("../../components/CustomerDetailsModal"));
 
 function AdminOrders() {
-  const webTitle = document.title = 'All Orders | Power House Ecommerce';
+
+  document.title = ('All Orders | Power House Ecommerce');
 
   const [orders, setOrders] = useState([]);
   const [refresh, setRefresh] = useState(0);
