@@ -1,7 +1,7 @@
 import '../../style/Checkout.css'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import axiosInstance from '../../utils/axiosInstance'
 
 function Checkout() {
 
@@ -30,22 +30,20 @@ function Checkout() {
 
 
   useEffect(() => {
-    axios
-      .get('http://localhost:4000/api/cart', { withCredentials: true })
-      .then(res => {
-        const subtotal = res.data.reduce(
-          (sum, item) => sum + item.product.price * item.quantity,
-          0
-        );
+    axiosInstance.get('/cart').then(res => {
+      const subtotal = res.data.reduce(
+        (sum, item) => sum + item.product.price * item.quantity,
+        0
+      );
 
-        const shipping = subtotal > 5000 ? 0 : 40;
+      const shipping = subtotal > 5000 ? 0 : 40;
 
-        setSummary({
-          subtotal,
-          shipping,
-          total: subtotal + shipping
-        });
-      })
+      setSummary({
+        subtotal,
+        shipping,
+        total: subtotal + shipping
+      });
+    })
       .catch(() => {
         setError('Failed to load cart')
       })
@@ -61,14 +59,12 @@ function Checkout() {
 
   const handlePlaceOrder = async () => {
     try {
-      await axios.post(
-        'http://localhost:4000/api/orders/checkout', { shippingAddress: address, paymentMethod },
-        { withCredentials: true }
-      )
-      navigate('/order-success')
+      await axiosInstance.post('/orders/checkout', { shippingAddress: address, paymentMethod });
+      navigate('/order-success');
 
     } catch (err) {
-      setError(err.response?.data?.error || 'Order failed')
+      setError(err.response?.data?.error || 'Order failed');
+
     }
   }
 

@@ -1,7 +1,7 @@
 import "../../style/ProductCard.css";
-import axios from "axios";
 import { useEffect, useState, Suspense, lazy } from "react";
 import { motion } from 'framer-motion'
+import axiosInstance from "../../utils/axiosInstance";
 const BannerCarousel = lazy(() => import("../../components/BannerCarousel"));
 const Footer = lazy(() => import("../../components/Footer"));
 const ProductCard = lazy(() => import("../../components/ProductCard"));
@@ -18,12 +18,10 @@ function HomePage() {
 
 
   useEffect(() => {
-    axios.get("http://localhost:4000/api/products")
-      .then((res) => setProducts(res.data))
+    axiosInstance.get('/products').then((res) => setProducts(res.data))
       .catch((err) => console.error("Failed to fetch products", err));
 
-    axios.get("http://localhost:4000/api/categories")
-      .then((res) => setCategories(res.data.categories))
+    axiosInstance.get('/categories').then((res) => setCategories(res.data.categories))
       .catch((err) => console.error("Failed to fetch categories", err));
   }, []);
 

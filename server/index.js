@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const fileup = require('express-fileupload');
@@ -26,7 +28,7 @@ database();
 app.use(logger('dev'));
 
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: process.env.APPLICATION_URL,
   credentials: true
 }));
 
@@ -38,7 +40,7 @@ app.use('/assets', express.static('public/assets'))
 
 app.use(
   session({
-    secret: "dont tell me",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -59,5 +61,5 @@ app.use('/api/cart', cartRouter);
 app.use('/api/orders', orderRouter);
 
 
-const PORT = 4000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => console.info(`Server running at http://localhost:${PORT}`));

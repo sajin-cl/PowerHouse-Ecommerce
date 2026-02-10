@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 import { motion } from 'framer-motion';
 import { cardContainer, droppingCard } from "../../animations/globalVariants";
 
@@ -13,9 +13,7 @@ function Users() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:4000/api/admin/users", { withCredentials: true })
-      .then((response) => setUsers(response.data))
+    axiosInstance.get("/admin/users").then((response) => setUsers(response.data))
       .catch((err) => {
         console.error(
           "Failed to fetch users:",
@@ -26,19 +24,16 @@ function Users() {
 
 
   const deleteUser = (id) => {
-    axios
-      .delete(`http://localhost:4000/api/admin/users/${id}`, { withCredentials: true })
-      .then(() => {
-        console.info('user deleted successfully');
-        setRefresh(prev => prev + 1);
-      })
+    axiosInstance.delete(`/admin/users/${id}`).then(() => {
+      console.info('user deleted successfully');
+      setRefresh(prev => prev + 1);
+    })
       .catch(err => console.error('failed to delete user', err))
   };
 
 
   const toggleBlockUser = (id) => {
-    axios
-      .patch(`http://localhost:4000/api/admin/users/${id}/toggle-block`, null, { withCredentials: true })
+    axiosInstance.patch(`/admin/users/${id}/toggle-block`, null)
       .then(() => {
         console.info('User toggle status changed');
         setRefresh(prev => prev + 1);

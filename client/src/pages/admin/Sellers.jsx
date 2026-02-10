@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { cardContainer, droppingCard } from "../../animations/globalVariants";
@@ -6,33 +6,28 @@ import { cardContainer, droppingCard } from "../../animations/globalVariants";
 function Sellers() {
 
 
-   document.title = ('Admin | Seller List | Power House Ecommerce');
+  document.title = ('Admin | Seller List | Power House Ecommerce');
 
   const [sellers, setSellers] = useState([]);
 
   const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:4000/api/admin/sellers', { withCredentials: true })
-      .then(response => setSellers(response.data))
-      .catch(err => console.error('failed to fetch sellers'));
+    axiosInstance.get('/admin/sellers').then(response => setSellers(response.data))
+      .catch(() => console.error('failed to fetch sellers'));
   }, [refresh]);
 
 
   const deleteSeller = (id) => {
-    axios
-      .delete(`http://localhost:4000/api/admin/sellers/${id}`, { withCredentials: true })
-      .then(() => {
-        console.info('seller deleted successfully');
-        setRefresh(prev => prev + 1)
-      })
+    axiosInstance.delete(`/admin/sellers/${id}`).then(() => {
+      console.info('seller deleted successfully');
+      setRefresh(prev => prev + 1)
+    })
   };
 
 
   const toggleBlockSeller = (id) => {
-    axios
-      .patch(`http://localhost:4000/api/admin/sellers/${id}/toggle-block`, null, { withCredentials: true })
+    axiosInstance.patch(`/admin/sellers/${id}/toggle-block`, null)
       .then(() => {
         console.info('seller status changed');
         setRefresh(prev => prev + 1);

@@ -1,8 +1,8 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion';
 import { useCart } from "../../context/CartContext";
+import axiosInstance from "../../utils/axiosInstance";
 
 
 function MyProfile() {
@@ -17,11 +17,10 @@ function MyProfile() {
 
 
   useEffect(() => {
-    axios
-      .get('http://localhost:4000/api/user/profile', { withCredentials: true })
-      .then(response => {
-        setUser(response.data)
-      })
+    axiosInstance.get('/user/profile').then(response => {
+      setUser(response.data)
+      
+    })
       .catch(err => console.error(err?.response?.data));
 
   }, []);

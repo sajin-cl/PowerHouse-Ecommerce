@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 
 function AddBrand() {
 
@@ -27,16 +27,14 @@ function AddBrand() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post('http://localhost:4000/api/admin/brands', formData, { withCredentials: true })
-      .then(response => {
-        console.info(response.data);
-        setFormData({
-          name: '',
-          description: ''
-        })
-        navigate('/admin/brands');
+    axiosInstance.post('/admin/brands', formData).then(response => {
+      console.info(response.data);
+      setFormData({
+        name: '',
+        description: ''
       })
+      navigate('/admin/brands');
+    })
       .catch(err => {
         console.error('Error for creating brand');
         setErrors({ backend: err.response?.data?.error });

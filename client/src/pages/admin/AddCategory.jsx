@@ -1,11 +1,11 @@
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function AddCategory() {
 
-  
-   document.title = ('Add Category | Power House Ecommerce');
+
+  document.title = ('Add Category | Power House Ecommerce');
 
   const navigate = useNavigate();
 
@@ -28,10 +28,7 @@ function AddCategory() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.post('http://localhost:4000/api/admin/categories', formData, {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true
-    }).then(response => {
+    axiosInstance.post('/admin/categories', formData).then(response => {
       console.log(response.data);
       setFormData({
         name: "",

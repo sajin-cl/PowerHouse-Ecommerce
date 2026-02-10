@@ -36,6 +36,7 @@ import AdminOrders from '../pages/admin/AdminOrders';
 
 
 import NotFound from '../components/NotFound';
+import ForgotPassword from '../components/ForgotPassword';
 
 
 
@@ -96,6 +97,7 @@ const router = createBrowserRouter([
   //Authentication Purpose::
   { path: '/register', element: <RegisterForm /> },
   { path: '/login', element: <LoginForm /> },
+  { path: '/forgot-password', element: <ForgotPassword /> }
 
 ]);
 

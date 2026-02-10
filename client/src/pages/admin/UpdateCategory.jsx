@@ -1,12 +1,11 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import axios from 'axios';
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import axiosInstance from '../../utils/axiosInstance';
 
 function UpdateCategory() {
 
-  
-   document.title = ('Update Category | Power House Ecommerce');
+
+  document.title = ('Update Category | Power House Ecommerce');
 
   const { id } = useParams();
 
@@ -22,8 +21,7 @@ function UpdateCategory() {
 
   useEffect(() => {
 
-    axios.get(`http://localhost:4000/api/admin/categories/${id}`,{withCredentials:true})
-      .then(response => setData(response.data))
+    axiosInstance.get(`/admin/categories/${id}`).then(response => setData(response.data))
       .catch((err) => {
         console.error('category fetching error');
         setErrors({ backend: err.response?.data?.error });
@@ -48,8 +46,7 @@ function UpdateCategory() {
 
     e.preventDefault();
 
-    axios
-      .patch(`http://localhost:4000/api/admin/categories/${id}`, data, { withCredentials: true })
+    axiosInstance.patch(`/admin/categories/${id}`, data)
       .then(() => {
         navigate('/admin/categories');
         console.log('category updated')

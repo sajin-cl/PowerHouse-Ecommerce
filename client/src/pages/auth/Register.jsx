@@ -1,7 +1,7 @@
-import { useState } from "react";
 import "../../style/register.css";
+import axiosInstance from '../../utils/axiosInstance';
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axios from 'axios';
 
 function RegisterForm() {
 
@@ -11,9 +11,7 @@ function RegisterForm() {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
-
   const [showConfirm, setShowConfirm] = useState(false);
-
   const [errors, setErrors] = useState({});
 
   const [formData, setFormData] = useState({
@@ -70,30 +68,23 @@ function RegisterForm() {
       return;
     }
 
-    axios.post('http://localhost:4000/api/auth/register', formData, {
-      headers: {
-        "Content-Type": 'application/json'
-      }
-    })
-      .then((response => {
-        console.log(response.data);
-        setFormData({
-          fullName: "",
-          email: "",
-          password: "",
-          confirmPassword: "",
-          role: "user",
-          shopName: "",
-          shopAddress: ""
-        });
-        navigate("/login");
-      }))
+    axiosInstance.post('/auth/register', formData).then((response => {
+      console.log(response.data);
+      setFormData({
+        fullName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        role: "user",
+        shopName: "",
+        shopAddress: ""
+      });
+      navigate("/login");
+    }))
       .catch((err) => {
         console.error('registeration failed');
-        const error = err.response?.data?.error || 'Something went wrong on the server'
-        setErrors({ backend: error });
+        setErrors({ backend: err.response?.data?.error || 'Something went wrong on the server' });
         setTimeout(() => setErrors({}), 3000)
-
       });
   };
 

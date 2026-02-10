@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { motion } from 'framer-motion';
 import { cardContainer, cardFromLeft, cardFromRight } from '../../animations/globalVariants'
+import axiosInstance from "../../utils/axiosInstance";;
 
 function SellerOrders() {
 
@@ -12,22 +12,15 @@ function SellerOrders() {
 
 
   useEffect(() => {
-    axios
-      .get("http://localhost:4000/api/seller/orders", { withCredentials: true })
-      .then((res) => setOrders(res.data))
+    axiosInstance.get("/seller/orders").then((res) => setOrders(res.data))
       .catch((err) => console.error("Failed to fetch orders:", err.response?.data || err));
   }, []);
 
 
   const updateStatus = (orderId, itemId, newStatus) => {
-    axios
-      .patch(
-        `http://localhost:4000/api/seller/orders/${orderId}/item/${itemId}/status`,
-        { status: newStatus },
-        { withCredentials: true }
-      )
+    axiosInstance.patch(`/seller/orders/${orderId}/item/${itemId}/status`, { status: newStatus })
       .then(() => {
-
+        
         setOrders((prev) =>
           prev.map((order) =>
             order._id === orderId

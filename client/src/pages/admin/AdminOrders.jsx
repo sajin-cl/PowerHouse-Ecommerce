@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 import { useEffect, useState, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import { cardContainer, cardFromLeft, cardFromRight } from "../../animations/globalVariants";
@@ -13,21 +13,17 @@ function AdminOrders() {
   const [refresh, setRefresh] = useState(0);
   const [errors, setErrors] = useState({});
   const [selectedOrder, setSelectedOrder] = useState(null);
+  
 
   useEffect(() => {
-    axios
-      .get("http://localhost:4000/api/admin/orders", { withCredentials: true })
-      .then(res => setOrders(res.data))
+    axiosInstance
+      .get("/admin/orders").then(res => setOrders(res.data))
       .catch(err => console.error(err));
   }, [refresh]);
 
+
   const updateOrderStatus = (orderId, newStatus) => {
-    axios
-      .patch(
-        `http://localhost:4000/api/admin/orders/${orderId}/status`,
-        { status: newStatus },
-        { withCredentials: true }
-      )
+    axiosInstance.patch(`/admin/orders/${orderId}/status`, { status: newStatus })
       .then(() => setRefresh(prev => prev + 1))
       .catch(err => {
         setErrors({ backend: err.response?.data?.error || err.message });

@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { NavLink } from 'react-router-dom';
 import logo from '/logo.png';
-import {motion} from 'framer-motion'
+import { motion } from 'framer-motion'
 import { logoVariants } from '../animations/globalVariants';
 import '../style/SellerHeader.css';
 
+
 function SellerHeader() {
+
   const { logout } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axiosInstance from '../utils/axiosInstance'
 import { useState, useEffect, createContext, useContext } from 'react'
 
 
@@ -17,7 +17,7 @@ export const CartProvider = ({ children }) => {
 
   const fetchCart = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/cart", { withCredentials: true });
+      const res = await axiosInstance.get("/cart");
       setCartItems(res.data);
       setCartCount(res.data.length);
     } catch (err) {
@@ -28,7 +28,7 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = async (productId, quantity) => {
     try {
-      await axios.post('http://localhost:4000/api/cart', { productId, quantity }, { withCredentials: true });
+      await axiosInstance.post('/cart', { productId, quantity });
       await fetchCart();
     }
     catch (err) {
@@ -40,7 +40,7 @@ export const CartProvider = ({ children }) => {
 
   const updateCartItem = async (cartItemId, quantity) => {
     try {
-      await axios.patch(`http://localhost:4000/api/cart/${cartItemId}`, { quantity }, { withCredentials: true });
+      await axiosInstance.patch(`/cart/${cartItemId}`, { quantity });
       await fetchCart();
 
     }
@@ -54,7 +54,7 @@ export const CartProvider = ({ children }) => {
   const removeCartItem = async (cartItemId) => {
     try {
 
-      await axios.delete(`http://localhost:4000/api/cart/${cartItemId}`, { withCredentials: true });
+      await axiosInstance.delete(`/cart/${cartItemId}`);
       await fetchCart();
     }
     catch (err) {

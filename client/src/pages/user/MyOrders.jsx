@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { motion } from 'framer-motion';
 import { cardContainer, cardFromLeft, cardFromRight } from '../../animations/globalVariants'
+import axiosInstance from "../../utils/axiosInstance";
 
 function MyOrders() {
 
@@ -12,18 +12,14 @@ function MyOrders() {
 
   useEffect(() => {
 
-    axios
-      .get('http://localhost:4000/api/orders', { withCredentials: true })
-      .then(response => setOrders(response.data))
+    axiosInstance.get('/orders').then(response => setOrders(response.data))
       .catch(err => console.error(err.response?.data || err.message))
 
   }, []);
 
 
   const cancelOrder = (orderId) => {
-    axios
-      .patch(
-        `http://localhost:4000/api/orders/${orderId}/cancel`, {}, { withCredentials: true })
+    axiosInstance.patch(`/orders/${orderId}/cancel`, {})
       .then(() => {
         setOrders(prev =>
           prev.map(order =>
@@ -32,6 +28,7 @@ function MyOrders() {
               : order
           )
         );
+        
       })
       .catch(err => console.error(err.response?.data?.message || "Failed to cancel order"));
   };

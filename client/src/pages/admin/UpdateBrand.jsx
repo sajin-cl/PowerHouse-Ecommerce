@@ -1,15 +1,15 @@
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 function UpdateBrand() {
 
-  
+
   document.title = ('Update Brand | Power House Ecommerce');
 
   const { id } = useParams();
-  
+
   const navigate = useNavigate();
 
   const [errors, setErrors] = useState({});
@@ -21,9 +21,7 @@ function UpdateBrand() {
 
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:4000/api/admin/brands/${id}`, { withCredentials: true })
-      .then(response => setBrand(response.data))
+    axiosInstance.get(`/admin/brands/${id}`).then(response => setBrand(response.data))
       .catch(err => {
         console.error('Brand fetching error');
         setErrors({ backend: err.response?.data?.error });
@@ -43,13 +41,11 @@ function UpdateBrand() {
   const updateBrand = (e) => {
 
     e.preventDefault();
-    axios
-      .patch(`http://localhost:4000/api/admin/brands/${id}`, brand, { withCredentials: true })
-      .then(response => {
-        setBrand(response.data);
-        console.log('Brand updated');
-        navigate('/admin/brands');
-      })
+    axiosInstance.patch(`/admin/brands/${id}`, brand).then(response => {
+      setBrand(response.data);
+      console.log('Brand updated');
+      navigate('/admin/brands');
+    })
       .catch(err => {
         console.error('update failed');
         setErrors({ backend: err.response?.data?.error });

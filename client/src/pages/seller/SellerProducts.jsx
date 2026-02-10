@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import { motion, scale } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { droppingCard, cardContainer } from '../../animations/globalVariants'
+import axiosInstance from "../../utils/axiosInstance";
 
 function SellerProducts() {
 
@@ -15,19 +15,15 @@ function SellerProducts() {
 
 
   useEffect(() => {
-    axios
-      .get('http://localhost:4000/api/products', { withCredentials: true })
-      .then(response => setProducts(response.data))
+    axiosInstance.get('/products').then(response => setProducts(response.data))
       .catch(err => console.error('Failed to fetch products', err));
   }, [refresh]);
 
   const handleDelete = (id) => {
-    axios
-      .delete(`http://localhost:4000/api/products/${id}`, { withCredentials: true })
-      .then(() => {
-        setRefresh(prev => prev + 1)
-        console.info('Product deleted successfully');
-      })
+    axiosInstance.delete(`/products/${id}`).then(() => {
+      setRefresh(prev => prev + 1)
+      console.info('Product deleted successfully');
+    })
       .catch(err => console.error('Failed to delete product', err))
   }
 

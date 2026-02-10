@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "../../utils/axiosInstance";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from 'framer-motion';
@@ -13,8 +13,7 @@ function Brands() {
   const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:4000/api/admin/brands', { withCredentials: true })
+    axiosInstance.get('/admin/brands')
       .then(response => setBrands(response.data))
       .catch(err => console.error('Brands fetching error', err));
 
@@ -22,12 +21,10 @@ function Brands() {
 
 
   const deleteBrand = (id) => {
-    axios
-      .delete(`http://localhost:4000/api/admin/brands/${id}`, { withCredentials: true })
-      .then(() => {
-        setRefresh(prev => prev + 1);
-        console.info('Brand Deleted successfully!')
-      })
+    axiosInstance.delete(`/admin/brands/${id}`).then(() => {
+      setRefresh(prev => prev + 1);
+      console.info('Brand Deleted successfully!')
+    })
       .catch(err => console.error(err));
   };
 

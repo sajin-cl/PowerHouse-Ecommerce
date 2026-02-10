@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import axios from 'axios';
 import { Link } from "react-router-dom"
 import { motion } from 'framer-motion';
 import { cardContainer, droppingCard } from '../../animations/globalVariants'
+import axiosInstance from '../../utils/axiosInstance';
 
 
 function SellerDashboard() {
@@ -18,8 +18,7 @@ function SellerDashboard() {
   });
 
   useEffect(() => {
-    axios
-      .get('http://localhost:4000/api/seller/dashboard', { withCredentials: true })
+    axiosInstance.get('/seller/dashboard')
       .then(response => setStats(response.data))
       .catch(err => console.error(err.response?.data?.error || err.message));
 

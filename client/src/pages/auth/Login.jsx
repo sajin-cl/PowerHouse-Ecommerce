@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import axiosInstance from '../../utils/axiosInstance'
 
 function LoginForm() {
 
@@ -53,19 +53,11 @@ function LoginForm() {
       return
     }
 
-    axios.post('http://localhost:4000/api/auth/login', formData, {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then((response) => {
+    axiosInstance.post('/auth/login', formData).then((response) => {
 
       const { role } = response.data
 
-      setFormData({
-        email: "",
-        password: ""
-      });
+      setFormData({ email: "", password: "" });
 
       navigate(
         role === 'admin' ? '/admin' :
@@ -74,9 +66,8 @@ function LoginForm() {
       );
 
     }).catch((err) => {
-      console.log('Login failed')
-      const error = err.response?.data?.error || "Something went wrong on the server"
-      setErrors({ backend: error });
+      console.error('Login failed');
+      setErrors({ backend: err.response?.data?.error || "Something went wrong on the server" });
       setTimeout(() => { setErrors({}) }, 3000)
     })
 
@@ -140,6 +131,10 @@ function LoginForm() {
                 {errors.password && <div className='text-danger'>{errors.password}</div>}
               </div>
               {errors.backend && <div className="text-danger mb-2 text-center">{errors.backend}</div>}
+
+              <p className="text-center my-2">
+                <Link to="/forgot-password">Forgot Password?</Link>
+              </p>
 
               <button className="btn btn-primary w-100 mt-3" style={{ backgroundColor: "var(--violet-color)" }}>
                 Login

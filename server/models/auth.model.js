@@ -36,6 +36,12 @@ const userSchema = mongoose.Schema({
   isBlocked: {
     type: Boolean,
     default: false
+  },
+  resetOtp: {
+    type: String
+  },
+  resetOTPExpires: {
+    type: Date
   }
 
 }, { timestamps: true });

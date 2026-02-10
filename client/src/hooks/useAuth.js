@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
 
 export const useAuth = () => {
-  
+
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -13,7 +13,7 @@ export const useAuth = () => {
     const checkSession = async () => {
       try {
 
-        const res = await axios.get("http://localhost:4000/api/auth/check-session", { withCredentials: true });
+        const res = await axiosInstance.get("/auth/check-session");
 
         if (isMounted) {
           if (res.data.loggedIn) {
@@ -50,7 +50,7 @@ export const useAuth = () => {
 
   const logout = async () => {
     try {
-      await axios.get("http://localhost:4000/api/auth/logout", { withCredentials: true });
+      await axiosInstance.get("/auth/logout");
       setLoggedIn(false);
       navigate("/login");
     }

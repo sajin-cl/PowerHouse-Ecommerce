@@ -1,12 +1,12 @@
-import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import axiosInstance from "../../utils/axiosInstance";
 
 function UpdateProduct() {
 
-  
-   document.title = ('Seller | Update Products | Power House Ecommerce');
+
+  document.title = ('Seller | Update Products | Power House Ecommerce');
 
   const navigate = useNavigate();
 
@@ -29,36 +29,33 @@ function UpdateProduct() {
 
   useEffect(() => {
 
-    axios.get('http://localhost:4000/api/categories', { withCredentials: true })
-      .then(response => setCategories(response.data.categories))
+    axiosInstance.get('/categories').then(response => setCategories(response.data.categories))
       .catch(err => {
         console.error('Failed to fetching categories');
         setErrors({ backend: err.response?.data?.error });
         setTimeout(() => { setErrors({}) }, 3000);
       });
 
-    axios.get('http://localhost:4000/api/brands', { withCredentials: true })
-      .then(response => setBrands(response.data.brands))
+    axiosInstance.get('/brands').then(response => setBrands(response.data.brands))
       .catch(err => {
         console.error('Failed to fetching brands');
         setErrors({ backend: err.response?.data?.error });
         setTimeout(() => { setErrors({}) }, 3000);
       });
 
-    axios.get(`http://localhost:4000/api/products/${id}`, { withCredentials: true })
-      .then(response => {
-        const prod = response.data;
-        setCurrentImage(prod.image_url)
-        setFormValues({
-          name: prod.name || '',
-          description: prod.description || '',
-          brand: prod.brand?._id || '',
-          category: prod.category?._id || '',
-          stock: prod.stock || 0,
-          price: prod.price || 0,
-          productImage: null
-        })
+    axiosInstance.get(`/products/${id}`).then(response => {
+      const prod = response.data;
+      setCurrentImage(prod.image_url)
+      setFormValues({
+        name: prod.name || '',
+        description: prod.description || '',
+        brand: prod.brand?._id || '',
+        category: prod.category?._id || '',
+        stock: prod.stock || 0,
+        price: prod.price || 0,
+        productImage: null
       })
+    })
       .catch(err => {
         console.error('Failed to fetching product');
         setErrors({ backend: err.response?.data?.error });
@@ -96,8 +93,7 @@ function UpdateProduct() {
       formData.append("productImage", formValues.productImage);
     }
 
-    axios
-      .patch(`http://localhost:4000/api/products/${id}`, formData, { withCredentials: true })
+    axiosInstance.patch(`/products/${id}`, formData)
       .then(() => {
         console.info('Product updated');
         navigate('/seller/products');

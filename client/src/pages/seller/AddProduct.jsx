@@ -1,7 +1,7 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import axios from 'axios';
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from '../../utils/axiosInstance';
+
 
 function AddProduct() {
 
@@ -11,9 +11,7 @@ function AddProduct() {
   const navigate = useNavigate();
 
   const [categories, setCategories] = useState([]);
-
   const [brands, setBrands] = useState([]);
-
   const [errors, setErrors] = useState({});
 
   const [formValues, setFormValues] = useState({
@@ -27,10 +25,8 @@ function AddProduct() {
   });
 
   useEffect(() => {
-    axios.get('http://localhost:4000/api/categories', {
-      withCredentials: true
-    })
-      .then(response => setCategories(response.data.categories))
+
+    axiosInstance.get('/categories').then(response => setCategories(response.data.categories))
       .catch(err => {
         console.error('Category fetch failed');
         setErrors({ backend: err.response?.data?.error });
@@ -39,10 +35,7 @@ function AddProduct() {
 
       );
 
-    axios.get('http://localhost:4000/api/brands', {
-      withCredentials: true
-    })
-      .then(response => setBrands(response.data.brands))
+    axiosInstance.get('/brands').then(response => setBrands(response.data.brands))
       .catch(err => {
         console.log('Brand fetch failed');
         setErrors({ backend: err.response?.data?.error });
@@ -75,23 +68,20 @@ function AddProduct() {
     formData.append('productImage', formValues.productImage);
 
 
-    axios.post('http://localhost:4000/api/products', formData, {
-      withCredentials: true,
-    })
-      .then(response => {
-        console.info(response.data);
-        setFormValues({
-          name: "",
-          description: "",
-          category: "",
-          brand: "",
-          stock: "",
-          price: "",
-          productImage: null
-        });
+    axiosInstance.post('/products', formData).then(response => {
+      console.info(response.data);
+      setFormValues({
+        name: "",
+        description: "",
+        category: "",
+        brand: "",
+        stock: "",
+        price: "",
+        productImage: null
+      });
 
-        navigate('/seller/products')
-      })
+      navigate('/seller/products')
+    })
       .catch(err => {
         console.error('product submition failed', err)
         setErrors({ backend: err.response?.data?.error || 'something went wrong' });

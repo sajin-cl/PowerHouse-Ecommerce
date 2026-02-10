@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from 'axios';
+import axiosInstance from '../../utils/axiosInstance';
 import { motion } from 'framer-motion';
 import { cardContainer, droppingCard } from '../../animations/globalVariants'
 
@@ -20,9 +20,8 @@ function AdminDashboard() {
 
 
   useEffect(() => {
-    axios
-      .get('http://localhost:4000/api/admin/dashboard', { withCredentials: true })
-      .then(response => setStats(response.data))
+    axiosInstance
+      .get('/admin/dashboard').then(response => setStats(response.data))
       .catch(err => console.error(err.response?.data?.error || err.message));
   }, []);
 

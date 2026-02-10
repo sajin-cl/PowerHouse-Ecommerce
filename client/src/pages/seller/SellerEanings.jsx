@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import axios from 'axios';
 import { motion } from "framer-motion";
 import { cardContainer, droppingCard } from '../../animations/globalVariants'
+import axiosInstance from '../../utils/axiosInstance';
 
 function SellerEarnings() {
 
@@ -14,9 +14,7 @@ function SellerEarnings() {
   });
 
   useEffect(() => {
-    axios
-      .get('http://localhost:4000/api/seller/earnings', { withCredentials: true })
-      .then(response => setEarnings(response.data))
+    axiosInstance.get('/seller/earnings').then(response => setEarnings(response.data))
       .catch(err => console.error(err.response?.data?.error || err.message));
   }, []);
 

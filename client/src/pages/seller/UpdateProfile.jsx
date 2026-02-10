@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import axiosInstance from "../../utils/axiosInstance";
 
 function UpdateSellerProfile() {
 
@@ -24,16 +24,14 @@ function UpdateSellerProfile() {
 
   useEffect(() => {
 
-    axios
-      .get("http://localhost:4000/api/seller/profile", { withCredentials: true })
-      .then((res) => {
-        setFormData({
-          fullName: res.data.fullName || "",
-          email: res.data.email || "",
-          shopName: res.data.shopName || "",
-          shopAddress: res.data.shopAddress || ""
-        });
-      })
+    axiosInstance.get("/seller/profile").then((res) => {
+      setFormData({
+        fullName: res.data.fullName || "",
+        email: res.data.email || "",
+        shopName: res.data.shopName || "",
+        shopAddress: res.data.shopAddress || ""
+      });
+    })
       .catch((err) => console.error(err?.response?.data))
       .finally(() => setLoading(false));
   }, [id]);
@@ -55,16 +53,14 @@ function UpdateSellerProfile() {
     fd.append("shopAddress", formData.shopAddress);
 
     try {
-      await axios.patch(
-        "http://localhost:4000/api/seller/profile",
-        fd,
-        { withCredentials: true }
-      );
+      await axiosInstance.patch("/seller/profile", fd);
       navigate("/seller/profile");
+
     } catch (err) {
       console.error(err?.response?.data);
       setErrors({ backend: err?.response?.data?.error || "Failed to update profile" });
       setTimeout(() => setErrors({}), 3000);
+      
     }
   };
 

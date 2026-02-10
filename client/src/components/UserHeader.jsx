@@ -7,6 +7,7 @@ import { logoVariants } from '../animations/globalVariants';
 import { useCart } from "../context/CartContext.jsx";
 
 
+
 function UserHeader() {
 
   const { loggedIn, logout } = useAuth();
@@ -14,6 +15,7 @@ function UserHeader() {
   const { cartCount } = useCart();
 
   return (
+    
     <nav className="navbar navbar-expand-lg navbar-light sticky-top">
       <div className="container-fluid">
         <motion.img

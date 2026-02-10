@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion';
+import axiosInstance from "../../utils/axiosInstance";
 
 function SellerProfile() {
 
@@ -12,11 +12,9 @@ function SellerProfile() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get('http://localhost:4000/api/seller/profile', { withCredentials: true })
-      .then(response => {
-        setSeller(response.data)
-      })
+    axiosInstance.get('/seller/profile').then(response => {
+      setSeller(response.data)
+    })
       .catch(err => console.error(err?.response?.data));
 
   }, []);

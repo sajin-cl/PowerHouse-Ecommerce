@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from 'axios';
+import axiosInstance from '../../utils/axiosInstance';
 import { motion } from 'framer-motion';
 import { cardContainer, droppingCard } from "../../animations/globalVariants";
 
@@ -15,23 +15,19 @@ function Categories() {
   const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:4000/api/admin/categories', { withCredentials: true })
-      .then(response => {
-        setCategories(response.data);
-      })
+    axiosInstance.get('/admin/categories').then(response => {
+      setCategories(response.data);
+    })
       .catch(() => console.log('categories fetch error'));
 
   }, [refresh]);
 
 
   const deleteCategory = (id) => {
-    axios
-      .delete(`http://localhost:4000/api/admin/categories/${id}`, { withCredentials: true })
-      .then(() => {
-        console.info('category deleted');
-        setRefresh(prev => prev + 1);
-      })
+    axiosInstance.delete(`/admin/categories/${id}`).then(() => {
+      console.info('category deleted');
+      setRefresh(prev => prev + 1);
+    })
       .catch((err) => {
         console.error('category deletetion error', err);
 

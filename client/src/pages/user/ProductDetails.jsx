@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
 import "../../style/ProductDetails.css";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { useCart } from "../../context/CartContext";
+import axiosInstance from "../../utils/axiosInstance";
 
 function ProductDetails() {
 
@@ -31,11 +31,13 @@ function ProductDetails() {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get(`http://localhost:4000/api/products/${id}`, { withCredentials: true });
+      const res = await axiosInstance.get(`/products/${id}`);
       setProduct(res.data);
+
     }
     catch (err) {
       console.error("Product fetch failed:", err);
+
     }
   };
 

@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/auth.model.js');
 const validator = require('validator');
+const nodemailer = require('nodemailer');
+const { forgotPasswordTemplate } = require('../utils/emailTemplates/forgotPasswordTemplate.js');
 
 
 exports.register = async (req, res) => {
@@ -98,7 +100,102 @@ exports.logout = (req, res) => {
       console.error('logout failed');
       return res.status(500).json({ error: 'logout failed' })
     }
-    res.json({ success: true, message: 'logout successfully' });
+    res.status(200).json({ success: true, message: 'logout successfully' });
   });
 
+};
+
+
+//Forgot password 
+exports.forgotPassword = async (req, res) => {
+  try {
+
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) res.status(404).json({ error: 'User not found' });
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+    user.resetOtp = otp;
+    user.resetOTPExpires = Date.now() + 10 * 60 * 1000 //10minnutes
+    await user.save();
+
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'powerhouseofficial444@gmail.com',
+        pass: 'zquvelsqpqjwbush'
+      }
+
+    });
+
+    const mailOptions = {
+      from: '"Power House Support" <powerhouseofficial444@gmail.com>',
+      to: email,
+      subject: 'Password Reset OTP',
+      html: forgotPasswordTemplate(user.fullName, otp)
+    };
+
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: "OTP sent on your email!" });
+
+  }
+  catch (err) {
+    if (err.code === 'ENOTFOUND' || err.syscall === 'getaddrinfo') {
+      return res.status(503).json({
+        error: 'Network error! Please check your internet connection and try again.'
+      });
+    }
+    res.status(500).json({ error: err.message || 'Something went wrong. Please try again later.' });
+  }
+};
+
+
+exports.verifyOtp = async (req, res) => {
+  try {
+
+    const { email, otp } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) res.status(404).json({ error: 'User not found' });
+
+    if (user.resetOtp !== otp) return res.status(400).json({ error: 'Invalid OTP! Check again.' });
+    if (Date.now() > user.resetOTPExpires) return res.status(400).json({ error: 'OTP Expired! Send a new one.' });
+
+    res.status(200).json({ message: "OTP Verified! Now set your new password." });
+
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message || 'Something went wrong. Please try again later.' });
+  }
+};
+
+
+exports.resetPassword = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) return res.status(400).json({ error: 'Email and Password are required' });
+    if (password.length < 5) return res.status(400).json({ error: 'Password must be at least 5 characters' });
+
+    const user = await User.findOne({ email });
+    if (!user) res.status(404).json({ error: 'User not found' });
+
+    const hashedPwd = await bcrypt.hash(password, 10);
+    user.password = hashedPwd;
+
+    user.resetOTPExpires = undefined;
+    user.resetOtp = undefined;
+
+    await user.save();
+    res.status(200).json({ message: 'Password reset successful. You can now login.' });
+
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'password reset failed,try again later!' });
+  }
 };

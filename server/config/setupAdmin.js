@@ -1,11 +1,15 @@
-const  User  = require('../models/auth.model.js');
+require('dotenv').config();
+const User = require('../models/auth.model.js');
 const bcrypt = require('bcrypt');
 const database = require('../config/database.js');
 
 
 const setupAdmin = async () => {
-  
+
   await database();
+
+  const adminEmail = process.env.ADMIN_EMAIL;
+  const adminPassWord = process.env.ADMIN_PASSWORD;
 
   const existingAdmin = await User.findOne({ role: 'admin' });
 
@@ -14,10 +18,12 @@ const setupAdmin = async () => {
     return
   }
 
+  const hashedPwd = await bcrypt.hash(adminPassWord, 10);
+
   const admin = new User({
     fullName: 'admin',
-    email: 'admin@gmail.com',
-    password: await bcrypt.hash('admin', 10),
+    email: adminEmail,
+    password: hashedPwd,
     role: 'admin'
   });
 
