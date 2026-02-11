@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../utils/axiosInstance";
+import { addBrand } from "../../services/adminService";
 
 function AddBrand() {
 
@@ -25,21 +25,22 @@ function AddBrand() {
     }))
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axiosInstance.post('/admin/brands', formData).then(response => {
+    try {
+      const response = await addBrand(formData);
       console.info(response.data);
       setFormData({
         name: '',
         description: ''
       })
       navigate('/admin/brands');
-    })
-      .catch(err => {
-        console.error('Error for creating brand');
-        setErrors({ backend: err.response?.data?.error });
-        setTimeout(() => setErrors({}), 3000);
-      });
+    }
+    catch (err) {
+      console.error('Error for creating brand');
+      setErrors({ backend: err });
+      setTimeout(() => setErrors({}), 3000);
+    };
 
   };
 

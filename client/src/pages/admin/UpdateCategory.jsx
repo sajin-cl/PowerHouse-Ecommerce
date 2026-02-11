@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axiosInstance from '../../utils/axiosInstance';
+import { getCategoryById, updateCategory as updateCategoryApi } from "../../services/adminService";
 
 function UpdateCategory() {
-
 
   document.title = ('Update Category | Power House Ecommerce');
 
@@ -19,16 +18,23 @@ function UpdateCategory() {
   });
 
 
+  const fetchCategoryById = async (id) => {
+    try {
+      const response = await getCategoryById(id);
+      setData(response.data);
+    }
+    catch (err) {
+      console.error('category fetching error');
+      setErrors({ backend: err });
+      setTimeout(() => setErrors({}), 3000);
+    }
+  };
+
+
   useEffect(() => {
+    fetchCategoryById(id);
 
-    axiosInstance.get(`/admin/categories/${id}`).then(response => setData(response.data))
-      .catch((err) => {
-        console.error('category fetching error');
-        setErrors({ backend: err.response?.data?.error });
-        setTimeout(() => setErrors({}), 3000);
-      })
-
-  }, []);
+  }, [id]);
 
 
   const handleChange = (e) => {
@@ -42,20 +48,19 @@ function UpdateCategory() {
   };
 
 
-  const updateCategory = (e) => {
-
+  const updateCategory = async (e) => {
     e.preventDefault();
 
-    axiosInstance.patch(`/admin/categories/${id}`, data)
-      .then(() => {
-        navigate('/admin/categories');
-        console.log('category updated')
-      })
-      .catch(err => {
-        console.error('category update failed');
-        setErrors({ backend: err.response?.data?.error });
-        setTimeout(() => setErrors({}), 1000);
-      });
+    try {
+      await updateCategoryApi(id, data);
+      navigate('/admin/categories');
+      console.log('category updated')
+    }
+    catch (err) {
+      console.error('category update failed');
+      setErrors({ backend: err });
+      setTimeout(() => setErrors({}), 1000);
+    };
   }
 
   return (

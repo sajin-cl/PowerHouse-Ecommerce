@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axiosInstance from '../../utils/axiosInstance';
 import { motion } from 'framer-motion';
 import { cardContainer, droppingCard } from '../../animations/globalVariants'
+import { getAdminDashboard } from "../../services/adminService";
 
 function AdminDashboard() {
 
@@ -19,11 +19,25 @@ function AdminDashboard() {
   });
 
 
+  const fetchAdminDashboard = async () => {
+    try {
+      const response = await getAdminDashboard();
+      setStats(response.data);
+
+    }
+    catch (err) {
+      console.error(err)
+    }
+  };
+
+
   useEffect(() => {
-    axiosInstance
-      .get('/admin/dashboard').then(response => setStats(response.data))
-      .catch(err => console.error(err.response?.data?.error || err.message));
+
+    fetchAdminDashboard();
+
   }, []);
+
+
 
   return (
     <div className="container mt-4">

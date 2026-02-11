@@ -1,38 +1,46 @@
 import { useEffect, useState } from "react";
 import { motion } from 'framer-motion';
 import { cardContainer, cardFromLeft, cardFromRight } from '../../animations/globalVariants'
-import axiosInstance from "../../utils/axiosInstance";
+
+import { getMyOrders as getMyOrdersApi, cancelMyOrder as cancelMyOrderApi } from "../../services/orderService";
+
+
 
 function MyOrders() {
-
 
   document.title = ('My Orders | Power House Ecommerce');
 
   const [orders, setOrders] = useState([]);
 
-  useEffect(() => {
 
-    axiosInstance.get('/orders').then(response => setOrders(response.data))
-      .catch(err => console.error(err.response?.data || err.message))
+  const fetchAllorders = async () => {
+    try {
+      const response = await getMyOrdersApi();
+      setOrders(response.data);
+    }
+    catch (err) {
+      console.error(err);
+    }
+  }
 
-  }, []);
+  useEffect(() => { fetchAllorders() }, []);
 
 
-  const cancelOrder = (orderId) => {
-    axiosInstance.patch(`/orders/${orderId}/cancel`, {})
-      .then(() => {
-        setOrders(prev =>
-          prev.map(order =>
-            order._id === orderId
-              ? { ...order, status: "cancelled" }
-              : order
-          )
-        );
-        
-      })
-      .catch(err => console.error(err.response?.data?.message || "Failed to cancel order"));
+  const cancelOrder = async (orderId) => {
+    try {
+      await cancelMyOrderApi(orderId);
+      setOrders(prev =>
+        prev.map(order =>
+          order._id === orderId
+            ? { ...order, status: 'cancelled' }
+            : order
+        )
+      );
+    }
+    catch (err) {
+      console.error(err);
+    }
   };
-
 
 
   if (!orders.length) return <div className="container py-4 d-flex justify-content-center h-100">Your Order is empty.</div>

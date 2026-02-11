@@ -1,7 +1,7 @@
-import axiosInstance from "../../utils/axiosInstance";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { cardContainer, droppingCard } from "../../animations/globalVariants";
+import { getAllSellers, deleteSeller as deleteSellerApi, toggleBlockSeller as toggleBlockSellerApi } from "../../services/adminService";
 
 function Sellers() {
 
@@ -9,31 +9,52 @@ function Sellers() {
   document.title = ('Admin | Seller List | Power House Ecommerce');
 
   const [sellers, setSellers] = useState([]);
-
   const [refresh, setRefresh] = useState(0);
 
-  useEffect(() => {
-    axiosInstance.get('/admin/sellers').then(response => setSellers(response.data))
-      .catch(() => console.error('failed to fetch sellers'));
-  }, [refresh]);
 
+  const fetchAllSellers = async () => {
+    try {
+      const response = await getAllSellers();
+      setSellers(response.data)
 
-  const deleteSeller = (id) => {
-    axiosInstance.delete(`/admin/sellers/${id}`).then(() => {
-      console.info('seller deleted successfully');
-      setRefresh(prev => prev + 1)
-    })
+    }
+    catch (err) {
+      onsole.error(err);
+    }
   };
 
 
-  const toggleBlockSeller = (id) => {
-    axiosInstance.patch(`/admin/sellers/${id}/toggle-block`, null)
-      .then(() => {
-        console.info('seller status changed');
-        setRefresh(prev => prev + 1);
-      })
-      .catch(err => console.error('failed to change status', err.response?.data?.error || err.message));
-  }
+  useEffect(() => {
+
+    fetchAllSellers();
+
+  }, [refresh]);
+
+
+  const deleteSeller = async (id) => {
+    try {
+      await deleteSellerApi(id);
+      setRefresh(prev => prev + 1)
+
+    }
+    catch (err) {
+      console.error(err || 'seller deleted successfully');
+    }
+  };
+
+
+  const toggleBlockSeller = async (id) => {
+    try {
+      await toggleBlockSellerApi(id);
+      setRefresh(prev => prev + 1);
+
+    }
+    catch (err) {
+      console.error(err || 'failed to change status');
+    }
+  };
+
+  
 
   return (
     <div className="container mt-4">

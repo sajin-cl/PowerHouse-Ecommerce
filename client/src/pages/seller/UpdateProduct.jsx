@@ -1,10 +1,9 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axiosInstance from "../../utils/axiosInstance";
+import { getAllBrands, getAllCategories, getProductById, updateProduct } from "../../services/productService";
+
 
 function UpdateProduct() {
-
 
   document.title = ('Seller | Update Products | Power House Ecommerce');
 
@@ -16,6 +15,7 @@ function UpdateProduct() {
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [currentImage, setCurrentImage] = useState('');
+  const [preview, setPreview] = useState(null);
   const [formValues, setFormValues] = useState({
     name: '',
     description: '',
@@ -27,25 +27,21 @@ function UpdateProduct() {
   });
 
 
-  useEffect(() => {
+  const fetchProductEditData = async () => {
+    try {
+      const [catRes, brandRes, prodRes] = await Promise.all([
+        getAllCategories(),
+        getAllBrands(),
+        getProductById(id)
+      ]);
 
-    axiosInstance.get('/categories').then(response => setCategories(response.data.categories))
-      .catch(err => {
-        console.error('Failed to fetching categories');
-        setErrors({ backend: err.response?.data?.error });
-        setTimeout(() => { setErrors({}) }, 3000);
-      });
+      setCategories(catRes.data.categories);
+      setBrands(brandRes.data.brands);
 
-    axiosInstance.get('/brands').then(response => setBrands(response.data.brands))
-      .catch(err => {
-        console.error('Failed to fetching brands');
-        setErrors({ backend: err.response?.data?.error });
-        setTimeout(() => { setErrors({}) }, 3000);
-      });
+      const prod = prodRes.data
 
-    axiosInstance.get(`/products/${id}`).then(response => {
-      const prod = response.data;
-      setCurrentImage(prod.image_url)
+      setCurrentImage(prod.image_url);
+
       setFormValues({
         name: prod.name || '',
         description: prod.description || '',
@@ -54,57 +50,59 @@ function UpdateProduct() {
         stock: prod.stock || 0,
         price: prod.price || 0,
         productImage: null
-      })
-    })
-      .catch(err => {
-        console.error('Failed to fetching product');
-        setErrors({ backend: err.response?.data?.error });
-        setTimeout(() => { setErrors({}) }, 3000);
-      })
-
-  }, []);
-
-
-  const handleChange = (e) => {
-
-    const { name, value, files, type } = e.target;
-
-    setFormValues(prev => ({
-      ...prev,
-      [name]: type === 'file' ? files[0] : value
-    }));
+      });
+    }
+    catch (err) {
+      console.error(err);
+      setErrors({ backend: err });
+      setTimeout(() => { setErrors({}) }, 3000);
+    }
   };
 
 
-  const handleUpdate = (e) => {
+  useEffect(() => { fetchProductEditData() }, [id]);
 
-    e.preventDefault();
 
-    const formData = new FormData();
+  const handleChange = (e) => {
+    const { name, value, files, type } = e.target;
 
-    formData.append('name', formValues.name);
-    formData.append('description', formValues.description);
-    formData.append('brand', formValues.brand);
-    formData.append('category', formValues.category);
-    formData.append('stock', Number(formValues.stock));
-    formData.append('price', Number(formValues.price));
+    if (type === 'file' && files[0]) {
 
-    if (formValues.productImage) {
-      formData.append("productImage", formValues.productImage);
+      const selectedFile = files[0];
+
+      if (preview) URL.revokeObjectURL(preview);
+
+      setFormValues(prev => ({ ...prev, [name]: selectedFile }));
+
+      setPreview(URL.createObjectURL(selectedFile));
+    } else {
+      setFormValues(prev => ({
+        ...prev,
+        [name]: type === 'number' ? Number(value) : value
+      }));
     }
-
-    axiosInstance.patch(`/products/${id}`, formData)
-      .then(() => {
-        console.info('Product updated');
-        navigate('/seller/products');
-      })
-      .catch(err => {
-        console.error('Product update failed');
-        setErrors({ backend: err.response?.data?.error });
-        setTimeout(() => { setErrors({}) }, 3000);
-      })
+  };
 
 
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+
+      for (const [key, value] of Object.entries(formValues)) {
+        if (key === 'productImage' && value === null) continue;
+
+        if (value === '' && key !== 'description') continue;
+
+        formData.append(key, value);
+      }
+
+      await updateProduct(id, formData);
+      navigate('/seller/products');
+    } catch (err) {
+      setErrors({ backend: err });
+      setTimeout(() => { setErrors({}) }, 3000);
+    }
   };
 
   return (
@@ -209,27 +207,22 @@ function UpdateProduct() {
                   />
                 </div>
 
-                <div className="mb-3 d-flex flex-column">
-                  {currentImage &&
-                    <>
-                      <label htmlFor="current-prodImg" className="form-label text-purple">Current Image:</label>
-                      <img
-                        src={`${import.meta.env.VITE_IMG_URL}${currentImage}`}
-                        alt="current" style={{ width: "100%", height: "250px", objectFit: "cover" }}
-                      />
-                    </>
-                  }
-                </div>
-
                 <div className="mb-3">
-                  <label htmlFor="prodImg" className="form-label text-purple">Product Image</label>
-                  <input
-                    type="file"
-                    className="form-control"
-                    id="prodImg"
-                    name="productImage"
-                    onChange={handleChange}
-                  />
+                  <label className="form-label text-purple">Product Image</label>
+                  <div className="mb-2 text-center">
+                    {preview ? (
+                      <div className="border rounded p-1">
+                        
+                        <img src={preview} alt="New Preview" style={{ width: "100%", height: "200px", objectFit: "contain" }} />
+                      </div>
+                    ) : currentImage ? (
+                      <div className="border rounded p-1">
+                      
+                        <img src={`${import.meta.env.VITE_IMG_URL}${currentImage}`} alt="Current" style={{ width: "100%", height: "200px", objectFit: "contain" }} />
+                      </div>
+                    ) : null}
+                  </div>
+                  <input type="file" className="form-control" name="productImage" onChange={handleChange} />
                 </div>
 
                 {errors.backend && (<div className="text-center text-danger mb-2">{errors.backend}</div>)}

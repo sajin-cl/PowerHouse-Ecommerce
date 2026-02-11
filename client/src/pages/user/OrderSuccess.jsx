@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 function OrderSuccess() {
 
-  
  document.title = ('Order Success | Power House Ecommerce');
 
   const navigate = useNavigate();

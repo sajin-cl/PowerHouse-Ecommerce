@@ -9,7 +9,8 @@ function Cart() {
 
   document.title = ('My Cart | Power House Ecommerce');
 
-  const { cartItems, updateCartItem, removeCartItem } = useCart();
+  const { cartItems, updateCartItem, removeCartItem, loading } = useCart();
+
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
 
@@ -48,6 +49,11 @@ function Cart() {
   const goToCheckout = () => {
     navigate("/checkout");
   };
+
+
+  if (loading) {
+    return <div className="container py-5 text-center">Loading your cart...</div>;
+  }
 
 
   if (!cartItems.length) return <div className="container py-4 d-flex justify-content-center h-100">Your cart is empty.</div>;

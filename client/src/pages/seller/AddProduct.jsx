@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from '../../utils/axiosInstance';
+import { getAllCategories, getAllBrands, addProduct } from "../../services/productService";
+
 
 
 function AddProduct() {
-
 
   document.title = ('Seller | Add Products | Power House Ecommerce');
 
@@ -13,6 +13,7 @@ function AddProduct() {
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [errors, setErrors] = useState({});
+  const [preview, setPreview] = useState(null);
 
   const [formValues, setFormValues] = useState({
     name: '',
@@ -24,52 +25,62 @@ function AddProduct() {
     productImage: null
   });
 
-  useEffect(() => {
 
-    axiosInstance.get('/categories').then(response => setCategories(response.data.categories))
-      .catch(err => {
-        console.error('Category fetch failed');
-        setErrors({ backend: err.response?.data?.error });
-        setTimeout(() => { setErrors({}) }, 3000);
-      }
+  const fetchDropdownOptions = async () => {
+    try {
+      const [catRes, brandRes] = await Promise.all([
+        getAllCategories(),
+        getAllBrands()
+      ])
 
-      );
+      setCategories(catRes.data.categories || []);
+      setBrands(brandRes.data.brands || []);
+    }
+    catch (err) {
+      console.error(err);
+    }
 
-    axiosInstance.get('/brands').then(response => setBrands(response.data.brands))
-      .catch(err => {
-        console.log('Brand fetch failed');
-        setErrors({ backend: err.response?.data?.error });
-        setTimeout(() => { setErrors({}) }, 3000);
-      });
-  }, []);
+  };
+
+
+  useEffect(() => { fetchDropdownOptions() }, []);
 
 
   const handleChange = (e) => {
     const { name, type, value, files } = e.target;
 
-    setFormValues(prev => ({
-      ...prev,
-      [name]: type === 'file' ? files[0] : type === 'number' ? Number(value) : value
-    }))
+    if (type === 'file' && files[0]) {
+
+      const selectedFile = files[0];
+
+      if (preview) URL.revokeObjectURL(preview);
+
+      setFormValues(prev => ({ ...prev, [name]: selectedFile }));
+
+      setPreview(URL.createObjectURL(selectedFile));
+    }
+    else {
+      setFormValues(prev => ({
+        ...prev,
+        [name]: type === 'number' ? Number(value) : value
+      }))
+    }
   };
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
+    try {
+      const formData = new FormData();
 
-    formData.append('name', formValues.name);
-    formData.append('description', formValues.description);
-    formData.append('category', formValues.category);
-    formData.append('brand', formValues.brand);
-    formData.append('stock', formValues.stock);
-    formData.append('price', formValues.price);
-    formData.append('productImage', formValues.productImage);
+      for (const [key, value] of Object.entries(formValues)) {
+        if (value === null || value === '') continue;
+        formData.append(key, value);
+      }
 
+      await addProduct(formData);
 
-    axiosInstance.post('/products', formData).then(response => {
-      console.info(response.data);
       setFormValues({
         name: "",
         description: "",
@@ -81,13 +92,13 @@ function AddProduct() {
       });
 
       navigate('/seller/products')
-    })
-      .catch(err => {
-        console.error('product submition failed', err)
-        setErrors({ backend: err.response?.data?.error || 'something went wrong' });
-        setTimeout(() => { setErrors({}) }, 3000);
-      });
 
+    }
+    catch (err) {
+      console.error('product submition failed', err)
+      setErrors({ backend: err });
+      setTimeout(() => { setErrors({}) }, 3000);
+    }
   };
 
 
@@ -195,6 +206,12 @@ function AddProduct() {
                     onChange={handleChange}
                   />
                 </div>
+
+                {preview && (
+                  <div className="mb-3 text-center">
+                    <img src={preview} alt="Preview" style={{ width: "100%", height: "250px", objectFit: "cover" }} />
+                  </div>
+                )}
 
                 <div className="mb-3">
                   <label htmlFor="prodImg" className="form-label text-purple">Product Image</label>

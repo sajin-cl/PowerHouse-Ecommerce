@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axiosInstance from "../../utils/axiosInstance";
+import { getSellerProfile as getSellerProfileApi, updateSellerProfile } from "../../services/sellerService";
+
 
 function UpdateSellerProfile() {
 
@@ -9,6 +10,11 @@ function UpdateSellerProfile() {
 
   const { id } = useParams();
 
+  const [loading, setLoading] = useState(true);
+  const [errors, setErrors] = useState({});
+
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -16,25 +22,23 @@ function UpdateSellerProfile() {
     shopAddress: ""
   });
 
-  const [loading, setLoading] = useState(true);
 
-  const [errors, setErrors] = useState({});
 
-  const navigate = useNavigate();
+  const getSellerProfileData = async () => {
+    try {
+      const response = await getSellerProfileApi();
+      setFormData(response.data);
+    }
+    catch (err) {
+      console.error(err);
+    }
+    finally {
+      setLoading(false)
+    }
+  };
 
-  useEffect(() => {
 
-    axiosInstance.get("/seller/profile").then((res) => {
-      setFormData({
-        fullName: res.data.fullName || "",
-        email: res.data.email || "",
-        shopName: res.data.shopName || "",
-        shopAddress: res.data.shopAddress || ""
-      });
-    })
-      .catch((err) => console.error(err?.response?.data))
-      .finally(() => setLoading(false));
-  }, [id]);
+  useEffect(() => { getSellerProfileData() }, [id]);
 
 
   const handleChange = (e) => {
@@ -45,22 +49,15 @@ function UpdateSellerProfile() {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-
-    const fd = new FormData();
-    fd.append("fullName", formData.fullName);
-    fd.append("email", formData.email);
-    fd.append("shopName", formData.shopName);
-    fd.append("shopAddress", formData.shopAddress);
-
     try {
-      await axiosInstance.patch("/seller/profile", fd);
+      await updateSellerProfile(formData);
       navigate("/seller/profile");
 
-    } catch (err) {
-      console.error(err?.response?.data);
-      setErrors({ backend: err?.response?.data?.error || "Failed to update profile" });
+    }
+    catch (err) {
+      console.error('Failed to update profile');
+      setErrors({ backend: err });
       setTimeout(() => setErrors({}), 3000);
-      
     }
   };
 

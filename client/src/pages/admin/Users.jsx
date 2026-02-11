@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import axiosInstance from "../../utils/axiosInstance";
 import { motion } from 'framer-motion';
 import { cardContainer, droppingCard } from "../../animations/globalVariants";
+import { getAllUsers, deleteUser as deleteUserApi, toggleBlockUser as toggleBlockUserApi } from "../../services/adminService";
 
 function Users() {
 
@@ -9,37 +9,49 @@ function Users() {
   document.title = ('Admin | User List | Power House Ecommerce');
 
   const [refresh, setRefresh] = useState(0);
-
   const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    axiosInstance.get("/admin/users").then((response) => setUsers(response.data))
-      .catch((err) => {
-        console.error(
-          "Failed to fetch users:",
-          err.response?.data?.error || err?.message
-        );
-      });
-  }, [refresh]);
 
+  const fetchAllUsers = async () => {
+    try {
+      const response = await getAllUsers();
+      setUsers(response.data)
 
-  const deleteUser = (id) => {
-    axiosInstance.delete(`/admin/users/${id}`).then(() => {
-      console.info('user deleted successfully');
-      setRefresh(prev => prev + 1);
-    })
-      .catch(err => console.error('failed to delete user', err))
+    }
+    catch (err) {
+      console.error(err);
+    }
   };
 
 
-  const toggleBlockUser = (id) => {
-    axiosInstance.patch(`/admin/users/${id}/toggle-block`, null)
-      .then(() => {
-        console.info('User toggle status changed');
-        setRefresh(prev => prev + 1);
-      })
-      .catch(err => console.error('failed to change status', err.response?.data?.error || err.message))
-  }
+
+  useEffect(() => {
+    fetchAllUsers();
+  }, [refresh]);
+
+
+  const deleteUser = async (id) => {
+    try {
+      await deleteUserApi(id);
+      setRefresh(prev => prev + 1)
+    }
+    catch (err) {
+      console.error('failed to delete user', err);
+    }
+  };
+
+
+  const toggleBlockUser = async (id) => {
+    try {
+      await toggleBlockUserApi(id);
+      setRefresh(prev => prev + 1);
+
+    }
+    catch (err) {
+      console.error(err || 'failed to change status');
+    };
+
+  };
 
   return (
     <div className="container mt-4">

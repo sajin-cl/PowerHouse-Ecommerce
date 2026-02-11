@@ -1,6 +1,6 @@
-import axiosInstance from "../../utils/axiosInstance";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { addCategory } from "../../services/adminService";
 
 function AddCategory() {
 
@@ -25,24 +25,25 @@ function AddCategory() {
     })));
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    axiosInstance.post('/admin/categories', formData).then(response => {
-      console.log(response.data);
+    try {
+      const response = await addCategory(formData);
+      console.log(response);
       setFormData({
         name: "",
         description: ""
       });
       navigate('/admin/categories')
-    })
-      .catch(err => {
-        console.error('error for creating category');
-        if (err) {
-          setErrors({ backend: err.response?.data?.error });
-          setTimeout(() => setErrors({}), 3000);
-        }
-      })
+
+    }
+    catch (err) {
+      console.error('error for creating category');
+      setErrors({ backend: err });
+      setTimeout(() => setErrors({}), 3000);
+    }
+
   };
 
   return (
@@ -95,4 +96,4 @@ function AddCategory() {
   )
 }
 
-export default AddCategory;
+export default AddCategory

@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion';
-import axiosInstance from "../../utils/axiosInstance";
+import { getSellerProfile as getSellerProfileApi } from "../../services/sellerService";
+
 
 function SellerProfile() {
 
@@ -11,13 +12,21 @@ function SellerProfile() {
   const [seller, setSeller] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    axiosInstance.get('/seller/profile').then(response => {
-      setSeller(response.data)
-    })
-      .catch(err => console.error(err?.response?.data));
 
-  }, []);
+  const getSellerProfile = async () => {
+    try {
+      const response = await getSellerProfileApi();
+      setSeller(response?.data);
+
+    }
+    catch (err) {
+      console.error(err)
+    }
+  };
+
+
+  useEffect(() => { getSellerProfile() }, []);
+
 
   if (!seller) return <p>Loading your profile...</p>;
 

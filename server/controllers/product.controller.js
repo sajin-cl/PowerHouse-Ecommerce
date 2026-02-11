@@ -1,7 +1,7 @@
 const Category = require('../models/category.model');
 const Product = require('../models/product.model');
 const Brand = require('../models/brand.model');
-const User = require('../models/auth.model');
+
 
 exports.addProducts = async (req, res) => {
 
@@ -52,25 +52,19 @@ exports.addProducts = async (req, res) => {
 
 exports.getProducts = async (req, res) => {
   try {
-    let filter = {};
+    let productFilter = {};
 
     if (req.session?.userData?.role === 'seller') {
-      filter.sellerId = req.session?.userData?.id;
+      productFilter.sellerId = req.session?.userData?.id;
     }
 
-    const products = await Product.find(filter).sort({ createdAt: 1 });
+    const products = await Product.find(productFilter).populate('sellerId').sort({ createdAt: 1 });
     if (!products) return res.status(400).json({ error: 'Failed to fetch products' });
 
-    const visibleProducts = [];
-    
-    for (let product of products) {
+    const visibleProducts = products.filter(product => {
+      return product.sellerId && !product.sellerId.isBlocked;
+    });
 
-      const seller = await User.findById(product.sellerId);
-
-      if (seller && !seller.isBlocked) {
-        visibleProducts.push(product);
-      }
-    }
 
     res.status(200).json(visibleProducts);
     console.log('visible products:', visibleProducts);

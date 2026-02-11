@@ -1,7 +1,7 @@
-import axiosInstance from "../../utils/axiosInstance";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { getBrandById, updateBrand as updateBrandApi } from "../../services/adminService";
 
 function UpdateBrand() {
 
@@ -20,14 +20,23 @@ function UpdateBrand() {
   });
 
 
+  const fetchBrandById = async (id) => {
+    try {
+      const response = await getBrandById(id);
+      setBrand(response.data)
+    }
+    catch (err) {
+      console.error('Brand fetching error');
+      setErrors({ backend: err });
+      setTimeout(() => setErrors({}), 3000);
+    }
+
+  };
+
+
   useEffect(() => {
-    axiosInstance.get(`/admin/brands/${id}`).then(response => setBrand(response.data))
-      .catch(err => {
-        console.error('Brand fetching error');
-        setErrors({ backend: err.response?.data?.error });
-        setTimeout(() => setErrors({}), 3000);
-      });
-  }, []);
+    fetchBrandById(id);
+  }, [id]);
 
 
   const handleChange = (e) => {
@@ -38,19 +47,19 @@ function UpdateBrand() {
     }));
   };
 
-  const updateBrand = (e) => {
 
+  const updateBrand = async (e) => {
     e.preventDefault();
-    axiosInstance.patch(`/admin/brands/${id}`, brand).then(response => {
-      setBrand(response.data);
-      console.log('Brand updated');
-      navigate('/admin/brands');
-    })
-      .catch(err => {
-        console.error('update failed');
-        setErrors({ backend: err.response?.data?.error });
-        setTimeout(() => setErrors({}), 3000);
-      });
+    try {
+      await updateBrandApi(id, brand);
+      navigate("/admin/brands");
+    }
+    catch (err) {
+      console.error('update failed');
+      setErrors({ backend: err });
+      setTimeout(() => setErrors({}), 3000);
+
+    }
   };
 
   return (

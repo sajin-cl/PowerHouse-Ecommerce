@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axiosInstance from '../../utils/axiosInstance';
 import { motion } from 'framer-motion';
 import { cardContainer, droppingCard } from "../../animations/globalVariants";
+import { getAdminCategories, deleteCategory as deleteCategoryService } from "../../services/adminService";
 
 
 function Categories() {
@@ -14,24 +14,31 @@ function Categories() {
 
   const [refresh, setRefresh] = useState(0);
 
-  useEffect(() => {
-    axiosInstance.get('/admin/categories').then(response => {
+
+  const fetchCategories = async () => {
+    try {
+      const response = await getAdminCategories();
       setCategories(response.data);
-    })
-      .catch(() => console.log('categories fetch error'));
+    } catch (err) {
+      console.error('Categories fetch error:', err);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
 
   }, [refresh]);
 
 
-  const deleteCategory = (id) => {
-    axiosInstance.delete(`/admin/categories/${id}`).then(() => {
+  const deleteCategory = async (id) => {
+    try {
+      await deleteCategoryService(id);
       console.info('category deleted');
       setRefresh(prev => prev + 1);
-    })
-      .catch((err) => {
-        console.error('category deletetion error', err);
-
-      });
+    }
+    catch (err) {
+      console.error('category deletetion error', err);
+    }
   }
 
 

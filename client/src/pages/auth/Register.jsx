@@ -1,7 +1,7 @@
 import "../../style/register.css";
-import axiosInstance from '../../utils/axiosInstance';
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { register } from "../../services/authService";
 
 function RegisterForm() {
 
@@ -13,6 +13,7 @@ function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -57,7 +58,7 @@ function RegisterForm() {
   };
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
 
     e.preventDefault();
 
@@ -68,8 +69,12 @@ function RegisterForm() {
       return;
     }
 
-    axiosInstance.post('/auth/register', formData).then((response => {
-      console.log(response.data);
+    try {
+
+      setLoading(true);
+
+      await register(formData);
+
       setFormData({
         fullName: "",
         email: "",
@@ -80,12 +85,14 @@ function RegisterForm() {
         shopAddress: ""
       });
       navigate("/login");
-    }))
-      .catch((err) => {
-        console.error('registeration failed');
-        setErrors({ backend: err.response?.data?.error || 'Something went wrong on the server' });
-        setTimeout(() => setErrors({}), 3000)
-      });
+
+    }
+    catch (err) {
+      setLoading(false)
+      console.error('registeration failed');
+      setErrors({ backend: err || 'Something went wrong on the server' });
+      setTimeout(() => setErrors({}), 3000)
+    };
   };
 
   return (
@@ -237,8 +244,8 @@ function RegisterForm() {
             {errors.backend && <div className="text-danger mb-2 text-center">{errors.backend}</div>}
 
 
-            <button className="btn btn-primary w-100 mt-3" style={{ backgroundColor: "var(--violet-color)" }}>
-              Register now
+            <button className="btn btn-primary w-100 mt-3" style={{ backgroundColor: "var(--violet-color)" }} disabled={loading}>
+              {loading ? 'Registering...' :'Register now'}
             </button>
 
             <p className="text-center mt-3">

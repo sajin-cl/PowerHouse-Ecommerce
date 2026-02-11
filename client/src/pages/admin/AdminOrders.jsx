@@ -1,9 +1,10 @@
-import axiosInstance from "../../utils/axiosInstance";
 import { useEffect, useState, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import { cardContainer, cardFromLeft, cardFromRight } from "../../animations/globalVariants";
+import { getAllOrders, updateOrderStatus as updateOrderStatusApi } from "../../services/adminService";
 
 const CustomerDetailsModal = lazy(() => import("../../components/CustomerDetailsModal"));
+
 
 function AdminOrders() {
 
@@ -13,23 +14,38 @@ function AdminOrders() {
   const [refresh, setRefresh] = useState(0);
   const [errors, setErrors] = useState({});
   const [selectedOrder, setSelectedOrder] = useState(null);
-  
+
+
+  const fetchAllOrders = async () => {
+    try {
+      const response = await getAllOrders();
+      setOrders(response.data);
+    }
+    catch (err) {
+      console.error(err);
+    }
+  };
+
 
   useEffect(() => {
-    axiosInstance
-      .get("/admin/orders").then(res => setOrders(res.data))
-      .catch(err => console.error(err));
+
+    fetchAllOrders();
+
   }, [refresh]);
 
 
-  const updateOrderStatus = (orderId, newStatus) => {
-    axiosInstance.patch(`/admin/orders/${orderId}/status`, { status: newStatus })
-      .then(() => setRefresh(prev => prev + 1))
-      .catch(err => {
-        setErrors({ backend: err.response?.data?.error || err.message });
-        setTimeout(() => setErrors({}), 3000);
-      });
+  const updateOrderStatus = async (orderId, newStatus) => {
+    try {
+      await updateOrderStatusApi(orderId, newStatus);
+      setRefresh(prev => prev + 1)
+
+    } catch (err) {
+      setErrors({ backend: err });
+      setTimeout(() => setErrors({}), 3000);
+    };
+
   };
+
 
   return (
     <div className="container py-4">
@@ -141,7 +157,10 @@ function AdminOrders() {
       </motion.div>
 
       {selectedOrder && (
-        <Suspense fallback={<div className="text-center text-muted">Loading...</div>}>
+        <Suspense
+          fallback={<div className="text-center text-muted">
+            Loading...</div>}
+        >
           <CustomerDetailsModal order={selectedOrder} onCloseBtn={() => setSelectedOrder(null)} />
         </Suspense>
       )}

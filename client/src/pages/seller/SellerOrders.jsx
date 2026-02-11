@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { motion } from 'framer-motion';
 import { cardContainer, cardFromLeft, cardFromRight } from '../../animations/globalVariants'
-import axiosInstance from "../../utils/axiosInstance";;
+import { getSellerOrders, updateOrderedItemStatus } from "../../services/sellerService";
+
+
 
 function SellerOrders() {
 
@@ -11,31 +13,43 @@ function SellerOrders() {
   const [orders, setOrders] = useState([]);
 
 
-  useEffect(() => {
-    axiosInstance.get("/seller/orders").then((res) => setOrders(res.data))
-      .catch((err) => console.error("Failed to fetch orders:", err.response?.data || err));
-  }, []);
+  const fetchSellerOrders = async () => {
+    try {
+      const response = await getSellerOrders();
+      setOrders(response.data);
 
-
-  const updateStatus = (orderId, itemId, newStatus) => {
-    axiosInstance.patch(`/seller/orders/${orderId}/item/${itemId}/status`, { status: newStatus })
-      .then(() => {
-        
-        setOrders((prev) =>
-          prev.map((order) =>
-            order._id === orderId
-              ? {
-                ...order,
-                items: order.items.map((item) =>
-                  item._id === itemId ? { ...item, status: newStatus } : item
-                ),
-              }
-              : order
-          )
-        );
-      })
-      .catch((err) => console.error("Failed to update status:", err.response?.data || err));
+    }
+    catch (err) {
+      console.error(err || 'Failed to fetch orders');
+    }
   };
+
+
+  useEffect(() => { fetchSellerOrders() }, []);
+
+
+  const updateStatus = async (orderId, itemId, newStatus) => {
+    try {
+      await updateOrderedItemStatus(orderId, itemId, newStatus);
+
+      setOrders(prev =>
+        prev.map((order) =>
+          order._id === orderId
+            ? {
+              ...order,
+              items: order.items.map((item) =>
+                item._id === itemId ? { ...item, status: newStatus } : item
+              )
+            }
+            : order
+        )
+      );
+    }
+    catch (err) {
+      console.error(err || 'Update failed');
+    };
+  };
+
 
   return (
     <div className="container py-4">

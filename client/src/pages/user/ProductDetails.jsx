@@ -2,10 +2,10 @@ import "../../style/ProductDetails.css";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
-import axiosInstance from "../../utils/axiosInstance";
+import { getProductById } from "../../services/productService";
+
 
 function ProductDetails() {
-
 
   document.title = ('Product Details | Power House Ecommerce');
 
@@ -24,26 +24,21 @@ function ProductDetails() {
   const qtyDec = () => { if (count > 1) setCount(prev => prev - 1); };
 
 
-  useEffect(() => {
-    fetchProducts();
-  }, [id]);
-
-
   const fetchProducts = async () => {
     try {
-      const res = await axiosInstance.get(`/products/${id}`);
+      const res = await getProductById(id);
       setProduct(res.data);
-
     }
     catch (err) {
-      console.error("Product fetch failed:", err);
-
+      console.error("Product fetch failed:");
     }
   };
 
+  useEffect(() => { fetchProducts() }, [id]);
+
+
   //for addToCart & removeCart button ui
   useEffect(() => {
-
     if (!product) return;
 
     const item = cartItems.find(i => i.product._id === product._id);
@@ -75,12 +70,11 @@ function ProductDetails() {
       setError("");
     }
     catch (err) {
-      console.log(err);
-      setError(err.response?.data?.error || "Cart operation failed.");
+      console.log("Cart operation failed");
+      setError(err);
       setTimeout(() => setError(""), 3000);
     }
   };
-
 
 
   const descriptionItems = product?.description

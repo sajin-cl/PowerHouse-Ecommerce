@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axiosInstance from '../utils/axiosInstance'
+import { forgotPassword, verifyOtp, resetPassword } from '../../services/authService';
+
 
 function ForgotPassword() {
 
@@ -10,7 +11,7 @@ function ForgotPassword() {
   const [otp, setOtp] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
-  const [isOtpSent, setIsOtpSent] = useState(false); // For Email -> OTP swap
+  const [isOtpSent, setIsOtpSent] = useState(false); // For Email -> OTP splaceOrderApiwap
   const [isVerified, setIsVerified] = useState(false); // For OTP -> New Password swap
 
   const [message, setMessage] = useState("");
@@ -25,11 +26,11 @@ function ForgotPassword() {
     setError("");
     setLoading(true);
     try {
-      const response = await axiosInstance.post('/auth/forgot-password', { email });
+      const response = await forgotPassword(email);
       setMessage(response.data.message);
       setIsOtpSent(true);
     } catch (err) {
-      setError(err.response?.data?.error || "Something went wrong. Try again!");
+      setError(err || "Something went wrong. Try again!");
     } finally {
       setLoading(false);
     }
@@ -42,14 +43,14 @@ function ForgotPassword() {
     setError("");
     setLoading(true);
     try {
-      const response = await axiosInstance.post('/auth/verify-otp', { email, otp });
+      const response = await verifyOtp(email, otp);
       setMessage(response.data.message);
       setTimeout(() => {
         setMessage("");
         setIsVerified(true);
       }, 2000);
     } catch (err) {
-      setError(err.response?.data?.error || "Invalid OTP!");
+      setError(err || "Invalid OTP!");
       setTimeout(() => setError(""), 3000);
     } finally {
       setLoading(false);
@@ -63,11 +64,11 @@ function ForgotPassword() {
     setError("");
     setLoading(true);
     try {
-      const response = await axiosInstance.post('/auth/reset-password', { email, password: newPassword });
+      const response = await resetPassword(email, newPassword);
       setMessage(response.data.message);
       setTimeout(() => navigate('/login'), 3000);
     } catch (err) {
-      setError(err.response?.data?.error || "Reset failed. Try again!");
+      setError(err || "Reset failed. Try again!");
     } finally {
       setLoading(false);
     }

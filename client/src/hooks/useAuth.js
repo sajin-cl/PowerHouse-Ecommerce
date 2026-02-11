@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import axiosInstance from "../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import { logout as logoutService, checkSession as validateSessionService } from "../services/authService";
 
 export const useAuth = () => {
 
@@ -13,7 +13,7 @@ export const useAuth = () => {
     const checkSession = async () => {
       try {
 
-        const res = await axiosInstance.get("/auth/check-session");
+        const res = await validateSessionService();
 
         if (isMounted) {
           if (res.data.loggedIn) {
@@ -29,7 +29,7 @@ export const useAuth = () => {
         if (isMounted && loggedIn) {
           setLoggedIn(false);
           navigate("/login");
-          console.error(err.response?.data?.message || "Session expired");
+          console.error(err || "Session expired");
         }
       }
     };
@@ -50,7 +50,7 @@ export const useAuth = () => {
 
   const logout = async () => {
     try {
-      await axiosInstance.get("/auth/logout");
+      await logoutService();
       setLoggedIn(false);
       navigate("/login");
     }

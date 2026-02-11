@@ -2,30 +2,41 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from 'framer-motion';
 import { droppingCard, cardContainer } from '../../animations/globalVariants'
-import axiosInstance from "../../utils/axiosInstance";
+import { getAllProducts, deleteProduct } from "../../services/productService";
+
 
 function SellerProducts() {
-
 
   document.title = ('Seller | Product List | Power House Ecommerce');
 
   const [products, setProducts] = useState([]);
-
   const [refresh, setRefresh] = useState(0);
 
 
-  useEffect(() => {
-    axiosInstance.get('/products').then(response => setProducts(response.data))
-      .catch(err => console.error('Failed to fetch products', err));
-  }, [refresh]);
+  const fetchAllProducts = async () => {
+    try {
+      const response = await getAllProducts();
+      setProducts(response.data);
+    }
+    catch (err) {
+      console.error(err);
+    }
+  };
 
-  const handleDelete = (id) => {
-    axiosInstance.delete(`/products/${id}`).then(() => {
-      setRefresh(prev => prev + 1)
+
+  useEffect(() => { fetchAllProducts() }, [refresh]);
+
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteProduct(id);
+      setRefresh(prev => prev + 1);
       console.info('Product deleted successfully');
-    })
-      .catch(err => console.error('Failed to delete product', err))
-  }
+    }
+    catch (err) {
+      console.error(err);
+    }
+  };
 
 
   return (
@@ -76,14 +87,14 @@ function SellerProducts() {
                     to={`/seller/update-product/${product._id}`}
                     className="btn btn-sm"
                   >
-                    <i className="fas fa-edit fs-5 "></i>
+                    <i className="fas fa-edit fs-5 "></i>  {/* Edit Icon  */}
                   </Link>
 
                   <button
                     className="btn btn-sm"
                     onClick={() => { handleDelete(product._id) }}
                   >
-                    <i className="fas fa-trash fs-5 text-danger"></i>
+                    <i className="fas fa-trash fs-5 text-danger"></i>  {/* Delete Icon */}
 
                   </button>
                 </div>

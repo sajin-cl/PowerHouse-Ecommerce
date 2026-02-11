@@ -1,7 +1,9 @@
 import "../../style/ProductCard.css";
 import { useEffect, useState, Suspense, lazy } from "react";
 import { motion } from 'framer-motion'
-import axiosInstance from "../../utils/axiosInstance";
+
+import { getAllCategories, getAllProducts } from '../../services/productService'
+
 const BannerCarousel = lazy(() => import("../../components/BannerCarousel"));
 const Footer = lazy(() => import("../../components/Footer"));
 const ProductCard = lazy(() => import("../../components/ProductCard"));
@@ -17,13 +19,25 @@ function HomePage() {
   const [search, setSearch] = useState("");
 
 
-  useEffect(() => {
-    axiosInstance.get('/products').then((res) => setProducts(res.data))
-      .catch((err) => console.error("Failed to fetch products", err));
+  const fetchHomeData = async () => {
+    try {
+      const [catRes, prodRes] = await Promise.all([
 
-    axiosInstance.get('/categories').then((res) => setCategories(res.data.categories))
-      .catch((err) => console.error("Failed to fetch categories", err));
-  }, []);
+        getAllCategories(),
+        getAllProducts()
+
+      ]);
+      setCategories(catRes.data.categories || []);
+      setProducts(prodRes.data);
+
+    }
+    catch (err) {
+      console.error(err);
+    }
+  };
+
+
+  useEffect(() => { fetchHomeData() }, []);
 
 
   const filteredProducts = products.filter(prod =>

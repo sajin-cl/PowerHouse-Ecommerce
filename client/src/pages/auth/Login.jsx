@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
-import axiosInstance from '../../utils/axiosInstance'
+import { login } from '../../services/authService';
 
 function LoginForm() {
 
@@ -41,7 +41,7 @@ function LoginForm() {
 
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
 
     e.preventDefault();
 
@@ -53,7 +53,9 @@ function LoginForm() {
       return
     }
 
-    axiosInstance.post('/auth/login', formData).then((response) => {
+    try {
+
+      const response = await login(formData);
 
       const { role } = response.data
 
@@ -65,11 +67,12 @@ function LoginForm() {
             '/'
       );
 
-    }).catch((err) => {
+    }
+    catch (err) {
       console.error('Login failed');
-      setErrors({ backend: err.response?.data?.error || "Something went wrong on the server" });
+      setErrors({ backend: err });
       setTimeout(() => { setErrors({}) }, 3000)
-    })
+    }
 
   };
 

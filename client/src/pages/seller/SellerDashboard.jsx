@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom"
 import { motion } from 'framer-motion';
 import { cardContainer, droppingCard } from '../../animations/globalVariants'
-import axiosInstance from '../../utils/axiosInstance';
+import { getSellerDashboard } from "../../services/sellerService";
+
 
 
 function SellerDashboard() {
@@ -17,11 +18,21 @@ function SellerDashboard() {
     totalEarnings: 0,
   });
 
-  useEffect(() => {
-    axiosInstance.get('/seller/dashboard')
-      .then(response => setStats(response.data))
-      .catch(err => console.error(err.response?.data?.error || err.message));
 
+  const fetchSellerDashboardData = async () => {
+    try {
+      const response = await getSellerDashboard();
+      setStats(response.data);
+    }
+    catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+
+    fetchSellerDashboardData();
+    
   }, []);
 
 

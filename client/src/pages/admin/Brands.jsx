@@ -1,8 +1,8 @@
-import axiosInstance from "../../utils/axiosInstance";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from 'framer-motion';
 import { cardContainer, droppingCard } from "../../animations/globalVariants";
+import { getAdminBrands, deleteBrand as deleteBrandApi } from "../../services/adminService";
 
 function Brands() {
 
@@ -12,20 +12,33 @@ function Brands() {
 
   const [refresh, setRefresh] = useState(0);
 
+
+  const fetchBrands = async () => {
+    try {
+      const response = await getAdminBrands();
+      setBrands(response.data);
+    }
+    catch (err) {
+      console.error('Brands fetching error', err)
+    }
+  }
+
+
   useEffect(() => {
-    axiosInstance.get('/admin/brands')
-      .then(response => setBrands(response.data))
-      .catch(err => console.error('Brands fetching error', err));
+    fetchBrands();
 
   }, [refresh]);
 
 
-  const deleteBrand = (id) => {
-    axiosInstance.delete(`/admin/brands/${id}`).then(() => {
+  const deleteBrand = async (id) => {
+    try {
+      await deleteBrandApi(id);
       setRefresh(prev => prev + 1);
       console.info('Brand Deleted successfully!')
-    })
-      .catch(err => console.error(err));
+    }
+    catch (err) {
+      console.error(err);
+    }
   };
 
 

@@ -1,6 +1,9 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
+
+
 import RegisterForm from '../pages/auth/Register';
 import LoginForm from '../pages/auth/Login';
+import ForgotPassword from '../pages/auth/ForgotPassword';
 
 import UserLayout from '../layouts/UserLayout';
 import Home from '../pages/user/Home'
@@ -36,7 +39,7 @@ import AdminOrders from '../pages/admin/AdminOrders';
 
 
 import NotFound from '../components/NotFound';
-import ForgotPassword from '../components/ForgotPassword';
+
 
 
 

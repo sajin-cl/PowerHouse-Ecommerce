@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion';
 import { useCart } from "../../context/CartContext";
-import axiosInstance from "../../utils/axiosInstance";
+
+import { getUserProfile as getUserProfileApi } from "../../services/userService";
+
 
 
 function MyProfile() {
@@ -15,15 +17,19 @@ function MyProfile() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
+  const fetchUserProfile = async () => {
+    try {
+      const response = await getUserProfileApi();
+      setUser(response.data);
+    }
+    catch (err) {
+      console.error(err);
+    }
+  };
 
-  useEffect(() => {
-    axiosInstance.get('/user/profile').then(response => {
-      setUser(response.data)
-      
-    })
-      .catch(err => console.error(err?.response?.data));
 
-  }, []);
+  useEffect(() => { fetchUserProfile() }, []);
+
 
   if (!user) return <p className="d-flex justify-content-center align-items-center m-auto">Loading your profile...</p>;
 

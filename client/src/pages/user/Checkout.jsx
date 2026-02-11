@@ -1,16 +1,21 @@
 import '../../style/Checkout.css'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axiosInstance from '../../utils/axiosInstance'
+import { useCart } from '../../context/CartContext'
+
+import { getCart as getCartApi } from '../../services/cartService'
+import { placeOrder as placeOrderApi } from '../../services/orderService'
+
 
 function Checkout() {
 
   document.title = ('Checkout Page | Power House Ecommerce');
 
+  const { fetchCart } = useCart()
+
   const navigate = useNavigate();
 
   const [error, setError] = useState('');
-
   const [paymentMethod, setPaymentMethod] = useState('COD');
 
   const [address, setAddress] = useState({
@@ -28,14 +33,17 @@ function Checkout() {
     total: 0
   })
 
+  useEffect(() => { fetchCartData(), handlePlaceOrder() }, []);
 
-  useEffect(() => {
-    axiosInstance.get('/cart').then(res => {
-      const subtotal = res.data.reduce(
-        (sum, item) => sum + item.product.price * item.quantity,
+  const fetchCartData = async () => {
+    try {
+      const response = await getCartApi();
+      const cartItems = response.data;
+
+      const subtotal = cartItems.reduce(
+        (sum, item) => sum + (item.product?.price || 0) * item.quantity,
         0
       );
-
       const shipping = subtotal > 5000 ? 0 : 40;
 
       setSummary({
@@ -43,11 +51,16 @@ function Checkout() {
         shipping,
         total: subtotal + shipping
       });
-    })
-      .catch(() => {
-        setError('Failed to load cart')
-      })
-  }, []);
+
+    }
+    catch (err) {
+      console.error(err);
+      setError(err);
+    }
+  }
+
+
+
 
   const handleChange = (e) => {
     setAddress({
@@ -59,14 +72,14 @@ function Checkout() {
 
   const handlePlaceOrder = async () => {
     try {
-      await axiosInstance.post('/orders/checkout', { shippingAddress: address, paymentMethod });
+      await placeOrderApi({ shippingAddress: address, paymentMethod });
+      await fetchCart();
       navigate('/order-success');
 
     } catch (err) {
-      setError(err.response?.data?.error || 'Order failed');
-
+      setError(err);
     }
-  }
+  };
 
   return (
     <div className="container py-4">
