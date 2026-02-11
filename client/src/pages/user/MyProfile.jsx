@@ -15,7 +15,7 @@ function MyProfile() {
 
   const { cartCount } = useCart();
   const [user, setUser] = useState(null);
-  const navigate = useNavigate();
+
 
   const fetchUserProfile = async () => {
     try {
@@ -87,7 +87,6 @@ function MyProfile() {
 
         <MotionLink
           className="mt-3 btn btn-violet "
-          onClick={() => { navigate(`/seller/update-profile/${user._id}`) }}
           initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { duration: 0.5, delay: 1 } }} drag
         >
           Edit Profile

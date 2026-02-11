@@ -65,12 +65,14 @@ function Categories() {
                     <Link
                       to={`/admin/update-category/${category._id}`}
                       className="btn  btn-sm"
+                      title="edit"
                     >
                       <i className="fas fa-edit fs-6 "></i>
                     </Link>
                     <button
                       className="btn  btn-sm "
                       onClick={() => deleteCategory(category._id)}
+                     title="delete"
                     >
                       <i className="fas fa-trash fs-6 text-danger"></i>
                     </button>

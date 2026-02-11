@@ -3,9 +3,11 @@ import footerLogo from '/footer_logo.png'
 import appStore from '../assets/images/logos/App-Store-icon.png'
 import playStore from '../assets/images/logos/playstore-icon.png'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
+
 
 function Footer() {
-  
+
   return (
     <footer className="footer">
 
@@ -17,8 +19,12 @@ function Footer() {
 
       <div className="footer-body">
 
-        <div className="footer-logo">
-          <img src={footerLogo} alt="PowerHouse Logo" />
+        <div className="footer-logo ms-1">
+          <motion.img
+            src={footerLogo}
+            alt="PowerHouse Logo"
+            drag
+          />
         </div>
 
         <ul className="footer-links">

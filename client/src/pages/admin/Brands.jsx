@@ -65,6 +65,7 @@ function Brands() {
                     <Link
                       to={`/admin/update-brand/${brand._id}`}
                       className="btn  btn-sm"
+                      title="edit"
                     >
                       <i className="fas fa-edit fs-6 "></i>
                     </Link>
@@ -72,6 +73,7 @@ function Brands() {
                     <button
                       className="btn  btn-sm "
                       onClick={() => { deleteBrand(brand._id) }}
+                      title="delete"
                     >
                       <i className="fas fa-trash fs-6 text-danger"></i>
                     </button>

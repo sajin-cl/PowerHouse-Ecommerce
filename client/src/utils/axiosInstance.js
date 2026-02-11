@@ -22,7 +22,6 @@ axiosInstance.interceptors.response.use(
       message = error.response.data?.error || "Server Error!";
 
     }
-
     return Promise.reject(message);
   }
 );
