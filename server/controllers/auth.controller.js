@@ -125,14 +125,14 @@ exports.forgotPassword = async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'powerhouseofficial444@gmail.com',
-        pass: 'zquvelsqpqjwbush'
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
       }
 
     });
 
     const mailOptions = {
-      from: '"Power House Support" <powerhouseofficial444@gmail.com>',
+      from: `"Power House Support" <${process.env.EMAIL_USER}>`,
       to: email,
       subject: 'Password Reset OTP',
       html: forgotPasswordTemplate(user.fullName, otp)
