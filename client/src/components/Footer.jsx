@@ -15,17 +15,16 @@ function Footer() {
         <h6>For better experience, download the PowerHouse app now</h6>
         <img src={appStore} alt="App Store" />
         <img src={playStore} alt="Play Store" />
-      </div>
-
-      <div className="footer-body">
-
-        <div className="footer-logo ms-1">
+         <div className="footer-logo ms-4">
           <motion.img
             src={footerLogo}
             alt="PowerHouse Logo"
             drag
           />
         </div>
+      </div>
+
+      <div className="footer-body d-flex justify-content-around">
 
         <ul className="footer-links">
           <li><Link to="/" > Home</Link></li>

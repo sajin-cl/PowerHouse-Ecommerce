@@ -16,7 +16,7 @@ function UserHeader() {
 
   return (
     
-    <nav className="navbar navbar-expand-lg navbar-light sticky-top">
+    <nav className="navbar navbar-expand-lg navbar-light sticky-top w-100">
       <div className="container-fluid">
         <motion.img
           src={logo} alt="logo"

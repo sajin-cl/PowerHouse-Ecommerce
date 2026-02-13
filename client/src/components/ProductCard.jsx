@@ -5,12 +5,12 @@ function ProductCard({ product }) {
   return (
     <>
       <div className="col">
-        <div className="card product-card h-100 ">
+        <div className="card product-card h-100 w-100 mb-3">
           <img
             src={`${import.meta.env.VITE_IMG_URL}${product.image_url}`}
             alt={product.name}
-            className="card-img-top"
-            style={{ maxWidth: "250px", height: "250px", margin: "auto" }}
+            className="card-img-top "
+            style={{ maxWidth: "400px", height: "250px", margin: "auto" }}
           />
           <div className="card-body P-2">
             <div

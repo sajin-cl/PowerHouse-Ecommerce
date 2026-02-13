@@ -70,7 +70,7 @@ function HomePage() {
             <div className="d-flex align-items-center gap-3 ">
               <label className="mb-0 fw-semibold">Category:</label>
               <select
-                className="form-select w-auto px-5 py-1"
+                className="form-select  px-3 py-1"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
               >
@@ -88,7 +88,7 @@ function HomePage() {
             <Suspense fallback={<div className="d-flex justify-content-center align-content-center pt-5">
               <img src="/loading-spinner.gif" width={"50px"} /></div>}>
 
-              <div className="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4">
+              <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 row-cols-xl-5 g-4">
                 {filteredProducts.length > 0 ? (
                   filteredProducts.map((product, index) => (
 

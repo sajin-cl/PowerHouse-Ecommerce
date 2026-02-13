@@ -77,6 +77,7 @@ exports.login = async (req, res) => {
 
 exports.checkSession = (req, res) => {
 
+
   if (!req.session || !req.session?.userData) {
     return res.status(401).json({
       loggedIn: false,
@@ -85,6 +86,7 @@ exports.checkSession = (req, res) => {
   }
 
    const { id, role } = req.session.userData;
+
 
   res.json({
     loggedIn: true, message: 'session is still active',
