@@ -1,7 +1,7 @@
 import '../style/footer.css'
 import footerLogo from '/footer_logo.png'
-import appStore from '../assets/images/logos/App-Store-icon.png'
-import playStore from '../assets/images/logos/playstore-icon.png'
+import appStore from '/images/logos/App-Store-icon.png'
+import playStore from '/images/logos/playstore-icon.png'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 

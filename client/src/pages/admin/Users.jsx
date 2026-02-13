@@ -78,7 +78,7 @@ function Users() {
                 </span>
 
                 <img
-                  src="/src/assets/images/avatar.png"
+                  src="/images/avatar.png"
                   alt="avatar"
                   className="rounded-circle mx-auto mb-3"
                   style={{ width: "72px", height: "72px", objectFit: "cover" }}
