@@ -7,7 +7,7 @@ function ProductCard({ product }) {
       <div className="col">
         <div className="card product-card h-100 ">
           <img
-            src={`http://localhost:4000${product.image_url}`}
+            src={`${import.meta.env.VITE_IMG_URL}${product.image_url}`}
             alt={product.name}
             className="card-img-top"
             style={{ maxWidth: "250px", height: "250px", margin: "auto" }}

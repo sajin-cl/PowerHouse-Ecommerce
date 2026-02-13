@@ -31,8 +31,6 @@ export const CartProvider = ({ children }) => {
 
 
 
-
-
   const addToCart = async (productId, quantity) => {
     try {
       await addToCartApi(productId, quantity);
