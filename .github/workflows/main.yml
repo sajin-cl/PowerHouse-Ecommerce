@@ -27,7 +27,7 @@ jobs:
 
       - name: Run Backend Check
         env:
-          PORT: 4000
+          PORT: 8000
           MONGODB_URL: ${{ secrets.MONGODB_URL }}
           APPLICATION_URL: ${{ secrets.APPLICATION_URL }}
           EMAIL_USER: ${{ secrets.EMAIL_USER }}

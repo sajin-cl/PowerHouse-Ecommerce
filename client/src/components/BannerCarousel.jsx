@@ -31,13 +31,13 @@ function BannerCarousel() {
         <div className="carousel-inner">
 
           <div className="carousel-item active">
-            <img src="src/assets/images/banner/banner1.webp" className="d-block w-100" alt="Banner 1"
+            <img src="/images/banner/banner1.webp" className="d-block w-100" alt="Banner 1"
               style={bannerStyle} />
             
           </div>
 
           <div className="carousel-item">
-            <img src="src/assets/images/banner/banner2.webp" className="d-block w-100" alt="Banner 2"
+            <img src="/images/banner/banner2.webp" className="d-block w-100" alt="Banner 2"
               style={bannerStyle} />
             <div className="carousel-caption d-none d-md-block" style={captionStyle}>
               <h1 style={companyNameStyle}>Power House</h1>
@@ -47,7 +47,7 @@ function BannerCarousel() {
           </div>
 
           <div className="carousel-item">
-            <img src="src/assets/images/banner/banner3.webp" className="d-block w-100" alt="Banner 3"
+            <img src="/images/banner/banner3.webp" className="d-block w-100" alt="Banner 3"
               style={bannerStyle} />
             <div className="carousel-caption d-none d-md-block" style={captionStyle}>
               <h1 style={companyNameStyle}>Power House</h1>
@@ -57,7 +57,7 @@ function BannerCarousel() {
           </div>
 
           <div className="carousel-item">
-            <img src="src/assets/images/banner/banner4.webp" className="d-block w-100" alt="Banner 4"
+            <img src="/images/banner/banner4.webp" className="d-block w-100" alt="Banner 4"
               style={bannerStyle} />
             <div className="carousel-caption d-none d-md-block" style={captionStyle}>
               <h1 style={companyNameStyle}>Power House</h1>
