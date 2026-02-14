@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { motion } from 'framer-motion'
 import { logoVariants } from '../animations/globalVariants';
 import { useCart } from "../context/CartContext.jsx";
+import brandLogo from '../assets/brandLogo.png';
 
 
 
@@ -18,7 +19,7 @@ function UserHeader() {
     <nav className="navbar navbar-expand-lg navbar-light sticky-top w-100">
       <div className="container-fluid">
         <motion.img
-          src='src/assets/brandLogo.png?v=2' alt="logo"
+          src={brandLogo} alt="logo"
           className="me-2"
           variants={logoVariants}
           initial="hidden" animate="visible" drag dragConstraints={{ left: 0, top: 0, bottom: 0, right: 0 }}

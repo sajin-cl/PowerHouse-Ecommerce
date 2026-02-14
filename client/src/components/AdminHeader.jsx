@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { logoVariants } from '../animations/globalVariants';
+import brandLogo from '../assets/brandLogo.png';
 import '../style/AdminHeader.css';
 
 function AdminHeader() {
@@ -20,7 +21,7 @@ function AdminHeader() {
         <div className="container-fluid">
           <div className="d-flex align-items-center">
             <motion.img
-              src='src/assets/brandLogo.png?v=2' alt="logo"
+              src={brandLogo} alt="logo"
               className="me-2"
               variants={logoVariants}
               initial="hidden" animate="visible" drag dragConstraints={{ left: 0, top: 0, bottom: 0, right: 0 }}
