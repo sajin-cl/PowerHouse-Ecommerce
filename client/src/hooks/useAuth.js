@@ -21,7 +21,7 @@ export const useAuth = () => {
     }
     else {
       setLoggedIn(false);
-      if (window.location.pathname !== "/login") navigate("/login");
+      
     }
   }, []);
 
